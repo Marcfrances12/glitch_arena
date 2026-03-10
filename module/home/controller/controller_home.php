@@ -5,12 +5,12 @@
 $path = $_SERVER['DOCUMENT_ROOT'] . '/glitch_arena/';
 include($path . "module/home/model/DAOHome.php");
 
-session_start();
+@session_start();
 
 switch ($_GET['op']) {
     case 'view':
-        // $data = 'hola crtl home view';
-        // die('<script>console.log('.json_encode( $data ) .');</script>');
+         //$data = 'hola crtl home view';
+         //die('<script>console.log('.json_encode( $data ) .');</script>');
         include("module/home/view/home.html");
         break;
 
