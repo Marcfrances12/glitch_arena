@@ -4,22 +4,22 @@ function loadCategories() {
     ajaxPromise('module/home/controller/controller_home.php?op=homePageCategory','GET', 'JSON')
     .then(function(data) {
         console.log(data);
-
+//  <h3 class="evento-name card-title">${data[row].nombre_evento}</h3> 
         for (let row = 0; row < data.length; row++) {
-            $('<div></div>')
-                .addClass("user_card")
-                .attr('id', data[row].user)
+            $("<div/>")
+                .addClass("user_card card") 
+                .attr('id', data[row].id_torn)
                 .appendTo('#containerCategories')
-                .html(
-                    "<div class='item-main'>" +
-                        "<h3 class='user-name'>" + data[row].name + "</h3>" +
-                        "<p><b>Usuario:</b> " + data[row].user + "</p>" +
-                        "<p><b>DNI:</b> " + data[row].dni + "</p>" +
-                        "<p><b>Sexo:</b> " + data[row].sex + "</p>" +
-                        "<p><b>Hobby:</b> " + data[row].hobby + "</p>" +
-                        "<p><b>Idioma:</b> " + data[row].language + "</p>" +
-                    "</div>"
-                );
+                .html(`
+                    <span class="material-symbols-outlined card-icon">sports_esports</span>
+                    <div class="item-main">
+                        
+                        <p class="card-category">
+                            <strong></strong> ${data[row].categoria}
+                        </p>
+                    </div>
+                `);
+                
         }
     }).catch(function() {
         //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Type_Categories HOME";

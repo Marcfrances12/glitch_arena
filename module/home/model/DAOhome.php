@@ -4,11 +4,11 @@ include($path . "model/connect.php");
 
 class DAOHome
 {
-	function select_all_user()
+	function select_all_evento()
 	{
-		// echo json_encode("select_all_user");
+		// echo json_encode("select_all_evento");
         // exit();
-		$sql = "SELECT * FROM usuario ORDER BY user ASC";
+		$sql = "SELECT * FROM eventos_torneos ORDER BY id_torn ASC";
 		$conexion = connect::con();
 		$stmt = $conexion->prepare($sql);
 		$stmt->execute();

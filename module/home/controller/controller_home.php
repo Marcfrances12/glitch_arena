@@ -15,11 +15,11 @@ switch ($_GET['op']) {
         break;
 
     case 'homePageCategory':
-        // echo json_encode("homePageCategory");
-        // exit();
+         //echo json_encode("homePageCategory");
+         //exit();
         try{
             $daohome = new DAOHome();
-            $SelectCategory = $daohome->select_all_user();
+            $SelectCategory = $daohome->select_all_evento();
             // echo json_encode($SelectCategory);
             // exit();
         } catch(Exception $e){
