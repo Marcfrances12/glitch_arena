@@ -6,7 +6,7 @@ class connect
 		$host = 'localhost';
 		$user = "root";
 		$pass = "";
-		$db = "torneos_db";
+		$db = "glitch_arena";
 
 		try {
 			$conexion = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
