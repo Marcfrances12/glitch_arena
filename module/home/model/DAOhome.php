@@ -29,4 +29,20 @@ class DAOHome
 		return $res;
 	}
 
+	function select_all_game()
+	{
+	
+		$sql = "SELECT g.*, GROUP_CONCAT(gi.game_img) as all_images
+				FROM games g
+				LEFT JOIN game_images gi ON g.id_game = gi.id_game
+				GROUP BY g.id_game
+				ORDER BY g.id_game ASC";
+		$conexion = connect::con();
+		$stmt = $conexion->prepare($sql);
+		$stmt->execute();
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		connect::close($conexion);
+		return $res;
+	}
+
 }

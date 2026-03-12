@@ -134,10 +134,10 @@ CREATE TABLE torn_images (
 -- ==================================
 
 INSERT INTO platforms (platform_name, platform_logo) VALUES
-('PC', 'img/pc.png'), ('PS5', 'img/ps5.png'), ('Xbox', 'img/xbox.png');
+('PC', 'view/img/plataforma/pc.jpg'), ('PS5', 'view/img/plataforma/ps5.jpg'), ('Xbox', 'view/img/plataforma/xbox.png'), ('Nintendo', 'view/img/plataforma/nintendo.jpg');
 
 INSERT INTO categories (cat_name, cat_img) VALUES
-('FPS', 'img/fps.png'), ('MOBA', 'img/moba.png'), ('Sports', 'img/sports.png');
+('FPS', 'view/img/categ/fps.png'), ('MOBA', 'view/img/categ/moba.png'), ('Deporte', 'view/img/categ/sports.png'), ('Lucha', 'view/img/categ/sports.png'), ('Carreras', 'view/img/categ/sports.png'), ('Estrategia', 'view/img/categ/sports.png');
 
 INSERT INTO cities (city_name, city_img) VALUES
 ('Madrid', 'img/madrid.jpg'), ('Barcelona', 'img/bcn.jpg');
@@ -147,9 +147,14 @@ INSERT INTO venues (venue_name, id_city, address, venue_img) VALUES
 ('Gaming Hub Barcelona', 2, 'Av. Digital 45', 'img/hub_bcn.jpg');
 
 INSERT INTO games (game_name, developer, game_img) VALUES
-('Counter-Strike 2', 'Valve', 'img/cs2.jpg'),
-('Rocket League', 'Psyonix', 'img/rl.jpg'),
-('League of Legends', 'Riot Games', 'img/lol.jpg');
+('Counter-Strike 2', 'Valve', 'view/img/games/cs2.jpg'),
+('Rocket League', 'Psyonix', 'view/img/games/rocket.jpg'),
+('League of Legends', 'Riot Games', 'view/img/games/lol.jpg'),
+('Dota 2', 'Valve', 'view/img/games/dota.png'),
+('Valorant', 'Riot Games', 'view/img/games/val.jpg'),
+('F1', 'Electronics Arts', 'view/img/games/f1.jpg'),
+('FC 26', 'Electronics Arts', 'view/img/games/fc.jpg'),
+('Smash Bros Ultimate', 'Nintendo', 'view/img/games/smash.jpg');
 
 INSERT INTO tournament_types (type_name, type_img) VALUES
 ('Presencial', 'img/pres.png'), ('Online', 'img/online.png');

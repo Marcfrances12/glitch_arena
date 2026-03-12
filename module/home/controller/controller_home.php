@@ -54,6 +54,24 @@ switch ($_GET['op']) {
         }
         break;
 
+    case 'homePageGame':
+      
+        try{
+            $daohome = new DAOHome();
+            $SelectCategory = $daohome->select_all_game();
+            
+        } catch(Exception $e){
+            echo json_encode("error");
+        }
+            
+        if(!empty($SelectCategory)){
+            echo json_encode($SelectCategory); 
+        }
+        else{
+            echo json_encode("error");
+        }
+        break;
+
     default:
         include("view/inc/error404.php");
         break;
