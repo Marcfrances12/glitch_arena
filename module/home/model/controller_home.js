@@ -86,6 +86,14 @@ function loadGames() {
     ajaxPromise('module/home/controller/controller_home.php?op=homePageGame','GET', 'JSON')
     .then(function(data) {
         console.log(data);
+        $('#game-card').empty().html(`
+            <div class="swiper main-game-swiper">
+                <div class="swiper-wrapper" id="main-wrapper"></div>
+                <div class="swiper-button-next main-nav"></div>
+                <div class="swiper-button-prev main-nav"></div>
+                <div class="swiper-pagination main-pagination"></div>
+            </div>
+        `);
         for (let row = 0; row < data.length; row++) {
           
             let imagesArray = data[row].all_images ? data[row].all_images.split(',') : ['view/img/default.png'];
@@ -95,10 +103,10 @@ function loadGames() {
                 </div>
             `).join('');
 
-            $("<div/>")
-                .addClass("game-card ") 
+            let $currentCard = $("<div/>")
+                .addClass("game-card swiper-slide") 
                 .attr('id', data[row].id_game) 
-                .appendTo('#game-card') 
+                .appendTo('#main-wrapper') 
                 .html(`
                     <div class="game-card-header">
                         <div class="swiper inner-game-swiper">
@@ -117,28 +125,96 @@ function loadGames() {
                             <span class="game-tag">${data[row].developer}</span>
                         </div>
                         <h4 class="game-card-title">${data[row].game_name}</h4>
-                        <button class="game-card-btn">Ver Torneos</button>
+                        <button class="game-card-btn">Mas Información</button>
                     </div>
                 `);
 
-                new Swiper(".inner-game-swiper", {
-                    nested: true, 
-                    loop: true,
-                    pagination: {
-                        el: ".mini-dots",
-                        clickable: true,
-                    },
-                    navigation: {
-                        nextEl: ".mini-nav",
-                        prevEl: ".mini-nav",
-                    },
-                     autoplay: { 
-                        delay: 3000,
-                        disableOnInteraction: false
-                    },
-                });        
+                new Swiper($currentCard.find(".inner-game-swiper")[0], {
+                nested: true, 
+                loop: true,
+                // pagination: { el: $currentCard.find(".mini-dots")[0], clickable: true },
+                navigation: {
+                    nextEl: $currentCard.find(".swiper-button-next")[0],
+                    prevEl: $currentCard.find(".swiper-button-prev")[0],
+                },
+                autoplay: { delay: 2000, disableOnInteraction: false },
+            });        
         }
+        new Swiper(".main-game-swiper", {
+            slidesPerView: 3,
+            spaceBetween: 20,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            
+            breakpoints: {
+                320: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
+            },
+            autoplay: { delay: 4000, disableOnInteraction: false },
+        });
         
+    }).catch(function() {
+        //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Type_Categories HOME";
+    });
+}
+
+function loadCity() {
+    //console.log('loadCategories() called');
+
+    ajaxPromise('module/home/controller/controller_home.php?op=homePageCity','GET', 'JSON')
+    .then(function(data) {
+        console.log(data);
+        for (let row = 0; row < data.length; row++) {
+            $("<div/>")
+                .addClass("city-card") 
+                .attr('id', data[row].id_city)
+                .appendTo('#containerCities') 
+                .html(`
+                    <div class="city-card-img-wrapper">
+                        <img src="${data[row].city_img}" alt="${data[row].city_name}" class="city-card-img">
+                    </div>
+                    <div class="city-card-content">
+                        <h3 class="city-card-name">${data[row].city_name}</h3>
+                        <p class="city-card-info">${data[row].description}</p>
+                        <div class="city-card-footer">
+                            <span class="city-card-tag">Explorar</span>
+                        </div>
+                    </div>
+                `);
+
+            new Swiper(".mySwiperCategories", {
+
+                slidesPerView: 4,
+                spaceBetween: 1,
+                slidesPerGroup: 1,
+                loop: true,
+
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev"
+                },
+                autoplay: { 
+                    delay: 3000,
+                    disableOnInteraction: false
+                },
+
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1
+                    },
+                    768: {
+                        slidesPerView: 3 
+                    },
+                    1024: {
+                        slidesPerView: 4
+                    }
+                }
+            });
+                
+        }
     }).catch(function() {
         //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Type_Categories HOME";
     });
@@ -148,5 +224,6 @@ $(document).ready(function () {
     loadCategories();
     loadPlataform();
     loadGames();
+    loadCity();
     
 });

@@ -71,6 +71,24 @@ switch ($_GET['op']) {
             echo json_encode("error");
         }
         break;
+    
+    case 'homePageCity':
+      
+        try{
+            $daohome = new DAOHome();
+            $SelectCity = $daohome->select_all_city();
+            
+        } catch(Exception $e){
+            echo json_encode("error");
+        }
+            
+        if(!empty($SelectCity)){
+            echo json_encode($SelectCity); 
+        }
+        else{
+            echo json_encode("error");
+        }
+        break;
 
     default:
         include("view/inc/error404.php");
