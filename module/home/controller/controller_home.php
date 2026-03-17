@@ -12,7 +12,7 @@ switch ($_GET['op']) {
          //$data = 'hola crtl home view';
          //die('<script>console.log('.json_encode( $data ) .');</script>');
         include("module/home/view/home.html");
-        break;
+    break;
 
     case 'homePageCategory':
          //echo json_encode("homePageCategory");
@@ -32,7 +32,7 @@ switch ($_GET['op']) {
         else{
             echo json_encode("error");
         }
-        break;
+    break;
 
     case 'homePagePlataform':
          //echo json_encode("homePageCategory");
@@ -52,7 +52,7 @@ switch ($_GET['op']) {
         else{
             echo json_encode("error");
         }
-        break;
+    break;
 
     case 'homePageGame':
       
@@ -70,10 +70,10 @@ switch ($_GET['op']) {
         else{
             echo json_encode("error");
         }
-        break;
+    break;
     
     case 'homePageCity':
-      
+     
         try{
             $daohome = new DAOHome();
             $SelectCity = $daohome->select_all_city();
@@ -88,9 +88,30 @@ switch ($_GET['op']) {
         else{
             echo json_encode("error");
         }
-        break;
+    break;
 
+    case 'homePageType':
+         //echo json_encode("homePageCategory");
+         //exit();
+        try{
+            $daohome = new DAOHome();
+            $SelectType = $daohome->select_all_type();
+            // echo json_encode($SelectCategory);
+            // exit();
+        } catch(Exception $e){
+            echo json_encode("error");
+        }
+            
+        if(!empty($SelectType)){
+            echo json_encode($SelectType); 
+        }
+        else{
+            echo json_encode("error");
+        }
+    break;
+
+    
     default:
-        include("view/inc/error404.php");
-        break;
+    include("view/inc/error404.php");
+    break;
 }

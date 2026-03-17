@@ -48,7 +48,19 @@ class DAOHome
 	function select_all_city()
 	{
 	
-		$sql = "SELECT * FROM cities ORDER BY id_city ASC";
+		$sql = "SELECT * FROM cities c INNER JOIN venues v WHERE c.id_city = v.id_city ORDER BY c.id_city ASC";
+		$conexion = connect::con();
+		$stmt = $conexion->prepare($sql);
+		$stmt->execute();
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		connect::close($conexion);
+		return $res;
+	}
+
+	function select_all_type()
+	{
+	
+		$sql = "SELECT * FROM tournament_types ORDER BY id_type ASC";
 		$conexion = connect::con();
 		$stmt = $conexion->prepare($sql);
 		$stmt->execute();

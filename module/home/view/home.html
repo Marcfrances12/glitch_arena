@@ -1,4 +1,4 @@
-<main class="flex-1 w-full max-w-7xl mx-auto px-6 py-8">
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-6 py-8">
 <!-- Hero Section -->
 <section class="mb-12">
 <div class="relative min-h-[500px] flex flex-col items-start justify-end p-8 md:p-16 rounded-xl overflow-hidden bg-slate-900 group" data-alt="Cinematic esports arena with neon lights and professional gaming setup" style='background-image: linear-gradient(to right, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.2) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAu3LC9u5E6cLxZmZih5RG9GhG_ls2JB8uUul8v1gs91uQMJu71PKF3hP9EfmIhDYLA34fO_Q2OcK9EQG0mX8pXEzsoSo77F1kv5FSEq-jc9nP5GQz56K0uaN6RxRYtENVGPbnwwSL5BDRU7xOEsNMawGCZq6O-qM1cAo9b4OiFeOBcq0GCFw8_Ec5l-nT8GAy1jHHC6NjMZyAhIEELd2yXs3WBC5iTKkAizY-hzsb8aIxJ1u2nFJ09uUVkLF-_xtvspvnxR9fY4M"); background-size: cover; background-position: center;'>
@@ -49,25 +49,28 @@
 <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
 <span class="w-1 h-8 bg-primary rounded-full">
 </span>Explora las Categorias</h3>
-
+<br>
 <div class="swiper mySwiperCategories">
 
     <div class="swiper-wrapper" id="containerCategories"></div>
 
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next btn-next-cat"></div>
+    <div class="swiper-button-prev btn-prev-cat"></div>
 
 </div>
 
+<br>
+<br>
 <br>
 <br>
 
 <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
 <span class="w-1 h-8 bg-primary rounded-full">
 </span>Nuestras Plataformas</h3>
-
+<br>
 <div id="containerPlatform"></div>
 
+<br>
 <br>
 <br>
 
@@ -77,16 +80,53 @@
 <p class="text-slate-400 mt-1">No te pierdas ninguno de estos juegos maestros</p>
 </div>
 <br>
-
+<br>
 
 <div id="game-card"></div>
 
 <br>
 <br>
+<br>
 
-<div id="containerCities"></div>
+<div>
+<h3 class="text-2xl font-bold flex items-center gap-3">
+<span class="w-1 h-8 bg-primary rounded-full"></span>Tipos de eventos</h3>
+<p class="text-slate-400 mt-1">Elige el tipo que quieras!!!</p>
+</div>
+
+<br>
+<br>
 
 
+<div class="swiper mySwiperType">
+
+    <div class="swiper-wrapper" id="containerType"></div>
+
+    <div class="swiper-button-next btn-next-type"></div>
+    <div class="swiper-button-prev btn-prev-type"></div>
+
+</div>
+
+<br>
+<br>
+
+<div>
+<h3 class="text-2xl font-bold flex items-center gap-3">
+<span class="w-1 h-8 bg-primary rounded-full"></span>Ciudades de eventos</h3>
+<p class="text-slate-400 mt-1">Elige tu ciudad mas cercana i no te lo pierdas!!</p>
+</div>
+
+<br>
+<br>
+
+<div class="swiper mySwiperCity">
+
+    <div class="swiper-wrapper" id="containerCities"></div>
+
+    <div class="swiper-button-next btn-next-city"></div>
+    <div class="swiper-button-prev btn-prev-city"></div>
+
+</div>
 
 <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 <div class="group cursor-pointer bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 p-6 rounded-xl hover:border-primary/50 transition-all text-center">
@@ -109,7 +149,7 @@
 </div> -->
 </section>
 <!-- Upcoming Tournaments -->
-<section class="mb-20">
+<!-- <section class="mb-20">
 <div class="flex justify-between items-end mb-8">
 
 <a class="text-primary font-semibold flex items-center gap-1 hover:underline" href="#">
@@ -117,7 +157,7 @@
 </a>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Tournament Card 1 -->
+
 <div class="bg-white dark:bg-slate-800/30 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-2xl transition-all">
 <div class="h-48 overflow-hidden relative">
 <img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" data-alt="Competitive League of Legends match atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCrjdqn4KL3-iL3jB1wzKMorsWPtSRa6lle34H0I6br1mgJVXYTz6R00VFXDSik85rfIxSLewBNt3MQsSZysJCqWKz-444440FCzx4bC5F4JaTm85hTclgFD5l4kKGCPc93cvZjq8QYeNJLxccO3G685qE5rnYAetRrDg98s_BHYkjz7dagXWQt8BRHxyE3aylbc5SRy65htEmc-z1HdRWXvKp3w2yJTA64CM8abQ28pEcOKeATE42nKalhrvxKuIigXxLeP9mgyM"/>
@@ -146,7 +186,7 @@
                                 </button>
 </div>
 </div>
-<!-- Tournament Card 2 -->
+
 <div class="bg-white dark:bg-slate-800/30 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-2xl transition-all">
 <div class="h-48 overflow-hidden relative">
 <img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" data-alt="Dota 2 professional player focused during match" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Sr5oVP18MKCcdNez8GRhmUgk1z-sXi6X7Nm2iOLdLjrjsWIZ9TwKZ46rEymXt5JEgAgq_jvj-2q5ZRocypLxhkBMXz70y-bOTxGD8UbDyYBDe_a92EhI2jDuxt22KsRoKYBLIwpEz_mIvgKfnFA9z2dNZga_Vq09LhpLa-4lE07Gisgjc4fYT9FWgvRlm4bChitBZSu37ErqzETIjJ6FZiC-0hvl-gn3aaEXk6CJ1tOhi_w3sbenL7AeRBOioll553zzoIZ5_9A"/>
@@ -175,7 +215,7 @@
                                 </button>
 </div>
 </div>
-<!-- Tournament Card 3 -->
+
 <div class="bg-white dark:bg-slate-800/30 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-2xl transition-all">
 <div class="h-48 overflow-hidden relative">
 <img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" data-alt="Retro racing game neon aesthetics" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBphgFI0ChBEIV9Z-nU8IYyc5Y-Hyr-AhSoCGN3c1rsxgqPAXNPaCXGR9M9FqC1h0cED0_B2L2qRupIIWLcZyQp1l91cWWVVOdTeorwfcarPJS2cH5wJqukQt8vmugNBySiEnVGncnXU7YZvrgXoKGOycUGAFSFsNLH_4A62HJ4dm53RWNGpjs7jgbT2AddEk2IRMVhR865s6aGA7ad6qqJMBwg2Ti5neYZkfKvkWuhy9udJd-HwfpVvlXOpZ3okpl6UDB4alLsaW8"/>
@@ -200,7 +240,7 @@
                                     Get Tickets
                                 </button>
 </div>
-</div>
+</div> -->
 </div>
 </section>
 </main>
