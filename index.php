@@ -1,6 +1,11 @@
 <?php
     if ((isset($_GET['page'])) && ($_GET['page']==="controller_home") ){
+
 		include("view/inc/top_page_home.html");
+
+	}else if ((isset($_GET['page'])) && ($_GET['page']==="controller_shop" )){
+		
+		include("view/inc/top_page_shop.html");
 	}else{
 		include("view/inc/top_page_home.html");
 	}

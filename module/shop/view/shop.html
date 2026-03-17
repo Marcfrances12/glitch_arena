@@ -1,0 +1,291 @@
+
+<!-- Header Section -->
+<!-- <header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+<div class="max-w-7xl mx-auto flex items-center justify-between gap-8">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">sports_esports</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">EsportsTix</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Home</a>
+<a class="text-primary text-sm font-medium" href="#">Tournaments</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Teams</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">My Tickets</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4">
+<label class="hidden sm:flex items-center relative w-full max-w-xs">
+<span class="material-symbols-outlined absolute left-3 text-slate-400 text-xl">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary transition-all placeholder:text-slate-500" placeholder="Search events..." type="text"/>
+</label>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center size-10 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</div>
+</header> -->
+<main class="max-w-[1440px] mx-auto w-full px-6 lg:px-20 py-10">
+<div class="flex flex-col lg:flex-row gap-10">
+<!-- Sidebar Filters -->
+<aside class="w-full lg:w-72 shrink-0 space-y-8">
+<div>
+<h1 class="text-2xl font-bold mb-2">Eventos Actuales</h1>
+<p class="text-slate-500 text-sm">Encuentra tu nueva experiencia competitiva</p>
+</div>
+<div class="space-y-6">
+<!-- Game Filter -->
+<div class="space-y-4">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Game Title</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 dark:border-slate-700 bg-transparent text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">League of Legends</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-slate-300 dark:border-slate-700 bg-transparent text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Valorant</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-slate-300 dark:border-slate-700 bg-transparent text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Counter-Strike 2</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-slate-300 dark:border-slate-700 bg-transparent text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Dota 2</span>
+</label>
+</div>
+</div>
+<!-- Date Range -->
+<div class="space-y-4">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Date Range</h3>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">calendar_today</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 pl-10 text-sm focus:ring-2 focus:ring-primary" placeholder="Select dates" type="text"/>
+</div>
+</div>
+<!-- Price Range -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Price Range</h3>
+<span class="text-xs font-medium text-primary">$0 - $500</span>
+</div>
+<div class="px-2">
+<input class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary" max="500" min="0" type="range" value="250"/>
+</div>
+</div>
+<button class="w-full py-3 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl transition-all">
+                            Reset Filters
+                        </button>
+</div>
+</aside>
+<!-- Event Grid -->
+<section class="flex-1">
+<!-- Sorting Bar -->
+<div class="flex justify-between items-center mb-8 bg-slate-100 dark:bg-slate-900/50 p-2 rounded-xl">
+<div class="flex gap-2">
+<button class="px-4 py-1.5 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 shadow-sm">All Events</button>
+<button class="px-4 py-1.5 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-all">Majors</button>
+<button class="px-4 py-1.5 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-all">Qualifiers</button>
+</div>
+<div class="flex items-center gap-2 px-3">
+<span class="text-xs text-slate-500">Sort by:</span>
+<select class="bg-transparent border-none text-xs font-bold focus:ring-0 p-0 pr-6">
+<option>Popularity</option>
+<option>Date</option>
+<option>Price: Low to High</option>
+</select>
+</div>
+</div>
+<!-- Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Event Card 1 -->
+<div class="group flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Dynamic esports arena with blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlLZwU_VJhcWxq82CZ8Euwf6NgsNaRUqE7b2Ah92yh5HGuFFmjla7q7GxoLNDTy_F1fhTuBkjpYJrvJdLsmZCBtBWHOvIPF_3AROybsXxn0BppyOM24_9NMi7W9y_ND4lk7w_4f6cFUEQncfeQk-XT-VS38h90S9Fn2GDrB-UdRhlNnF3nAvSx9a-5hjDsobsBF_WVyXwfWHSwgFPUsvHuhOcdCD3IldtN6Yo6q6KHD6mCjDlRGNvWXQPN80beFqADDlHUBGJw43k"/>
+<div class="absolute top-3 left-3 px-3 py-1 bg-primary text-white text-[10px] font-bold rounded-full uppercase">League of Legends</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold mb-3 line-clamp-1">LEC Spring Finals 2024</h3>
+<div class="space-y-2 mb-6">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">calendar_month</span>
+<span>April 14 - 16, 2024</span>
+</div>
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+<span data-location="Berlin">Mercedes-Benz Arena, Berlin</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between gap-4">
+<div>
+<p class="text-xs text-slate-400">Starting from</p>
+<p class="text-xl font-bold text-primary">$49.00</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all">Buy Ticket</button>
+</div>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="group flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of gaming mouse and keyboard neon lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN18hjHW0IaeLIA6rx5nM6UQU4nzUrfM3AGpg7K6jR-dyl894ctfWLjDXGvazf8ZPLjJEuP_l2JX1rNmhukxTEIKVEhTOuzjLGWqwaYU7kHFfXvD9o1y5JMgLxcT3KN0XngKyYMyFn-C3F8ZSubbVo1VE3EOXVkVfQQrawBF2vygJ1uN2Q303PXLKiwMdPzRdUxm1B7tQkH4SjwEcF8LGGHTFkdXNq35cYu_9mTN0y5LM81YWFwvhcCnE8q1sB88gwfgB_HTHDTvE"/>
+<div class="absolute top-3 left-3 px-3 py-1 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">Valorant</div>
+<div class="absolute top-3 right-3 px-3 py-1 bg-white/10 backdrop-blur-md text-white text-[10px] font-bold rounded-full uppercase border border-white/20">Sold Out</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold mb-3 line-clamp-1">VCT Masters Madrid</h3>
+<div class="space-y-2 mb-6">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">calendar_month</span>
+<span>March 24, 2024</span>
+</div>
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+<span data-location="Madrid">Madrid Arena, Spain</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between gap-4">
+<div>
+<p class="text-xs text-slate-400">Starting from</p>
+<p class="text-xl font-bold text-slate-400 line-through">$85.00</p>
+</div>
+<button class="bg-slate-200 dark:bg-slate-800 text-slate-500 px-6 py-2.5 rounded-xl font-bold text-sm cursor-not-allowed">Details</button>
+</div>
+</div>
+</div>
+<!-- Event Card 3 -->
+<div class="group flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern office building used as esport venue" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwM1nNSQy-JlmKDjcUZ_bZM7eWxbja9LN1dFrw5y4eGY5pFR5f3y4l5zgQ2dQaMZcrOTKvcCxqUGtHNjs9MIN0nCMREhd4wP8KgwZ_1w7CH0YEKaBC8oBzAGd0OU7t3uHxPJb-5tolZSyUEobN2mWgdNa52Z6qIq2V-dpeO3ScLfsMQ7b2gumTBiMMD1yXD9esd4ONKPiVpN_4PclzIshheZBGLJZfXyt-U9SqpKAuKOAW9FTGaD9EJ9awULzXwgbt8YVd5DgUkBk"/>
+<div class="absolute top-3 left-3 px-3 py-1 bg-orange-600 text-white text-[10px] font-bold rounded-full uppercase">CS2</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold mb-3 line-clamp-1">PGL Major Copenhagen</h3>
+<div class="space-y-2 mb-6">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">calendar_month</span>
+<span>May 17 - 31, 2024</span>
+</div>
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+<span data-location="Copenhagen">Royal Arena, Copenhagen</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between gap-4">
+<div>
+<p class="text-xs text-slate-400">Starting from</p>
+<p class="text-xl font-bold text-primary">$120.00</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all">Buy Ticket</button>
+</div>
+</div>
+</div>
+<!-- Event Card 4 -->
+<div class="group flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Retro gaming hardware and monitors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-Ju9hAqQrt9ZDv1eDy3ZgwdvmS2NITpMEjnDsIHkoLwSH7u342CyIbeAFn9pUSroZeTCsJHc9trRtUjlLMcH68YeDcSq3hgKWhLNmJsgZ6oWSP8YJUgeRmRZgKvbQ0frbXfRwohp50QNMyMFjCpzhWiz-tjh2HVBi7HPTRpuzMmS1iL-275DaezWW0gRQWIBMMMr0nYwG3kY3YgeSNkD0ySaAn1gxCFCfkml4NAmStxwP9d1cyyJb4ACZrX6QMDfj9ftb_Ww7Buc"/>
+<div class="absolute top-3 left-3 px-3 py-1 bg-primary text-white text-[10px] font-bold rounded-full uppercase">League of Legends</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold mb-3 line-clamp-1">LPL Summer Split Open</h3>
+<div class="space-y-2 mb-6">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">calendar_month</span>
+<span>June 10, 2024</span>
+</div>
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">language</span>
+<span>Online Broadcast</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between gap-4">
+<div>
+<p class="text-xs text-slate-400">Starting from</p>
+<p class="text-xl font-bold text-primary">$15.00</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all">Get Access</button>
+</div>
+</div>
+</div>
+<!-- Event Card 5 -->
+<div class="group flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Abstract colorful light streaks on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0XMHvggu8xhGnjQqbAeO-eWXKD_G-MEksv5-Db5VmWa36TZJsJQsdwrQsboNqa5S-3namctnPJKTLf9P5zVyNXmy-5AyZo2KsZ4ziy8W-MoNruJum9x-YoJoDYu8AHgn2aKdTK8uXAzq8JvVfaiEhcvEE1HH7-1de8eBGm2iEn3BsIFSJqxHaBcIXyjhzK9j_oTkv2FT3AlXiK04hxBy03A7YyyA5OmcQdIRmQoZhLZ3jbB-TduJMubcuZm0ePrOvIZPkMq2iTd0"/>
+<div class="absolute top-3 left-3 px-3 py-1 bg-purple-600 text-white text-[10px] font-bold rounded-full uppercase">Dota 2</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold mb-3 line-clamp-1">ESL One Birmingham</h3>
+<div class="space-y-2 mb-6">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">calendar_month</span>
+<span>July 22 - 28, 2024</span>
+</div>
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+<span data-location="Birmingham">Resorts World Arena, Birmingham</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between gap-4">
+<div>
+<p class="text-xs text-slate-400">Starting from</p>
+<p class="text-xl font-bold text-primary">$75.00</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all">Buy Ticket</button>
+</div>
+</div>
+</div>
+<!-- Event Card 6 -->
+<div class="group flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Futuristic controller illustration with neon glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQol6mAxdggds6XbHGL3V6_T9414yNCVs--0heWLhA38QX8WDMa3jXrph6Phkauh0A9FFc1-vHR5a1bgKRRjpRxvNnZH7e-vhmi5wSRoqtFgb5kROYEA4IvWk1sEwB6n1Nav4Xmh7vDNvLzTzP_d56Go54tNqiWWnfHCjdmVp6puT-PJeTvD-RTj0Dt0wdfz1jX_cJ3Gfg3kEZtoH4tpQVFWvuQ5zIRecvyRB4e1Eq-xS5FW8gUdBuHSvcp-ENqxJEf91Un_qNcgM"/>
+<div class="absolute top-3 left-3 px-3 py-1 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">Valorant</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold mb-3 line-clamp-1">Game Changers Championship</h3>
+<div class="space-y-2 mb-6">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">calendar_month</span>
+<span>August 15, 2024</span>
+</div>
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+<span data-location="Los Angeles">Shrine Expo Hall, LA</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between gap-4">
+<div>
+<p class="text-xs text-slate-400">Starting from</p>
+<p class="text-xl font-bold text-primary">$55.00</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all">Buy Ticket</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<!-- <div class="mt-12 flex items-center justify-center gap-2">
+<button class="size-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+<button class="size-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">2</button>
+<button class="size-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">3</button>
+<span class="px-2">...</span>
+<button class="size-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div> -->
+</section>
+</div>
+</main>
+
+</div>
+</body></html>
