@@ -4,6 +4,22 @@ include($path . "model/connect.php");
 
 class DAOHome
 {
+
+	function carousel()
+	{
+		// echo json_encode("select_all_evento");
+        // exit();
+		$sql = "SELECT * FROM tournaments t 
+				LEFT JOIN torn_images ti ON t.id_torn = ti.id_torn 
+				ORDER BY t.id_torn ASC";
+		$conexion = connect::con();
+		$stmt = $conexion->prepare($sql);
+		$stmt->execute();
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		connect::close($conexion);
+		return $res;
+	}
+
 	function select_all_categ()
 	{
 		// echo json_encode("select_all_evento");

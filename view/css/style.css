@@ -74,11 +74,7 @@
   width: 100%;
   margin: 0 auto;
 }
-#containerType {
-  gap: 1.5rem;
-  width: 100%;
-  margin: 0 auto;
-}
+
 .card-vertical {
     width: 300px; /* Aquí controlas el ANCHO de la carta */
     background: #172030;
@@ -416,13 +412,20 @@
 /* ==========================================
    TYPEEEEEEEEEEEEEEEE
    ========================================== */
+#containerType {
+  display: flex;
+  margin: 0 ;
+}
+
 .card-vertical-type {
-    width: 300px;
-    background: #172030; /* Importante para que la imagen no se salga de las esquinas redondeadas */
+    width: 100%;
+    background: #172030; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
     cursor: pointer;
     border: 1px solid #172030;
+    border-radius: 8px; 
+    overflow: hidden;
 }
 
 .card-vertical-type:hover {
@@ -446,3 +449,129 @@
     object-fit: cover; /* MAGIA: Ajusta la foto sin deformarla (la recorta por los lados si es necesario) */
     transition: scale 0.5s ease;
 }
+
+/* ==========================================
+   CAROUSEEEEEEEEEEEEL PRINCIPAAAAAALLLLLLLL
+   ========================================== */
+/* Contenedor principal del Slide */
+.hero-slide {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.hero-card {
+    position: relative;
+    min-height: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 4rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background-color: #0f172a;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Badge con animación de pulso */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #3b82f6;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.pulse-container {
+    position: relative;
+    display: flex;
+    height: 0.5rem;
+    width: 0.5rem;
+}
+
+.pulse-ring {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 9999px;
+    background-color: #3b82f6;
+    opacity: 0.75;
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.pulse-dot {
+    position: relative;
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 9999px;
+    background-color: #3b82f6;
+}
+
+@keyframes ping {
+    75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+/* Textos */
+.hero-title {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.text-primary { color: #3b82f6; }
+
+.hero-description {
+    color: #94a3b8;
+    font-size: 1.125rem;
+    max-width: 32rem;
+    margin-bottom: 2rem;
+}
+
+/* Botones */
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.btn-main {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-main:hover { background: #2563eb; }
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }

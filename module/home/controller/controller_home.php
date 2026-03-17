@@ -14,6 +14,26 @@ switch ($_GET['op']) {
         include("module/home/view/home.html");
     break;
 
+    case 'homePageCarousel':
+         //echo json_encode("homePageCategory");
+         //exit();
+        try{
+            $daohome = new DAOHome();
+            $SelectCarousel = $daohome->carousel();
+            // echo json_encode($SelectCategory);
+            // exit();
+        } catch(Exception $e){
+            echo json_encode("error");
+        }
+            
+        if(!empty($SelectCarousel)){
+            echo json_encode($SelectCarousel); 
+        }
+        else{
+            echo json_encode("error");
+        }
+    break;
+
     case 'homePageCategory':
          //echo json_encode("homePageCategory");
          //exit();

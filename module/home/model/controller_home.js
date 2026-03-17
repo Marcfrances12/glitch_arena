@@ -1,3 +1,80 @@
+function loadCarousel() {
+    //console.log('loadCategories() called');
+
+    ajaxPromise('module/home/controller/controller_home.php?op=homePageCarousel','GET', 'JSON')
+    .then(function(data) {
+        console.log(data);
+        for (let row = 0; row < data.length; row++) {
+            $("<div/>")
+            .addClass("swiper-slide hero-slide")
+            .appendTo('#containerCarousel') 
+            .html(`
+                <div class="hero-card" style="background-image: linear-gradient(to right, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.2) 100%), url('${data[row].image_url}');">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span class="pulse-container">
+                                <span class="pulse-ring"></span>
+                                <span class="pulse-dot"></span>
+                            </span>
+                            FEATURED EVENT
+                        </div>
+
+                        <h1 class="hero-title">
+                            ${data[row].title} <br/>
+                            <span class="text-primary">EDICIÓN 2026</span>
+                        </h1>
+
+                        <p class="hero-description">
+                            Vive la mejor experiencia del torneo. Únete a la competición ahora.
+                        </p>
+
+                        <div class="hero-buttons">
+                            <button class="btn-main" id="${data[row].id_torn}">
+                                <span class="material-symbols-outlined">confirmation_number</span>
+                                Ver en vivo
+                            </button>
+                            <button class="btn-secondary">Ver mas</button>
+                        </div>
+
+                    </div>
+                </div>
+            `);
+        }
+        new Swiper(".mySwiperCarousel", {
+
+                slidesPerView: 1,
+                slidesPerGroup: 1,
+                loop: true,
+                effect: "fade", // Opcional: añade esto para un efecto pro de desvanecimiento
+                fadeEffect: {
+                    crossFade: true
+                },
+                navigation: {
+                    nextEl: ".btn-next-carou",
+                    prevEl: ".btn-prev-carou"
+                },
+                autoplay: { 
+                    delay: 3500,
+                    disableOnInteraction: false
+                },
+
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1
+                    },
+                    768: {
+                        slidesPerView: 1
+                    },
+                    1024: {
+                        slidesPerView: 1
+                    }
+                }
+            });
+    }).catch(function() {
+        //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Type_Categories HOME";
+    });
+}
+
 function loadCategories() {
     //console.log('loadCategories() called');
 
@@ -237,9 +314,11 @@ function loadType() {
         }
          new Swiper(".mySwiperType", {
 
-                slidesPerView: 3,
-                spaceBetween: 20,
+                slidesPerView: 4,
+                spaceBetween: 15,
+                slidesPerGroup: 1,
                 loop: true,
+                centeredSlides: false,
 
                 navigation: {
                     nextEl: ".btn-next-type",
@@ -262,6 +341,7 @@ function loadType() {
 }
 
 $(document).ready(function () {
+    loadCarousel();
     loadCategories();
     loadPlataform();
     loadGames();
