@@ -7,19 +7,22 @@ function ajaxForSearch(url) {
     ajaxPromise(url, 'POST', 'JSON')
         .then(function(data) {
             console.log(data);
-
            $('#content_shop_evento').empty();
 
             if (data === "error" || data.length === 0) {
                 $('#content_shop_evento').html('<div class="col-span-full"><h3 class="text-center">No hay eventos disponibles.</h3></div>');
             } else {
                 for (row in data) {
-                    $('<div class="flex-item more_info_list" id="' + data[row].id_torn + '"></div>')                        .appendTo('#content_shop_evento')
+                    $('<div class="flex-item more_info_list" id="' + data[row].id_torn + '"></div>')
+                    .appendTo('#content_shop_evento')
                         .html(`
                             <article class="card-evento">
                                 <div class="evento-img-wrapper">
-                                    <img class="evento-img" src="${data[row].tournament_images}" alt="${data[row].title}">
-                                    <span class="evento-badge">${data[row].game_name}</span>
+                                    <div id="list-carousel-${data[row].id_torn}" class="swiper">
+                                        <div class="swiper-wrapper container_listCarousel"></div>
+                                        <div class="swiper-button-prev"></div>
+                                        <div class="swiper-button-next"></div>
+                                    </div>
                                 </div>
 
                                 <div class="evento-body">
@@ -48,14 +51,53 @@ function ajaxForSearch(url) {
                                 </div>
                             </article>
                         `);
+
+                    for (img in data[row].tournament_images) {
+                        $('<div></div>')
+                            .attr('class', 'carousel-item-c swiper-slide')
+                            .attr('id', data[row].tournament_images[img])
+                            .appendTo(`#list-carousel-${data[row].id_torn} .container_listCarousel`)
+                            .html(`
+                                <img src="${data[row].tournament_images[img]}" alt="${data[row].title}" class="evento-img">
+                            `);
+                    }
+                   
+                    
+                   
                 }
+                setTimeout(() => {
+
+                document.querySelectorAll('.swiper').forEach((el) => {
+
+                    new Swiper(el, {
+                        speed: 600,
+                        loop: el.querySelectorAll('.swiper-slide').length > 1,
+                        autoplay: {
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        },
+                        slidesPerView: 1,
+                        observer: true,
+                        observeParents: true,
+
+                        navigation: {
+                            nextEl: el.querySelector('.swiper-button-next'),
+                            prevEl: el.querySelector('.swiper-button-prev'),
+                        },
+                    });
+
+                });
+
+}, 0);
+                 
+                    
             }
         }).catch(function(err) {
             console.error("Detalle del error:", err);
             // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
         });
 }
-
+    
 function clicks() {
     $(document).on("click", ".more_info_list", function() {
         var id_torn = this.getAttribute('id');

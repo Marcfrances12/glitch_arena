@@ -206,15 +206,15 @@ function loadGames() {
                 `);
 
                 new Swiper($currentCard.find(".inner-game-swiper")[0], {
-                nested: true, 
-                loop: true,
-                // pagination: { el: $currentCard.find(".mini-dots")[0], clickable: true },
-                navigation: {
-                    nextEl: $currentCard.find(".swiper-button-next")[0],
-                    prevEl: $currentCard.find(".swiper-button-prev")[0],
-                },
-                autoplay: { delay: 2000, disableOnInteraction: false },
-            });        
+                    nested: true, 
+                    loop: true,
+                    // pagination: { el: $currentCard.find(".mini-dots")[0], clickable: true },
+                    navigation: {
+                        nextEl: $currentCard.find(".swiper-button-next")[0],
+                        prevEl: $currentCard.find(".swiper-button-prev")[0],
+                    },
+                    autoplay: { delay: 2000, disableOnInteraction: false },
+                });        
         }
         new Swiper(".main-game-swiper", {
             slidesPerView: 3,
