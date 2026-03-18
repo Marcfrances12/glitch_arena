@@ -9,8 +9,10 @@ class DAOHome
 	{
 		// echo json_encode("select_all_evento");
         // exit();
-		$sql = "SELECT * FROM tournaments t 
+		$sql = "SELECT * 
+				FROM tournaments t 
 				LEFT JOIN torn_images ti ON t.id_torn = ti.id_torn 
+				WHERE ti.id_image IN (1, 2, 3)
 				ORDER BY t.id_torn ASC";
 		$conexion = connect::con();
 		$stmt = $conexion->prepare($sql);

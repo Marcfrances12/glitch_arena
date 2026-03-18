@@ -3,9 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 17-03-2026 a las 17:49:10
+-- Tiempo de generación: 18-03-2026 a las 12:10:30
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
+
+DROP DATABASE IF EXISTS glitch_arena;
+CREATE DATABASE glitch_arena;
+USE glitch_arena;
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -230,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `torn_images` (
   `image_url` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id_image`),
   KEY `id_torn` (`id_torn`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `torn_images`
@@ -239,7 +244,8 @@ CREATE TABLE IF NOT EXISTS `torn_images` (
 INSERT INTO `torn_images` (`id_image`, `id_torn`, `image_url`) VALUES
 (1, 3, 'view/img/torneos/lol_t.jpg'),
 (2, 1, 'view/img/torneos/cs2_t.jpg'),
-(3, 2, 'view/img/torneos/rl.jpg');
+(3, 2, 'view/img/torneos/rl.jpg'),
+(4, 3, 'view/img/torneos/lol_t_1.jpg');
 
 -- --------------------------------------------------------
 
@@ -276,8 +282,8 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
   `id_torn` int NOT NULL AUTO_INCREMENT,
   `title` varchar(200) NOT NULL,
   `description` text,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime DEFAULT NULL,
+  `start_date` varchar(2000) NOT NULL,
+  `end_date` varchar(200) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT '0.00',
   `capacity` int DEFAULT NULL,
   `organizer` varchar(100) DEFAULT NULL,
@@ -299,9 +305,9 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
 --
 
 INSERT INTO `tournaments` (`id_torn`, `title`, `description`, `start_date`, `end_date`, `price`, `capacity`, `organizer`, `status`, `prizes`, `id_city`, `id_venue`, `id_type`, `visits`, `created_at`) VALUES
-(1, 'CS2 Summer Cup', 'Torneo de CS2 presencial', '2026-06-20 10:00:00', NULL, 20.00, 100, 'Valve', 'Abierto', NULL, 1, 1, 1, 0, '2026-03-11 15:31:46'),
-(2, 'RL Winter Cup', 'Torneo online', '2026-02-15 12:00:00', NULL, 0.00, 50, 'Psyonix', 'Abierto', NULL, 2, 2, 2, 0, '2026-03-11 15:31:46'),
-(3, 'LoL Spring Clash', 'Torneo competitivo de League of Legends para equipos amateur.', '2026-04-05 11:00:00', '2026-04-07 16:00:00', 15.00, 60, 'Summoners League', 'Abierto', '{\"1st\": \"1500€\", \"MVP\": \"Skin Mítica\"}', 1, 1, 1, 0, '2026-03-11 15:31:47');
+(1, 'CS2 Summer Cup', 'Torneo de CS2 presencial', '20-06-2026 10:00:00', NULL, 20.00, 100, 'Valve', 'Abierto', NULL, 1, 1, 1, 0, '2026-03-11 15:31:46'),
+(2, 'RL Winter Cup', 'Torneo online', '15-02-2026 12:00:00', NULL, 0.00, 50, 'Psyonix', 'Abierto', NULL, 2, 2, 2, 0, '2026-03-11 15:31:46'),
+(3, 'LoL Spring Clash', 'Torneo competitivo de League of Legends para equipos amateur.', '05-04-2026 11:00:00', '2026-04-07 16:00:00', 15.00, 60, 'Summoners League', 'Abierto', '{\"1st\": \"1500€\", \"MVP\": \"Skin Mítica\"}', 1, 1, 1, 0, '2026-03-11 15:31:47');
 
 -- --------------------------------------------------------
 
