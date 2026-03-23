@@ -6,6 +6,9 @@
 -- Tiempo de generación: 23-03-2026 a las 10:35:08
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
+DROP DATABASE IF EXISTS glitch_arena;
+CREATE DATABASE glitch_arena;
+USE glitch_arena;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;

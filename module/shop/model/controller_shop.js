@@ -116,6 +116,41 @@ function loadDetails(id_torn) {
     .then(function(data) {
         console.log(data);
         console.log(data[1][0]);
+
+        var premios = "";
+                try {
+                    var prizesObj = JSON.parse(data[0].prizes); 
+                    for (var key in prizesObj) {
+                        premios += "<div style='display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #1f2937; padding-bottom:8px;'>" +
+                                        "<span style='color:#256af4; font-weight:bold; font-size:17px;'>" + key + "</span>" +
+                                        "<span style='color:white; font-weight:600;'>" + prizesObj[key] + "</span>" +
+                                    "</div>";
+                    }
+                } catch (e) {
+                    premios = "<p style='color:#9ca6ba;'>Sin premios registrados</p>";
+                }
+
+        var detalles_extra = `
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="extra-item">
+                    <span class="extra-label">DESCRIPCIÓN:</span>
+                    <span class="extra-value">${data[0].description || 'Sin descripción'}</span>
+                </div>
+                <div class="extra-item">
+                    <span class="extra-label">ORGANIZADOR:</span>
+                    <span class="extra-value">${data[0].organizer || 'No especificado'}</span>
+                </div>
+                <div class="extra-item">
+                    <span class="extra-label">CAPACIDAD:</span>
+                    <span class="extra-value">${data[0].capacity} personas</span>
+                </div>
+                <div class="extra-item">
+                    <span class="extra-label">ESTADO:</span>
+                    <span class="extra-status">${data[0].status}</span>
+                </div>
+            </div>
+        `;
+
         $('#content_shop_evento').empty();
         $('#eliminar-det').empty();
         $('.date_img').empty();
@@ -160,21 +195,24 @@ function loadDetails(id_torn) {
                             "<div class='info-row'><div><p class='info-text-label'>Precio Entrada</p><p class='price-value'>" + data[0].price + "€</p></div></div>" +
                             "<button id='" + data[0].id_torn + "' class='btn-buy-large'>COMPRAR ENTRADA</button>" +
                         "</div>" +
-
-                        "<!-- EL MAPA QUE FALTABA -->" +
-                        "<div class='info-card'>" +
-                            "<h3><span class='material-symbols-outlined text-primary' style='color:#256af4; vertical-align:middle;'>map</span> Mapa</h3>" +
-                            "<div style='width:100%; height:150px; background:#1b1f27; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#64748b;'>Aquí irá tu mapa</div>" +
-                        "</div>" +
                     "</aside>" +
                 "</div>" +
 
                 "<!-- ZONA INFERIOR (Las 3 columnas que me dijiste) -->" +
                 "<div class='details-bottom-grid' style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;'>" +
-                    "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>gavel</span> Reglas</h3><p style='color:#9ca6ba;'>Cargando reglas...</p></div>" +
-                    "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>military_tech</span> Premios</h3><p style='color:#9ca6ba;'>Cargando premios...</p></div>" +
-                    "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>computer</span> Hardware</h3><p style='color:#9ca6ba;'>Cargando hardware...</p></div>" +
-                "</div>"
+                    "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>gavel</span>Más Detalles</h3>" + 
+                    detalles_extra
+                    + "</div>" +
+                    "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>military_tech</span> Premios</h3>" + premios + "</div>" +
+                
+                 "<!-- EL MAPA QUE FALTABA -->" +
+                        "<div class='info-card'grid-template-columns: repeat(3, 1fr);>" +
+                            "<h3><span class='material-symbols-outlined text-primary' style='color:#256af4; vertical-align:middle;'>map</span> Mapa</h3>" +
+                            "<div style='width:100%; height:150px; background:#1b1f27; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#64748b;'>Aquí irá tu mapa</div>" +
+                        "</div>" +
+                "</div>" +
+                "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>computer</span> Extras del Evento</h3><p style='color:#9ca6ba;'>Futuros eventos</p></div>" 
+
             );
 
         
