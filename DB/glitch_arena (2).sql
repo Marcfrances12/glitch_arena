@@ -3,14 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 18-03-2026 a las 12:10:30
+-- Tiempo de generación: 23-03-2026 a las 10:35:08
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
-
-DROP DATABASE IF EXISTS glitch_arena;
-CREATE DATABASE glitch_arena;
-USE glitch_arena;
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -235,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `torn_images` (
   `image_url` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id_image`),
   KEY `id_torn` (`id_torn`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `torn_images`
@@ -245,7 +240,12 @@ INSERT INTO `torn_images` (`id_image`, `id_torn`, `image_url`) VALUES
 (1, 3, 'view/img/torneos/lol_t.jpg'),
 (2, 1, 'view/img/torneos/cs2_t.jpg'),
 (3, 2, 'view/img/torneos/rl.jpg'),
-(4, 3, 'view/img/torneos/lol_t_1.jpg');
+(4, 3, 'view/img/torneos/lol_t_1.jpg'),
+(5, 3, 'view/img/torneos/lol_t_2.jpg'),
+(6, 2, 'view/img/torneos/rl_1.jpg'),
+(7, 2, 'view/img/torneos/rl_2.jpg'),
+(8, 1, 'view/img/torneos/cs2_t_1.jpg'),
+(9, 1, 'view/img/torneos/cs2_t_2.jpg');
 
 -- --------------------------------------------------------
 

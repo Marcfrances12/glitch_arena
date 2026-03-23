@@ -53,7 +53,7 @@
 /* IMAGEN Y BADGE */
 .evento-img-wrapper {
     position: relative;
-    height: 12rem;
+    height: 200px;
     overflow: hidden;
 }
 
@@ -454,12 +454,9 @@
     font-weight: 700 !important;
 }
 
-.evento-img-wrapper {
-    height: 200px; /* o el que quieras */
+#content_shop_evento > div {
+    min-width: 0;
 }
 
-.swiper {
-    width: 100% !important;
-}
 
 

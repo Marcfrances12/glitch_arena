@@ -65,30 +65,30 @@ function ajaxForSearch(url) {
                     
                    
                 }
-                setTimeout(() => {
+                
 
-                document.querySelectorAll('.swiper').forEach((el) => {
+                    document.querySelectorAll('.swiper').forEach((el) => {
 
-                    new Swiper(el, {
-                        speed: 600,
-                        loop: el.querySelectorAll('.swiper-slide').length > 1,
-                        autoplay: {
-                            delay: 2500,
-                            disableOnInteraction: false,
-                        },
-                        slidesPerView: 1,
-                        observer: true,
-                        observeParents: true,
+                        new Swiper(el, {
+                            speed: 600,
+                            loop: el.querySelectorAll('.swiper-slide').length > 1,
+                            autoplay: {
+                                delay: 2500,
+                                disableOnInteraction: false,
+                            },
+                            slidesPerView: 1,
+                            observer: true,
+                            observeParents: true,
 
-                        navigation: {
-                            nextEl: el.querySelector('.swiper-button-next'),
-                            prevEl: el.querySelector('.swiper-button-prev'),
-                        },
+                            navigation: {
+                                nextEl: el.querySelector('.swiper-button-next'),
+                                prevEl: el.querySelector('.swiper-button-prev'),
+                            },
+                        });
+
                     });
 
-                });
-
-}, 0);
+            
                  
                     
             }
@@ -99,7 +99,12 @@ function ajaxForSearch(url) {
 }
     
 function clicks() {
-    $(document).on("click", ".more_info_list", function() {
+    $(document).on("click", ".more_info_list", function(e) {
+
+        if ($(e.target).closest(".swiper-button-prev").length) return;
+        if ($(e.target).closest(".swiper-button-next").length) return;
+        if ($(e.target).closest(".evento-btn").length) return;
+
         var id_torn = this.getAttribute('id');
         loadDetails(id_torn);
     });
@@ -141,6 +146,7 @@ function loadDetails(id_torn) {
                                 "<div class='slick-arrows-details'></div>" +
                             "</div>" +
                         "</div>" +
+                        
                     "</div>" +
 
                     "<!-- ZONA DERECHA -->" +
