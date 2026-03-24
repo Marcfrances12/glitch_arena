@@ -57,6 +57,22 @@ switch ($_GET['op']) {
         }
     break;
 
+    case 'extras':
+        
+        try {
+            $daoshop = new DAOShop();
+            $Dates_eventos = $daoshop->select_extras_evento($_GET['id']);
+            
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!empty($Dates_eventos)) {
+            echo json_encode($Dates_eventos);
+        } else {
+            echo json_encode("error");
+        }
+    break;
     
 
 }

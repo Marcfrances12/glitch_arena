@@ -497,3 +497,71 @@
     text-transform: uppercase;
 }
 
+
+/* Contenedor padre: tiene que medir lo mismo que tu grid de arriba */
+.container_extras_det {
+    width: 100%;
+    max-width: 1280px; /* Ajusta este número al ancho de tu banner de arriba */
+    margin: 25px auto; /* Centrado */
+    padding: 0 20px;   /* Margen interno para que no pegue a los bordes del navegador */
+    box-sizing: border-box;
+}
+
+
+.seccion_extras_vip_wrapper {
+    background-color: #111827;
+    border: 1px solid #1e293b; /* Borde normal */
+    border-radius: 12px;
+    padding: 35px;
+    transition: all 0.3s ease; /* Para que la iluminación sea suave */
+    cursor: default;
+}
+
+/* AQUÍ ESTÁ EL EFECTO QUE BUSCABAS */
+.seccion_extras_vip_wrapper:hover {
+    border-color: #256af4; /* El azul principal que usas */
+    box-shadow: 0 0 20px rgba(37, 106, 244, 0.2); /* Un ligero brillo exterior */
+}
+.extras_vip_header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.extras_vip_header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin: 8px 0 30px 0;
+}
+
+/* Grid de 4 columnas ajustado */
+.extras_vip_grid_layout {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.extras_vip_card_unit {
+    background: #111827; /* Fondo un pelín más claro que el bloque para que resalte */
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.extras_vip_card_unit:hover {
+    border-color: #256af4;
+    background: #161e2e;
+}
+
+.extras_vip_text_box span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}

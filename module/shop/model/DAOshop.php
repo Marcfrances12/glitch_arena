@@ -33,8 +33,8 @@ class DAOShop
        foreach ($rows as $row) {
             $retrArray[] = array(
                 "id_torn"           => $row["id_torn"],
-                "title"             => $row["title"],        // <-- faltaba
-                "price"             => $row["price"],        // <-- faltaba
+                "title"             => $row["title"],        
+                "price"             => $row["price"],        
                 "start_date"        => $row["start_date"],
                 "city_name"         => $row["city_name"],
                 "venue_name"        => $row["venue_name"],
@@ -102,5 +102,27 @@ class DAOShop
             return [];
         }
 	}
+
+    function select_extras_evento($id) {
+
+    $sql = "SELECT e.nom_extra, e.img_extra 
+            FROM extras e
+            INNER JOIN torn_extra te ON e.id_extra = te.id_extra
+            WHERE te.id_torn = :id";
+
+    try {
+        $conexion = connect::con();
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_OBJ); 
+        
+        $conexion = null; 
+        return $res;
+    } catch (PDOException $e) {
+        
+        return [];
+    }
+}
 
 }

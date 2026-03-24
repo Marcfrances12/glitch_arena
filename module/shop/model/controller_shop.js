@@ -107,6 +107,7 @@ function clicks() {
 
         var id_torn = this.getAttribute('id');
         loadDetails(id_torn);
+        loadExtras(id_torn);
     });
 }
 
@@ -210,9 +211,7 @@ function loadDetails(id_torn) {
                             "<h3><span class='material-symbols-outlined text-primary' style='color:#256af4; vertical-align:middle;'>map</span> Mapa</h3>" +
                             "<div style='width:100%; height:150px; background:#1b1f27; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#64748b;'>Aquí irá tu mapa</div>" +
                         "</div>" +
-                "</div>" +
-                "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>computer</span> Extras del Evento</h3><p style='color:#9ca6ba;'>Futuros eventos</p></div>" 
-
+                "</div>" 
             );
 
         
@@ -234,6 +233,43 @@ function loadDetails(id_torn) {
 
     }).catch(function(err) {
          console.error("Error al cargar Detalles", err);
+    });
+}
+
+function loadExtras(id_torn) {
+    ajaxPromise('module/shop/controller/controller_shop.php?op=extras&id=' + id_torn, 'GET', 'JSON')
+    .then(function(data) {
+        $('.container_extras_det').empty();
+
+        // Estructura idéntica al bloque de arriba
+        $('<div class="seccion_extras_vip_wrapper"></div>')
+            .appendTo('.container_extras_det')
+            .html(`
+                <div class="extras_vip_header">
+                    <h3>
+                        <span class="material-symbols-outlined" style="color:#256af4; font-size:26px;">computer</span> 
+                        Extras del Evento
+                    </h3>
+                    <p>Futuros eventos</p>
+                </div>
+                <div id="grid_extras_vip_items" class="extras_vip_grid_layout"></div>
+            `);
+
+        for (row in data) {
+            $('<div class="extras_vip_card_unit"></div>')
+                .appendTo('#grid_extras_vip_items')
+                .html(`
+                    <div class="extras_vip_flex_box" style="display:flex; align-items:center; gap:10px;">
+                        <img src="${data[row].img_extra}" style="width:25px; height:25px; object-fit:contain;">
+                        <div class="extras_vip_text_box">
+                            <span>${data[row].nom_extra}</span>
+                        </div>
+                    </div>
+                `);
+        }
+
+    }).catch(function(err) {
+         console.error("Error extras:", err);
     });
 }
 

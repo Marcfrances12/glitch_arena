@@ -3,12 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 23-03-2026 a las 10:35:08
+-- Tiempo de generación: 24-03-2026 a las 12:05:26
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
-DROP DATABASE IF EXISTS glitch_arena;
-CREATE DATABASE glitch_arena;
-USE glitch_arena;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -75,6 +72,38 @@ INSERT INTO `cities` (`id_city`, `city_name`, `city_img`) VALUES
 (4, 'Valencia', 'view/img/city/val.jpg'),
 (5, 'Sevilla', 'view/img/city/sevi.jpg'),
 (6, 'Extremadura', 'view/img/city/extre.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `extras`
+--
+
+DROP TABLE IF EXISTS `extras`;
+CREATE TABLE IF NOT EXISTS `extras` (
+  `id_extra` int NOT NULL AUTO_INCREMENT,
+  `nom_extra` varchar(100) NOT NULL,
+  `img_extra` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id_extra`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `extras`
+--
+
+INSERT INTO `extras` (`id_extra`, `nom_extra`, `img_extra`) VALUES
+(1, 'LAN Alta Vel.', 'view/img/extras/lan.png'),
+(2, 'Soporte Técnico', 'view/img/extras/soporte.png'),
+(3, 'Gaming Room', 'view/img/extras/room.png'),
+(4, 'Parking Gratis', 'view/img/extras/parking.png'),
+(5, 'Zona Chill Out', 'view/img/extras/chill.png'),
+(6, 'Barra Bebidas', 'view/img/extras/barra.png'),
+(7, 'Discord Privado', 'view/img/extras/discord.png'),
+(8, 'Sorteos Premium', 'view/img/extras/sorteo.png'),
+(9, 'Welcome Pack', 'view/img/extras/pack.png'),
+(10, 'Periféricos Sust.', 'view/img/extras/perif.png'),
+(11, 'Streaming Live', 'view/img/extras/stream.png'),
+(12, 'VODs Partidas', 'view/img/extras/vod.png');
 
 -- --------------------------------------------------------
 
@@ -200,6 +229,50 @@ INSERT INTO `torn_categories` (`id_torn`, `id_category`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `torn_extra`
+--
+
+DROP TABLE IF EXISTS `torn_extra`;
+CREATE TABLE IF NOT EXISTS `torn_extra` (
+  `id_torn` int NOT NULL,
+  `id_extra` int NOT NULL,
+  PRIMARY KEY (`id_torn`,`id_extra`),
+  KEY `fk_extra` (`id_extra`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `torn_extra`
+--
+
+INSERT INTO `torn_extra` (`id_torn`, `id_extra`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(1, 2),
+(2, 2),
+(3, 2),
+(1, 3),
+(1, 4),
+(3, 4),
+(1, 5),
+(2, 5),
+(1, 6),
+(3, 6),
+(2, 7),
+(3, 7),
+(2, 8),
+(3, 8),
+(1, 9),
+(3, 9),
+(1, 10),
+(2, 10),
+(2, 11),
+(3, 11),
+(2, 12);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `torn_games`
 --
 
@@ -308,9 +381,9 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
 --
 
 INSERT INTO `tournaments` (`id_torn`, `title`, `description`, `start_date`, `end_date`, `price`, `capacity`, `organizer`, `status`, `prizes`, `id_city`, `id_venue`, `id_type`, `visits`, `created_at`) VALUES
-(1, 'CS2 Summer Cup', 'Torneo de CS2 presencial', '20-06-2026 10:00:00', NULL, 20.00, 100, 'Valve', 'Abierto', NULL, 1, 1, 1, 0, '2026-03-11 15:31:46'),
-(2, 'RL Winter Cup', 'Torneo online', '15-02-2026 12:00:00', NULL, 0.00, 50, 'Psyonix', 'Abierto', NULL, 2, 2, 2, 0, '2026-03-11 15:31:46'),
-(3, 'LoL Spring Clash', 'Torneo competitivo de League of Legends para equipos amateur.', '05-04-2026 11:00:00', '2026-04-07 16:00:00', 15.00, 60, 'Summoners League', 'Abierto', '{\"1st\": \"1500€\", \"MVP\": \"Skin Mítica\"}', 1, 1, 1, 0, '2026-03-11 15:31:47');
+(1, 'CS2 Summer Cup', 'Torneo de CS2 presencial', '20-06-2026 10:00:00', NULL, 20.00, 100, 'Valve', 'Abierto', '{\"1st\": \"3000€ + Dragon Lore\", \"2nd\": \"1500€ + 3 x Wepon Case\", \"3rd\": \"900€\", \"MVP\": \"Karambit Fade\"}', 1, 1, 1, 0, '2026-03-11 15:31:46'),
+(2, 'RL Winter Cup', 'Torneo online', '15-02-2026 12:00:00', NULL, 24.00, 50, 'Psyonix', 'Abierto', '{\"1st\": \"2500€ + 15 x Black Market Case\", \"2nd\": \"1250€ + 10 x Mytical Case\", \"3rd\": \"750€ + 5 x Epic Case\", \"MVP\": \"Fennec Blanco Titanio\"}', 2, 2, 2, 0, '2026-03-11 15:31:46'),
+(3, 'LoL Spring Clash', 'Torneo competitivo de League of Legends para equipos amateur.', '05-04-2026 11:00:00', '2026-04-07 16:00:00', 15.00, 60, 'Summoners League', 'Cancelado', '{\"1st\": \"1500€\", \"2nd\": \"800€\", \"3rd\": \"500€\", \"MVP\": \"Skin Mítica\"}', 1, 1, 1, 0, '2026-03-11 15:31:47');
 
 -- --------------------------------------------------------
 
