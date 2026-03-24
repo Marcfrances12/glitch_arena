@@ -1,0 +1,44 @@
+.sidebar-filters { @apply w-full lg:w-72 shrink-0 space-y-8; }
+.filter-title { @apply text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4; }
+.select-custom { @apply w-full bg-slate-800 border border-slate-700 text-slate-300 rounded-lg py-2.5 px-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all; }
+.radio-group { @apply flex flex-col gap-3; }
+.radio-label { @apply flex items-center gap-3 cursor-pointer group text-sm text-slate-300 hover:text-blue-500 transition-colors; }
+.radio-input { @apply w-4 h-4 text-blue-600 bg-slate-800 border-slate-700 focus:ring-blue-500; }
+.btn-filter-apply { @apply w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-900/20; }
+.btn-filter-reset { @apply w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-400 font-bold rounded-xl border border-slate-700 transition-all; }
+
+/* Estilo para los Radio Buttons personalizados estilo Glitch */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #334155; /* slate-700 */
+    border-radius: 50%;
+    outline: none;
+    transition: all 0.2s ease;
+    position: relative;
+    background: transparent;
+}
+
+input[type="radio"]:checked {
+    border-color: #2563eb; /* blue-600 */
+    background-color: #2563eb;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
+}
+
+/* El punto blanco interno del radio al estar seleccionado */
+input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+}
+
+/* Efecto hover suave en el texto del label */
+.group:hover span {
+    color: #3b82f6; /* blue-500 */
+}

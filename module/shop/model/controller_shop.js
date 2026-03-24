@@ -1,13 +1,32 @@
-function loadEventos() {
-    //console.log('loadEventos() called');
-    ajaxForSearch('module/shop/controller/controller_shop.php?op=all_eventos');
+
+function shopTodo() {
+    var filtro = JSON.parse(localStorage.getItem('filtros')) || null;
+    console.log("Iniciando shop con filtros:", filtro);
+    
+    
+    $('#content_shop_evento').addClass('hidden');
+    loadEventos(filtro);
 }
 
-function ajaxForSearch(url) {
-    ajaxPromise(url, 'POST', 'JSON')
+function loadEventos(filtro) {
+    var url;
+   
+    if (filtro && filtro.length > 0) {
+        url = "module/shop/controller/controller_shop.php?op=filtros";
+    } else {
+        url = "module/shop/controller/controller_shop.php?op=all_eventos";
+    }
+    ajaxForSearch(url, filtro);
+}
+
+
+
+
+function ajaxForSearch(url, filtro) {
+    ajaxPromise(url, 'POST', 'JSON', { 'filtro': filtro })
         .then(function(data) {
             console.log(data);
-           $('#content_shop_evento').empty();
+           $('#content_shop_evento').empty().removeClass('hidden');
 
             if (data === "error" || data.length === 0) {
                 $('#content_shop_evento').html('<div class="col-span-full"><h3 class="text-center">No hay eventos disponibles.</h3></div>');
@@ -61,8 +80,6 @@ function ajaxForSearch(url) {
                                 <img src="${data[row].tournament_images[img]}" alt="${data[row].title}" class="evento-img">
                             `);
                     }
-                   
-                    
                    
                 }
                 
@@ -272,10 +289,111 @@ function loadExtras(id_torn) {
     });
 }
 
+function print_filtros() {
+    $('.filtros').html(`
+        <aside class="w-full lg:w-64 flex-shrink-0 bg-[#0f172a] p-6 rounded-xl border border-slate-800 shadow-2xl">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold tracking-tight text-white mb-1">Eventos Actuales</h1>
+                <p class="text-slate-400 text-xs font-medium">Encuentra tu nueva experiencia</p>
+            </div>
 
+            <div class="space-y-8">
+                <div class="space-y-3">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Categoría</h3>
+                    <select id="select_cat" class="w-full bg-[#1e293b] border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all outline-none">
+                        <option value="">Todas las categorías</option>
+                        <option value="FPS">FPS / Shooters</option>
+                        <option value="MOBA">MOBA</option>
+                        <option value="Deporte">Deporte</option>
+                    </select>
+                </div>
 
+                <div class="space-y-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Plataforma</h3>
+                    <div class="flex flex-col gap-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="radio" name="plataforma" value="PC" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">PC Gaming</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="radio" name="plataforma" value="PS5" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">PlayStation 5</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="radio" name="plataforma" value="Xbox" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Xbox Series X</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-800 flex flex-col gap-3">
+                    <button id="Button_filter" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-all transform active:scale-95 shadow-lg shadow-blue-900/20">
+                        Aplicar Filtros
+                    </button>
+                    <button id="Remove_filter" class="w-full py-2 px-4 bg-slate-800/50 hover:bg-slate-700 text-slate-400 hover:text-white font-semibold rounded-lg transition-colors text-xs">
+                        Limpiar Todo
+                    </button>
+                </div>
+            </div>
+        </aside>
+    `);
+}
+
+function filter_button() {
+    $(document).on('click', '#Button_filter', function() {
+        var filtro = [];
+
+    
+        var catVal = $('#select_cat').val();
+        if (catVal && catVal !== "") {
+            filtro.push(['name_cat', catVal]);
+        }
+
+  
+        var radioVal = $('input[name="plataforma"]:checked').val();
+        if (radioVal) {
+            filtro.push(['name_platform', radioVal]);
+        }
+
+      
+        if (filtro.length > 0) {
+            localStorage.setItem('filtros', JSON.stringify(filtro));
+        } else {
+            localStorage.removeItem('filtros');
+        }
+        
+        location.reload(); 
+    });
+}
+
+function remove_filters() {
+    $(document).on('click', '#Remove_filter', function() {
+        localStorage.removeItem('filtros');
+        location.reload();
+    });
+}
+
+function highlightFilters() {
+    var filtros = JSON.parse(localStorage.getItem('filtros'));
+
+    if (filtros) {
+        filtros.forEach(function(item) {
+            if (item[0] === 'name_cat') {
+                $('#select_cat').val(item[1]);
+            }
+            if (item[0] === 'name_platform') {
+                $('input[name="plataforma"][value="' + item[1] + '"]').prop('checked', true);
+            }
+        });
+    }
+}
 
 $(document).ready(function() {
     loadEventos();
     clicks();
+    print_filtros();
+    filter_button();
+    remove_filters();
+    highlightFilters();
+    shopTodo();
 });
