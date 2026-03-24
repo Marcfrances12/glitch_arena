@@ -13,7 +13,7 @@ switch ($_GET['op']) {
             //$data = 'hola crtl home view';
             //die('<script>console.log('.json_encode( $data ) .');</script>');
             include("module/shop/view/shop.html");
-        break;  
+    break;  
 
     case 'all_eventos':
         // $prod = $_POST['total_prod'];
@@ -74,5 +74,26 @@ switch ($_GET['op']) {
         }
     break;
     
+    case 'filtros': 
+        
+        if (!isset($_POST['filtro']) || empty($_POST['filtro'])) {
+            echo json_encode(["error" => "No se han seleccionado criterios"]);
+            exit;
+        }
+
+        $daoshop = new DAOShop();
+
+        try {
+            $filt = $daoshop->filtros($_POST['filtro']);
+            if (!empty($filt)) {
+                echo json_encode($filt);
+            } else {
+                echo json_encode(["error" => "No hay torneos con esa selección"]);
+            }
+        } catch (Exception $e) {
+            echo json_encode(["error" => "Error en la consulta: " . $e->getMessage()]);
+        }
+    
+    break;
 
 }

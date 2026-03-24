@@ -241,7 +241,6 @@ function loadExtras(id_torn) {
     .then(function(data) {
         $('.container_extras_det').empty();
 
-        // Estructura idéntica al bloque de arriba
         $('<div class="seccion_extras_vip_wrapper"></div>')
             .appendTo('.container_extras_det')
             .html(`
@@ -272,6 +271,9 @@ function loadExtras(id_torn) {
          console.error("Error extras:", err);
     });
 }
+
+
+
 
 $(document).ready(function() {
     loadEventos();

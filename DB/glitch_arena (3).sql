@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 24-03-2026 a las 12:05:26
+-- Tiempo de generación: 24-03-2026 a las 17:36:46
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -224,7 +224,12 @@ CREATE TABLE IF NOT EXISTS `torn_categories` (
 INSERT INTO `torn_categories` (`id_torn`, `id_category`) VALUES
 (1, 1),
 (2, 3),
-(3, 2);
+(3, 2),
+(4, 2),
+(5, 1),
+(6, 5),
+(7, 3),
+(8, 4);
 
 -- --------------------------------------------------------
 
@@ -248,27 +253,67 @@ INSERT INTO `torn_extra` (`id_torn`, `id_extra`) VALUES
 (1, 1),
 (2, 1),
 (3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(8, 1),
 (1, 2),
 (2, 2),
 (3, 2),
+(4, 2),
+(5, 2),
+(6, 2),
+(7, 2),
 (1, 3),
+(4, 3),
+(5, 3),
+(8, 3),
 (1, 4),
 (3, 4),
+(5, 4),
+(6, 4),
+(8, 4),
 (1, 5),
 (2, 5),
+(4, 5),
+(6, 5),
+(7, 5),
+(8, 5),
 (1, 6),
 (3, 6),
+(5, 6),
+(6, 6),
+(8, 6),
 (2, 7),
 (3, 7),
+(4, 7),
+(7, 7),
 (2, 8),
 (3, 8),
+(5, 8),
+(6, 8),
+(7, 8),
 (1, 9),
 (3, 9),
+(4, 9),
+(7, 9),
+(8, 9),
 (1, 10),
 (2, 10),
+(5, 10),
+(7, 10),
+(8, 10),
 (2, 11),
 (3, 11),
-(2, 12);
+(4, 11),
+(5, 11),
+(6, 11),
+(7, 11),
+(2, 12),
+(4, 12),
+(6, 12),
+(7, 12),
+(8, 12);
 
 -- --------------------------------------------------------
 
@@ -291,7 +336,12 @@ CREATE TABLE IF NOT EXISTS `torn_games` (
 INSERT INTO `torn_games` (`id_torn`, `id_game`) VALUES
 (1, 1),
 (2, 2),
-(3, 3);
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8);
 
 -- --------------------------------------------------------
 
@@ -306,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `torn_images` (
   `image_url` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id_image`),
   KEY `id_torn` (`id_torn`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `torn_images`
@@ -321,7 +371,17 @@ INSERT INTO `torn_images` (`id_image`, `id_torn`, `image_url`) VALUES
 (6, 2, 'view/img/torneos/rl_1.jpg'),
 (7, 2, 'view/img/torneos/rl_2.jpg'),
 (8, 1, 'view/img/torneos/cs2_t_1.jpg'),
-(9, 1, 'view/img/torneos/cs2_t_2.jpg');
+(9, 1, 'view/img/torneos/cs2_t_2.jpg'),
+(10, 4, 'view/img/torneos/dota_t.jpg'),
+(11, 4, 'view/img/torneos/dota_t_1.jpg'),
+(12, 5, 'view/img/torneos/val_t.jpg'),
+(13, 5, 'view/img/torneos/val_t_1.jpg'),
+(14, 6, 'view/img/torneos/f1_t.jpg'),
+(15, 6, 'view/img/torneos/f1_t_1.jpg'),
+(16, 7, 'view/img/torneos/fc_t.jpg'),
+(17, 7, 'view/img/torneos/fc_t_1.jpeg'),
+(18, 8, 'view/img/torneos/smash_t.jpg'),
+(19, 8, 'view/img/torneos/smash_t_1.jpg');
 
 -- --------------------------------------------------------
 
@@ -345,7 +405,15 @@ INSERT INTO `torn_platforms` (`id_torn`, `id_platform`) VALUES
 (1, 1),
 (2, 1),
 (2, 2),
-(3, 1);
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(6, 2),
+(6, 3),
+(7, 2),
+(7, 3),
+(8, 4);
 
 -- --------------------------------------------------------
 
@@ -374,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
   KEY `id_city` (`id_city`),
   KEY `id_venue` (`id_venue`),
   KEY `id_type` (`id_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `tournaments`
@@ -383,7 +451,12 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
 INSERT INTO `tournaments` (`id_torn`, `title`, `description`, `start_date`, `end_date`, `price`, `capacity`, `organizer`, `status`, `prizes`, `id_city`, `id_venue`, `id_type`, `visits`, `created_at`) VALUES
 (1, 'CS2 Summer Cup', 'Torneo de CS2 presencial', '20-06-2026 10:00:00', NULL, 20.00, 100, 'Valve', 'Abierto', '{\"1st\": \"3000€ + Dragon Lore\", \"2nd\": \"1500€ + 3 x Wepon Case\", \"3rd\": \"900€\", \"MVP\": \"Karambit Fade\"}', 1, 1, 1, 0, '2026-03-11 15:31:46'),
 (2, 'RL Winter Cup', 'Torneo online', '15-02-2026 12:00:00', NULL, 24.00, 50, 'Psyonix', 'Abierto', '{\"1st\": \"2500€ + 15 x Black Market Case\", \"2nd\": \"1250€ + 10 x Mytical Case\", \"3rd\": \"750€ + 5 x Epic Case\", \"MVP\": \"Fennec Blanco Titanio\"}', 2, 2, 2, 0, '2026-03-11 15:31:46'),
-(3, 'LoL Spring Clash', 'Torneo competitivo de League of Legends para equipos amateur.', '05-04-2026 11:00:00', '2026-04-07 16:00:00', 15.00, 60, 'Summoners League', 'Cancelado', '{\"1st\": \"1500€\", \"2nd\": \"800€\", \"3rd\": \"500€\", \"MVP\": \"Skin Mítica\"}', 1, 1, 1, 0, '2026-03-11 15:31:47');
+(3, 'LoL Spring Clash', 'Torneo competitivo de League of Legends para equipos amateur.', '05-04-2026 11:00:00', '2026-04-07 16:00:00', 15.00, 60, 'Summoners League', 'Cancelado', '{\"1st\": \"1500€\", \"2nd\": \"800€\", \"3rd\": \"500€\", \"MVP\": \"Skin Mítica\"}', 1, 1, 1, 0, '2026-03-11 15:31:47'),
+(4, 'Dota 2 Regional Qualifier', 'Clasificatorio regional para el torneo mayor de Dota 2.', '10-05-2026 10:00:00', NULL, 10.00, 120, 'Valve', 'Abierto', '{\"1st\": \"1000€\", \"2nd\": \"500€\", \"3rd\": \"250€\", \"MVP\": \"Arcana Set\"}', 3, 3, 9, 0, '2026-03-24 16:39:43'),
+(5, 'Valorant Masters Sevilla', 'Torneo presencial de alto nivel competitivo en el sur.', '15-06-2026 16:00:00', '20-06-2026 22:00:00', 25.00, 200, 'Riot Games', 'Abierto', '{\"1st\": \"5000€\", \"2nd\": \"2500€\", \"3rd\": \"1000€\"}', 5, 5, 1, 0, '2026-03-24 16:39:43'),
+(6, 'Gran Premio Digital Vlc', 'Campeonato híbrido de F1 usando simuladores y formato online.', '20-07-2026 12:00:00', NULL, 30.00, 60, 'FIA Esports', 'Abierto', '{\"1st\": \"Volante Fanatec\", \"2nd\": \"Pedales Pro\", \"3rd\": \"150€\"}', 4, 4, 3, 0, '2026-03-24 16:39:43'),
+(7, 'Copa de Campeones FC 26', 'Torneo online crossplay para demostrar quién es el rey de la pista.', '05-08-2026 18:00:00', NULL, 15.00, 256, 'LVP', 'Abierto', '{\"1st\": \"1500€ + PS5\", \"2nd\": \"800€\", \"3rd\": \"DualSense Edge\"}', 1, 1, 2, 0, '2026-03-24 16:39:43'),
+(8, 'Super Smash Extremadura', 'El evento presencial más grande de lucha en la región.', '10-09-2026 10:00:00', '12-09-2026 20:00:00', 12.00, 128, 'Nintendo ES', 'Abierto', '{\"1st\": \"2000€\", \"2nd\": \"Nintendo Switch OLED\", \"3rd\": \"Mando Pro\"}', 6, 6, 1, 0, '2026-03-24 16:39:43');
 
 -- --------------------------------------------------------
 
