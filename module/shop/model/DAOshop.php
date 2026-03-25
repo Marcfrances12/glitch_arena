@@ -127,11 +127,13 @@ class DAOShop
 
     function filtros($filter) {
 
-        $sql = "SELECT DISTINCT t.* FROM tournaments t
+        $sql = "SELECT DISTINCT t.*, c.city_name, v.venue_name FROM tournaments t
                 INNER JOIN torn_categories tc ON t.id_torn = tc.id_torn
                 INNER JOIN categories cat ON tc.id_category = cat.id_category
                 INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn
-                INNER JOIN platforms p ON tp.id_platform = p.id_platform";
+                INNER JOIN platforms p ON tp.id_platform = p.id_platform
+                LEFT JOIN cities c ON t.id_city = c.id_city
+                LEFT JOIN venues v ON t.id_venue = v.id_venue";
 
         $params = []; 
 

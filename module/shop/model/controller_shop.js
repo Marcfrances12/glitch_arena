@@ -1,7 +1,7 @@
 
 function shopTodo() {
     var filtro = JSON.parse(localStorage.getItem('filtros')) || null;
-    console.log("Iniciando shop con filtros:", filtro);
+    console.log(" filtros:", filtro);
     
     
     $('#content_shop_evento').addClass('hidden');
@@ -170,9 +170,11 @@ function loadDetails(id_torn) {
         `;
 
         $('#content_shop_evento').empty();
-        $('#eliminar-det').empty();
+        $('#eliminar-det').hide();
         $('.date_img').empty();
         $('.date_evento').empty();
+        $('main').hide(); 
+        $('main > div.flex').hide();
 
         var imagenes_html = "";
         for (row in data[1][0]) {
