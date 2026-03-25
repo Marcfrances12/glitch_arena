@@ -28,8 +28,18 @@ function ajaxForSearch(url, filtro) {
             console.log(data);
            $('#content_shop_evento').empty().removeClass('hidden');
 
-            if (data === "error" || data.length === 0) {
-                $('#content_shop_evento').html('<div class="col-span-full"><h3 class="text-center">No hay eventos disponibles.</h3></div>');
+            if (data === "error" || data.error || data.length === 0) {
+                $('#content_shop_evento').html(`
+                    <div class="col-span-full flex flex-col items-center justify-center py-20 px-6 border-2 border-dashed border-slate-800 rounded-3xl bg-slate-900/20">
+                        <div class="mb-4 p-4 bg-slate-800/50 rounded-full">
+                            <span class="material-symbols-outlined text-slate-500" style="font-size: 3rem">search_off</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white uppercase tracking-wider">No hay eventos con ese filtro</h3>
+                        <p class="text-slate-500 mt-2 text-center max-w-xs">
+                            No hemos encontrado torneos que coincidan con tu búsqueda. Intenta cambiar los filtros o limpiar la selección.
+                        </p>
+                    </div>
+                `);
             } else {
                 for (row in data) {
                     $('<div class="flex-item more_info_list" id="' + data[row].id_torn + '"></div>')
@@ -111,9 +121,8 @@ function ajaxForSearch(url, filtro) {
             }
         }).catch(function(err) {
             console.error("Detalle del error:", err);
-            // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
         });
-}
+    }
     
 function clicks() {
     $(document).on("click", ".more_info_list", function(e) {
@@ -307,6 +316,9 @@ function print_filtros() {
                         <option value="FPS">FPS / Shooters</option>
                         <option value="MOBA">MOBA</option>
                         <option value="Deporte">Deporte</option>
+                        <option value="Lucha">Lucha</option>
+                        <option value="Carreras">Carreras</option>
+                        <option value="Estrategia">Estrategia</option>
                     </select>
                 </div>
 
@@ -324,6 +336,24 @@ function print_filtros() {
                         <label class="flex items-center gap-3 cursor-pointer group">
                             <input type="radio" name="plataforma" value="Xbox" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Xbox Series X</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="radio" name="plataforma" value="Nintendo" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Nintendo</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Ciudades</h3>
+                    <div id="container-ciudades" class="flex flex-col gap-2">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" name="id_city" value="1" class="filter-checkbox">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Madrid</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" name="id_city" value="2" class="filter-checkbox">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Barcelona</span>
                         </label>
                     </div>
                 </div>
@@ -348,15 +378,24 @@ function filter_button() {
     
         var catVal = $('#select_cat').val();
         if (catVal && catVal !== "") {
-            filtro.push(['name_cat', catVal]);
+            filtro.push(['cat_name', catVal]);
         }
 
   
         var radioVal = $('input[name="plataforma"]:checked').val();
         if (radioVal) {
-            filtro.push(['name_platform', radioVal]);
+            filtro.push(['platform_name', radioVal]);
         }
 
+        var ciudades = [];
+        $('input[name="id_city"]:checked').each(function() {
+            ciudades.push($(this).val());
+        });
+        
+        if (ciudades.length > 0) {
+            
+            filtro.push(['t.id_city', ciudades.join(',')]); 
+        }
       
         if (filtro.length > 0) {
             localStorage.setItem('filtros', JSON.stringify(filtro));
@@ -380,10 +419,10 @@ function highlightFilters() {
 
     if (filtros) {
         filtros.forEach(function(item) {
-            if (item[0] === 'name_cat') {
+            if (item[0] === 'cat_name') {
                 $('#select_cat').val(item[1]);
             }
-            if (item[0] === 'name_platform') {
+            if (item[0] === 'platform_name') {
                 $('input[name="plataforma"][value="' + item[1] + '"]').prop('checked', true);
             }
         });

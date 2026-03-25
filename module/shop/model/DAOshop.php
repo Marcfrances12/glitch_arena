@@ -126,51 +126,89 @@ class DAOShop
     }
 
     function filtros($filter) {
-
-        $sql = "SELECT DISTINCT t.*, c.city_name, v.venue_name FROM tournaments t
+    
+        $consulta = "SELECT 
+                    t.*, 
+                    c.city_name, 
+                    v.venue_name, 
+                    GROUP_CONCAT(DISTINCT g.game_name SEPARATOR ', ') AS game_name,
+                    GROUP_CONCAT(DISTINCT ti.image_url SEPARATOR ', ') AS tournament_images
+                FROM tournaments t
+                LEFT JOIN cities c ON t.id_city = c.id_city
+                LEFT JOIN venues v ON t.id_venue = v.id_venue
+                LEFT JOIN torn_games tg ON t.id_torn = tg.id_torn
+                LEFT JOIN games g ON tg.id_game = g.id_game
+                LEFT JOIN torn_images ti ON t.id_torn = ti.id_torn
                 INNER JOIN torn_categories tc ON t.id_torn = tc.id_torn
                 INNER JOIN categories cat ON tc.id_category = cat.id_category
                 INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn
-                INNER JOIN platforms p ON tp.id_platform = p.id_platform
-                LEFT JOIN cities c ON t.id_city = c.id_city
-                LEFT JOIN venues v ON t.id_venue = v.id_venue";
+                INNER JOIN platforms p ON tp.id_platform = p.id_platform";
 
-        $params = []; 
-
+        $param = []; 
         
-        if (!empty($filter)) {
-            for ($i = 0; $i < count($filter); $i++) {
-                
-                
-                if ($i == 0) {
-                    $sql .= " WHERE ";
-                } else {
-                    $sql .= " AND ";
-                }
+        for ($i = 0; $i < count($filter); $i++) {
+            
+            if ($i == 0) {
+                $consulta .= " WHERE ";
+            } else {
+                $consulta .= " AND ";
+            }
 
-                if ($filter[$i][0] == 'name_cat') {
-                    $columna = 'cat.cat_name';
-                } elseif ($filter[$i][0] == 'name_platform') {
-                    $columna = 'p.platform_name';
-                } else {
-                    $columna = 't.' . $filter[$i][0];
-                }
-
-                $sql .= $columna . " = ?"; 
+            
+            if (is_array($filter[$i][1])) {
+                $placeholders = implode(',', array_fill(0, count($filter[$i][1]), '?'));
+                $consulta .= $filter[$i][0] . " IN (" . $placeholders . ")";
                 
-                $params[] = $filter[$i][1];
+                
+                foreach ($filter[$i][1] as $value) {
+                    $param[] = $value;
+                }
+            } 
+            
+            else {
+                $consulta .= $filter[$i][0] . " = ?";
+                $param[] = $filter[$i][1]; 
             }
         }
 
+        
+        $consulta .= " GROUP BY t.id_torn ORDER BY t.start_date ASC";
+
         try {
             $conexion = connect::con();
-            $stmt = $conexion->prepare($sql);
-            $stmt->execute($params); 
+            $stmt = $conexion->prepare($consulta);
             
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $stmt->execute($param); 
+            
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $conexion = null;
+
+            $retrArray = [];
+
+            
+            foreach ($rows as $row) {
+                $retrArray[] = array(
+                    "id_torn"           => $row["id_torn"],
+                    "title"             => $row["title"],        
+                    "price"             => $row["price"],        
+                    "start_date"        => $row["start_date"],
+                    "city_name"         => $row["city_name"],
+                    "venue_name"        => $row["venue_name"],
+                    "game_name"         => !empty($row["game_name"]) 
+                                            ? explode(", ", $row["game_name"]) 
+                                            : [],
+                    "tournament_images" => !empty($row["tournament_images"]) 
+                                            ? explode(", ", $row["tournament_images"]) 
+                                            : []
+                );
+            }
+
+            return $retrArray;
 
         } catch (PDOException $e) {
-            return ["error" => $e->getMessage()];
+            // En caso de error, devolvemos un objeto error para que tu JS lo capture
+            return ["error" => "Error en la consulta: " . $e->getMessage()];
         }
     }
 
