@@ -348,13 +348,44 @@ function print_filtros() {
                     <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Ciudades</h3>
                     <div id="container-ciudades" class="flex flex-col gap-2">
                         <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="id_city" value="1" class="filter-checkbox">
+                            <input type="checkbox" name="city" value="Madrid" class="filter-checkbox">
                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Madrid</span>
                         </label>
                         <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="id_city" value="2" class="filter-checkbox">
+                            <input type="checkbox" name="city" value="Barcelona" class="filter-checkbox">
                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Barcelona</span>
                         </label>
+                         <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" name="city" value="Galicia" class="filter-checkbox">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Galicia</span>
+                        </label>
+                         <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" name="city" value="Valencia" class="filter-checkbox">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Valencia</span>
+                        </label>
+                         <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" name="city" value="Sevilla" class="filter-checkbox">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Sevilla</span>
+                        </label>
+                         <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" name="city" value="Extremadura" class="filter-checkbox">
+                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Extremadura</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Rango de Precio</h3>
+                        <span id="price-display" class="text-sm font-bold text-blue-500">0€ - 500€</span>
+                    </div>
+                    <div class="px-2 pt-2">
+                        <div id="slider-range" class="h-1.5 bg-slate-700 rounded-lg border-none"></div>
+                        
+                        <div class="flex justify-between text-[10px] text-slate-500 mt-3">
+                            <span>Mín: 0€</span>
+                            <span>Máx: 100€</span>
+                        </div>
                     </div>
                 </div>
 
@@ -370,8 +401,23 @@ function print_filtros() {
         </aside>
     `);
 }
-
+$(document).on('input', '#price-slider', function() {
+    let val = $(this).val();
+    $('#price-display').text(val + '€');
+});
 function filter_button() {
+
+    $("#slider-range").slider({
+        range: true,
+        min: 0,
+        max: 100,
+        values: [0, 100], 
+        slide: function(event, ui) {
+            $("#price-display").text(ui.values[0] + "€ - " + ui.values[1] + "€");
+        }
+    });
+
+
     $(document).on('click', '#Button_filter', function() {
         var filtro = [];
 
@@ -388,15 +434,18 @@ function filter_button() {
         }
 
         var ciudades = [];
-        $('input[name="id_city"]:checked').each(function() {
-            ciudades.push($(this).val());
+        $('input[name="city"]:checked').each(function() {
+            ciudades.push($(this).val()); 
         });
-        
+
         if (ciudades.length > 0) {
             
-            filtro.push(['t.id_city', ciudades.join(',')]); 
+            filtro.push(['city_name', ciudades]); 
         }
       
+       var rangeValues = $("#slider-range").slider("values");
+        filtro.push(['price', rangeValues]);
+
         if (filtro.length > 0) {
             localStorage.setItem('filtros', JSON.stringify(filtro));
         } else {
@@ -419,12 +468,31 @@ function highlightFilters() {
 
     if (filtros) {
         filtros.forEach(function(item) {
+            
             if (item[0] === 'cat_name') {
                 $('#select_cat').val(item[1]);
             }
+
             if (item[0] === 'platform_name') {
                 $('input[name="plataforma"][value="' + item[1] + '"]').prop('checked', true);
             }
+
+           if (item[0] === 'city_name' && Array.isArray(item[1])) {
+    
+                item[1].forEach(function(ciudad) {
+                    $('input[name="city"][value="' + ciudad + '"]').prop('checked', true);
+                });
+            } else if (item[0] === 'city_name') {
+                $('input[name="city"][value="' + item[1] + '"]').prop('checked', true);
+            }
+
+            if (item[0] === 'price') {
+                let minGuardado = item[1][0];
+                let maxGuardado = item[1][1];
+                $("#slider-range").slider("values", [minGuardado, maxGuardado]);
+                $("#price-display").text(minGuardado + "€ - " + maxGuardado + "€");
+            }
+
         });
     }
 }

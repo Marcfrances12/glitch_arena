@@ -154,33 +154,34 @@ class DAOShop
                 $consulta .= " AND ";
             }
 
+
+            if ($filter[$i][0] === 'price') {
+                $consulta .= "price BETWEEN ? AND ?";
+                $param[] = $filter[$i][0][1]; 
+                $param[] = $filter[$i][1][1]; 
+            } 
             
-            if (is_array($filter[$i][1])) {
+            elseif (is_array($filter[$i][1])) {
                 $placeholders = implode(',', array_fill(0, count($filter[$i][1]), '?'));
                 $consulta .= $filter[$i][0] . " IN (" . $placeholders . ")";
-                
-                
                 foreach ($filter[$i][1] as $value) {
                     $param[] = $value;
                 }
-            } 
+            }
             
             else {
                 $consulta .= $filter[$i][0] . " = ?";
                 $param[] = $filter[$i][1]; 
             }
         }
-
-        
+   
         $consulta .= " GROUP BY t.id_torn ORDER BY t.start_date ASC";
 
+       
         try {
             $conexion = connect::con();
             $stmt = $conexion->prepare($consulta);
-            
-            
-            $stmt->execute($param); 
-            
+            $stmt->execute($param);
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $conexion = null;
 
@@ -207,7 +208,6 @@ class DAOShop
             return $retrArray;
 
         } catch (PDOException $e) {
-            // En caso de error, devolvemos un objeto error para que tu JS lo capture
             return ["error" => "Error en la consulta: " . $e->getMessage()];
         }
     }
