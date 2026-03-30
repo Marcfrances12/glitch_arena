@@ -19,9 +19,6 @@ function loadEventos(filtro) {
     ajaxForSearch(url, filtro);
 }
 
-
-
-
 function ajaxForSearch(url, filtro) {
     ajaxPromise(url, 'POST', 'JSON', { 'filtro': filtro })
         .then(function(data) {
@@ -122,7 +119,7 @@ function ajaxForSearch(url, filtro) {
         }).catch(function(err) {
             console.error("Detalle del error:", err);
         });
-    }
+}
     
 function clicks() {
     $(document).on("click", ".more_info_list", function(e) {
@@ -401,10 +398,12 @@ function print_filtros() {
         </aside>
     `);
 }
+
 $(document).on('input', '#price-slider', function() {
     let val = $(this).val();
     $('#price-display').text(val + '€');
 });
+
 function filter_button() {
 
     $("#slider-range").slider({

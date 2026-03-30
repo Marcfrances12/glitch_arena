@@ -157,7 +157,7 @@ class DAOShop
 
             if ($filter[$i][0] === 'price') {
                 $consulta .= "price BETWEEN ? AND ?";
-                $param[] = $filter[$i][0][1]; 
+                $param[] = $filter[$i][1][0]; 
                 $param[] = $filter[$i][1][1]; 
             } 
             
