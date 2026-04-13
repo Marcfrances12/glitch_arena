@@ -297,106 +297,186 @@ function loadExtras(id_torn) {
     });
 }
 
-function print_filtros() {
-    $('.filtros').html(`
-        <aside class="w-full lg:w-64 flex-shrink-0 bg-[#0f172a] p-6 rounded-xl border border-slate-800 shadow-2xl">
-            <div class="mb-8">
-                <h1 class="text-2xl font-bold tracking-tight text-white mb-1">Eventos Actuales</h1>
-                <p class="text-slate-400 text-xs font-medium">Encuentra tu nueva experiencia</p>
-            </div>
+// function print_filtros() {
+//     $('.filtros').html(`
+//         <aside class="w-full lg:w-64 flex-shrink-0 bg-[#0f172a] p-6 rounded-xl border border-slate-800 shadow-2xl">
+//             <div class="mb-8">
+//                 <h1 class="text-2xl font-bold tracking-tight text-white mb-1">Eventos Actuales</h1>
+//                 <p class="text-slate-400 text-xs font-medium">Encuentra tu nueva experiencia</p>
+//             </div>
 
-            <div class="space-y-8">
-                <div class="space-y-3">
-                    <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Categoría</h3>
-                    <select id="select_cat" class="w-full bg-[#1e293b] border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all outline-none">
-                        <option value="">Todas las categorías</option>
-                        <option value="FPS">FPS / Shooters</option>
-                        <option value="MOBA">MOBA</option>
-                        <option value="Deporte">Deporte</option>
-                        <option value="Lucha">Lucha</option>
-                        <option value="Carreras">Carreras</option>
-                        <option value="Estrategia">Estrategia</option>
-                    </select>
-                </div>
+//             <div class="space-y-8">
+//                 <div class="space-y-3">
+//                     <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Categoría</h3>
+//                     <select id="select_cat" class="w-full bg-[#1e293b] border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all outline-none">
+//                         <option value="">Todas las categorías</option>
+//                         <option value="FPS">FPS / Shooters</option>
+//                         <option value="MOBA">MOBA</option>
+//                         <option value="Deporte">Deporte</option>
+//                         <option value="Lucha">Lucha</option>
+//                         <option value="Carreras">Carreras</option>
+//                         <option value="Estrategia">Estrategia</option>
+//                     </select>
+//                 </div>
 
-                <div class="space-y-4">
-                    <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Plataforma</h3>
-                    <div class="flex flex-col gap-3">
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="radio" name="plataforma" value="PC" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">PC Gaming</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="radio" name="plataforma" value="PS5" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">PlayStation 5</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="radio" name="plataforma" value="Xbox" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Xbox Series X</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="radio" name="plataforma" value="Nintendo" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Nintendo</span>
-                        </label>
-                    </div>
-                </div>
+//                 <div class="space-y-4">
+//                     <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Plataforma</h3>
+//                     <div class="flex flex-col gap-3">
+//                         <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="radio" name="plataforma" value="PC" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">PC Gaming</span>
+//                         </label>
+//                         <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="radio" name="plataforma" value="PS5" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">PlayStation 5</span>
+//                         </label>
+//                         <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="radio" name="plataforma" value="Xbox" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Xbox Series X</span>
+//                         </label>
+//                         <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="radio" name="plataforma" value="Nintendo" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700 focus:ring-blue-600 focus:ring-offset-[#0f172a]">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Nintendo</span>
+//                         </label>
+//                     </div>
+//                 </div>
 
-                <div class="space-y-4">
-                    <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Ciudades</h3>
-                    <div id="container-ciudades" class="flex flex-col gap-2">
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="city" value="Madrid" class="filter-checkbox">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Madrid</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="city" value="Barcelona" class="filter-checkbox">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Barcelona</span>
-                        </label>
-                         <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="city" value="Galicia" class="filter-checkbox">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Galicia</span>
-                        </label>
-                         <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="city" value="Valencia" class="filter-checkbox">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Valencia</span>
-                        </label>
-                         <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="city" value="Sevilla" class="filter-checkbox">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Sevilla</span>
-                        </label>
-                         <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="city" value="Extremadura" class="filter-checkbox">
-                            <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Extremadura</span>
-                        </label>
-                    </div>
-                </div>
+//                 <div class="space-y-4">
+//                     <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Ciudades</h3>
+//                     <div id="container-ciudades" class="flex flex-col gap-2">
+//                         <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="checkbox" name="city" value="Madrid" class="filter-checkbox">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Madrid</span>
+//                         </label>
+//                         <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="checkbox" name="city" value="Barcelona" class="filter-checkbox">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Barcelona</span>
+//                         </label>
+//                          <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="checkbox" name="city" value="Galicia" class="filter-checkbox">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Galicia</span>
+//                         </label>
+//                          <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="checkbox" name="city" value="Valencia" class="filter-checkbox">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Valencia</span>
+//                         </label>
+//                          <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="checkbox" name="city" value="Sevilla" class="filter-checkbox">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Sevilla</span>
+//                         </label>
+//                          <label class="flex items-center gap-3 cursor-pointer group">
+//                             <input type="checkbox" name="city" value="Extremadura" class="filter-checkbox">
+//                             <span class="text-sm text-slate-300 group-hover:text-blue-500 transition-colors">Extremadura</span>
+//                         </label>
+//                     </div>
+//                 </div>
 
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Rango de Precio</h3>
-                        <span id="price-display" class="text-sm font-bold text-blue-500">0€ - 500€</span>
-                    </div>
-                    <div class="px-2 pt-2">
-                        <div id="slider-range" class="h-1.5 bg-slate-700 rounded-lg border-none"></div>
+//                 <div class="space-y-4">
+//                     <div class="flex justify-between items-center">
+//                         <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">Rango de Precio</h3>
+//                         <span id="price-display" class="text-sm font-bold text-blue-500">0€ - 500€</span>
+//                     </div>
+//                     <div class="px-2 pt-2">
+//                         <div id="slider-range" class="h-1.5 bg-slate-700 rounded-lg border-none"></div>
                         
-                        <div class="flex justify-between text-[10px] text-slate-500 mt-3">
-                            <span>Mín: 0€</span>
-                            <span>Máx: 100€</span>
-                        </div>
-                    </div>
-                </div>
+//                         <div class="flex justify-between text-[10px] text-slate-500 mt-3">
+//                             <span>Mín: 0€</span>
+//                             <span>Máx: 100€</span>
+//                         </div>
+//                     </div>
+//                 </div>
 
-                <div class="pt-6 border-t border-slate-800 flex flex-col gap-3">
-                    <button id="Button_filter" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-all transform active:scale-95 shadow-lg shadow-blue-900/20">
-                        Aplicar Filtros
-                    </button>
-                    <button id="Remove_filter" class="w-full py-2 px-4 bg-slate-800/50 hover:bg-slate-700 text-slate-400 hover:text-white font-semibold rounded-lg transition-colors text-xs">
-                        Limpiar Todo
-                    </button>
+//                 <div class="pt-6 border-t border-slate-800 flex flex-col gap-3">
+//                     <button id="Button_filter" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-all transform active:scale-95 shadow-lg shadow-blue-900/20">
+//                         Aplicar Filtros
+//                     </button>
+//                     <button id="Remove_filter" class="w-full py-2 px-4 bg-slate-800/50 hover:bg-slate-700 text-slate-400 hover:text-white font-semibold rounded-lg transition-colors text-xs">
+//                         Limpiar Todo
+//                     </button>
+//                 </div>
+//             </div>
+//         </aside>
+//     `);
+// }
+
+function print_filtros() {
+    ajaxPromise('module/shop/controller/controller_shop.php?op=get_filters_config', 'GET', 'JSON')
+    .then(function(data) {
+        let html = `
+            <aside class="w-full lg:w-64 flex-shrink-0 bg-[#0f172a] p-6 rounded-xl border border-slate-800 shadow-2xl">
+                <div class="mb-8">
+                    <h1 class="text-2xl font-bold tracking-tight text-white mb-1">Eventos Actuales</h1>
+                    <p class="text-slate-400 text-xs font-medium">Filtros Dinámicos</p>
                 </div>
-            </div>
-        </aside>
-    `);
+                <div class="space-y-8">`;
+
+        data.forEach(filtro => {
+            html += `<div class="space-y-3">
+                        <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">${filtro.display_name}</h3>`;
+
+            if (filtro.html_type === 'select') {
+                html += `<select id="select_${filtro.db_column}" class="dynamic-select w-full bg-[#1e293b] border border-slate-700 text-slate-200 text-sm rounded-lg p-2.5 outline-none">
+                            <option value="">Todas</option>`;
+                filtro.valores.forEach(v => { html += `<option value="${v}">${v}</option>`; });
+                html += `</select>`;
+            } 
+            else if (filtro.html_type === 'radio') {
+                html += `<div class="flex flex-col gap-3">`;
+                filtro.valores.forEach(v => {
+                    html += `<label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="radio" name="${filtro.db_column}" value="${v}" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700">
+                                <span class="text-sm text-slate-300 group-hover:text-blue-500">${v}</span>
+                             </label>`;
+                });
+                html += `</div>`;
+            }
+            else if (filtro.html_type === 'check') {
+                html += `<div class="flex flex-col gap-2">`;
+                filtro.valores.forEach(v => {
+                    html += `<label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" name="${filtro.db_column}" value="${v}" class="filter-checkbox">
+                                <span class="text-sm text-slate-300 group-hover:text-blue-500">${v}</span>
+                             </label>`;
+                });
+                html += `</div>`;
+            }
+            else if (filtro.html_type === 'slider') {
+                html += `<div class="flex justify-between items-center">
+                            <span id="price-display" class="text-sm font-bold text-blue-500">${filtro.valores.min}€ - ${filtro.valores.max}€</span>
+                         </div>
+                         <div id="slider-range" data-column="${filtro.db_column}" data-min="${filtro.valores.min}" data-max="${filtro.valores.max}" class="h-1.5 bg-slate-700 rounded-lg border-none mt-4"></div>`;
+            }
+            html += `</div>`;
+        });
+
+        html += `
+                <div class="pt-6 border-t border-slate-800 flex flex-col gap-3">
+                    <button id="Button_filter" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-lg">Aplicar Filtros</button>
+                    <button id="Remove_filter" class="w-full py-2 px-4 bg-slate-800/50 hover:bg-slate-700 text-slate-400 font-semibold rounded-lg text-xs">Limpiar Todo</button>
+                </div>
+            </div></aside>`;
+
+        
+        $('.filtros').html(html);
+
+        
+        if ($("#slider-range").length > 0) {
+            let minVal = parseInt($("#slider-range").attr('data-min'));
+            let maxVal = parseInt($("#slider-range").attr('data-max'));
+            
+            $("#slider-range").slider({
+                range: true,
+                min: minVal,
+                max: maxVal,
+                values: [minVal, maxVal], 
+                slide: function(event, ui) {
+                    $("#price-display").text(ui.values[0] + "€ - " + ui.values[1] + "€");
+                }
+            });
+        }
+        highlightFilters();
+        
+    }).catch(error => console.error("Error cargando configuración:", error));
 }
 
 $(document).on('input', '#price-slider', function() {
@@ -405,46 +485,48 @@ $(document).on('input', '#price-slider', function() {
 });
 
 function filter_button() {
-
-    $("#slider-range").slider({
-        range: true,
-        min: 0,
-        max: 100,
-        values: [0, 100], 
-        slide: function(event, ui) {
-            $("#price-display").text(ui.values[0] + "€ - " + ui.values[1] + "€");
-        }
-    });
-
-
+    
     $(document).on('click', '#Button_filter', function() {
         var filtro = [];
 
-    
-        var catVal = $('#select_cat').val();
-        if (catVal && catVal !== "") {
-            filtro.push(['cat_name', catVal]);
-        }
-
-  
-        var radioVal = $('input[name="plataforma"]:checked').val();
-        if (radioVal) {
-            filtro.push(['platform_name', radioVal]);
-        }
-
-        var ciudades = [];
-        $('input[name="city"]:checked').each(function() {
-            ciudades.push($(this).val()); 
+        
+        $('.dynamic-select').each(function() {
+            let val = $(this).val();
+            if (val && val !== "") {
+                let db_col = $(this).attr('id').replace('select_', '');
+                filtro.push([db_col, val]);
+            }
         });
 
-        if (ciudades.length > 0) {
-            
-            filtro.push(['city_name', ciudades]); 
-        }
-      
-       var rangeValues = $("#slider-range").slider("values");
-        filtro.push(['price', rangeValues]);
+        $('input[type="radio"]:checked').each(function() {
+            let db_col = $(this).attr('name'); 
+            let val = $(this).val();
+            filtro.push([db_col, val]);
+        });
 
+        let checks_temporales = {};
+        $('input[type="checkbox"]:checked').each(function() {
+            let db_col = $(this).attr('name');
+            let val = $(this).val();
+            
+            if (!checks_temporales[db_col]) {
+                checks_temporales[db_col] = [];
+            }
+            checks_temporales[db_col].push(val);
+        });
+        
+        for (let columna in checks_temporales) {
+            filtro.push([columna, checks_temporales[columna]]);
+        }
+
+        let sliderDiv = $("#slider-range");
+        if (sliderDiv.length > 0 && sliderDiv.hasClass('ui-slider')) {
+            let rangeValues = sliderDiv.slider("values");
+            let db_col = sliderDiv.attr('data-column'); 
+            filtro.push([db_col, rangeValues]);
+        }
+
+        console.log("Filtros listos para enviar:", filtro); 
         if (filtro.length > 0) {
             localStorage.setItem('filtros', JSON.stringify(filtro));
         } else {
@@ -467,31 +549,34 @@ function highlightFilters() {
 
     if (filtros) {
         filtros.forEach(function(item) {
+            let columna = item[0]; 
+            let valor = item[1];
+
+            if ($(`#select_${columna}`).length > 0) {
+                $(`#select_${columna}`).val(valor);
+            }
+
+            let inputs = $(`input[name="${columna}"]`);
+            if (inputs.length > 0) {
+                if (Array.isArray(valor)) {
+                    
+                    valor.forEach(v => {
+                        $(`input[name="${columna}"][value="${v}"]`).prop('checked', true);
+                    });
+                } else {
+                    
+                    $(`input[name="${columna}"][value="${valor}"]`).prop('checked', true);
+                }
+            }
+
             
-            if (item[0] === 'cat_name') {
-                $('#select_cat').val(item[1]);
+            if (columna === 'price' || $(`div[data-column="${columna}"]`).length > 0) {
+                let sliderElem = $(`#slider-range`); 
+                if (sliderElem.hasClass('ui-slider')) {
+                    sliderElem.slider("values", [valor[0], valor[1]]);
+                    $("#price-display").text(valor[0] + "€ - " + valor[1] + "€");
+                }
             }
-
-            if (item[0] === 'platform_name') {
-                $('input[name="plataforma"][value="' + item[1] + '"]').prop('checked', true);
-            }
-
-           if (item[0] === 'city_name' && Array.isArray(item[1])) {
-    
-                item[1].forEach(function(ciudad) {
-                    $('input[name="city"][value="' + ciudad + '"]').prop('checked', true);
-                });
-            } else if (item[0] === 'city_name') {
-                $('input[name="city"][value="' + item[1] + '"]').prop('checked', true);
-            }
-
-            if (item[0] === 'price') {
-                let minGuardado = item[1][0];
-                let maxGuardado = item[1][1];
-                $("#slider-range").slider("values", [minGuardado, maxGuardado]);
-                $("#price-display").text(minGuardado + "€ - " + maxGuardado + "€");
-            }
-
         });
     }
 }
@@ -502,6 +587,6 @@ $(document).ready(function() {
     print_filtros();
     filter_button();
     remove_filters();
-    highlightFilters();
+    // highlightFilters();
     shopTodo();
 });

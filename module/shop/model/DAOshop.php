@@ -212,4 +212,73 @@ class DAOShop
         }
     }
 
+
+    function get_dynamic_filters() {
+        try {
+            $conexion = connect::con();
+            
+            $sql = "SELECT * FROM config_filters";
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute();
+            $filtros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $resultado = [];
+            foreach ($filtros as $f) {
+                $col = $f['db_column'];
+
+                if ($f['html_type'] === 'slider') {
+                    // Slider: min y max directo de tournaments
+                    $sql_val = "SELECT MIN($col) as min, MAX($col) as max FROM tournaments";
+                    $stmt_val = $conexion->prepare($sql_val);
+                    $stmt_val->execute();
+                    $f['valores'] = $stmt_val->fetch(PDO::FETCH_ASSOC);
+
+                } elseif (!empty($f['join_table']) && !empty($f['pivot_table'])) {
+                    // Relación muchos a muchos via tabla pivot
+                    $jt = $f['join_table'];   // categories
+                    $jl = $f['join_label'];   // cat_name
+                    $pt = $f['pivot_table'];  // torn_categories
+                    $fk = $f['pivot_fk'];     // id_category
+
+                    $sql_val = "SELECT DISTINCT j.$jl 
+                                FROM $jt j
+                                INNER JOIN $pt p ON j.$fk = p.$fk
+                                INNER JOIN tournaments t ON p.id_torn = t.id_torn";
+                    $stmt_val = $conexion->prepare($sql_val);
+                    $stmt_val->execute();
+                    $f['valores'] = $stmt_val->fetchAll(PDO::FETCH_COLUMN);
+
+                } elseif (!empty($f['join_table'])) {
+                    // Relación directa con FK en tournaments (ciudades)
+                    $jt = $f['join_table'];  // cities
+                    $jl = $f['join_label'];  // city_name
+                    $fk = $f['pivot_fk'];    // id_city
+
+                    $sql_val = "SELECT DISTINCT j.$jl 
+                                FROM $jt j
+                                INNER JOIN tournaments t ON j.$fk = t.$fk
+                                WHERE t.$fk IS NOT NULL";
+                    $stmt_val = $conexion->prepare($sql_val);
+                    $stmt_val->execute();
+                    $f['valores'] = $stmt_val->fetchAll(PDO::FETCH_COLUMN);
+
+                } else {
+                    // Columna directa en tournaments (status, price...)
+                    $sql_val = "SELECT DISTINCT $col FROM tournaments 
+                                WHERE $col IS NOT NULL AND $col != ''";
+                    $stmt_val = $conexion->prepare($sql_val);
+                    $stmt_val->execute();
+                    $f['valores'] = $stmt_val->fetchAll(PDO::FETCH_COLUMN);
+                }
+
+                $resultado[] = $f;
+            }
+
+            $conexion = null;
+            return $resultado;
+
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
 }

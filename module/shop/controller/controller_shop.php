@@ -96,4 +96,21 @@ switch ($_GET['op']) {
     
     break;
 
+    ob_start(); // Captura cualquier output accidental
+
+case 'get_filters_config':
+    try {
+        $daoshop = new DAOShop();
+        $config = $daoshop->get_dynamic_filters();
+        ob_end_clean(); // Limpia el buffer antes de responder
+        header('Content-Type: application/json');
+        echo json_encode($config);
+    } catch (Exception $e) {
+        ob_end_clean();
+        header('Content-Type: application/json');
+        echo json_encode(["error" => $e->getMessage()]);
+    }
+    exit;
+break;
+
 }
