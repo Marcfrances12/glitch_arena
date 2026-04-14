@@ -227,18 +227,18 @@ class DAOShop
                 $col = $f['db_column'];
 
                 if ($f['html_type'] === 'slider') {
-                    // Slider: min y max directo de tournaments
+                    
                     $sql_val = "SELECT MIN($col) as min, MAX($col) as max FROM tournaments";
                     $stmt_val = $conexion->prepare($sql_val);
                     $stmt_val->execute();
                     $f['valores'] = $stmt_val->fetch(PDO::FETCH_ASSOC);
 
                 } elseif (!empty($f['join_table']) && !empty($f['pivot_table'])) {
-                    // Relación muchos a muchos via tabla pivot
-                    $jt = $f['join_table'];   // categories
-                    $jl = $f['join_label'];   // cat_name
-                    $pt = $f['pivot_table'];  // torn_categories
-                    $fk = $f['pivot_fk'];     // id_category
+
+                    $jt = $f['join_table'];   
+                    $jl = $f['join_label'];   
+                    $pt = $f['pivot_table'];  
+                    $fk = $f['pivot_fk'];     
 
                     $sql_val = "SELECT DISTINCT j.$jl 
                                 FROM $jt j
@@ -249,10 +249,10 @@ class DAOShop
                     $f['valores'] = $stmt_val->fetchAll(PDO::FETCH_COLUMN);
 
                 } elseif (!empty($f['join_table'])) {
-                    // Relación directa con FK en tournaments (ciudades)
-                    $jt = $f['join_table'];  // cities
-                    $jl = $f['join_label'];  // city_name
-                    $fk = $f['pivot_fk'];    // id_city
+                    
+                    $jt = $f['join_table']; 
+                    $jl = $f['join_label'];  
+                    $fk = $f['pivot_fk'];    
 
                     $sql_val = "SELECT DISTINCT j.$jl 
                                 FROM $jt j
@@ -263,7 +263,7 @@ class DAOShop
                     $f['valores'] = $stmt_val->fetchAll(PDO::FETCH_COLUMN);
 
                 } else {
-                    // Columna directa en tournaments (status, price...)
+                   
                     $sql_val = "SELECT DISTINCT $col FROM tournaments 
                                 WHERE $col IS NOT NULL AND $col != ''";
                     $stmt_val = $conexion->prepare($sql_val);
@@ -279,6 +279,58 @@ class DAOShop
 
         } catch (PDOException $e) {
             return ["error" => $e->getMessage()];
+        }
+    }
+
+    function count_filtros($filter) {
+
+        $consulta = "SELECT COUNT(DISTINCT t.id_torn) as total
+                    FROM tournaments t
+                    LEFT JOIN cities c ON t.id_city = c.id_city
+                    LEFT JOIN venues v ON t.id_venue = v.id_venue
+                    LEFT JOIN torn_games tg ON t.id_torn = tg.id_torn
+                    LEFT JOIN games g ON tg.id_game = g.id_game
+                    INNER JOIN torn_categories tc ON t.id_torn = tc.id_torn
+                    INNER JOIN categories cat ON tc.id_category = cat.id_category
+                    INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn
+                    INNER JOIN platforms p ON tp.id_platform = p.id_platform";
+
+        $param = []; 
+        
+        if (!empty($filter)) {
+            for ($i = 0; $i < count($filter); $i++) {
+                $consulta .= ($i == 0) ? " WHERE " : " AND ";
+
+                if ($filter[$i][0] === 'price') {
+                    $consulta .= "t.price BETWEEN ? AND ?";
+                    $param[] = $filter[$i][1][0]; 
+                    $param[] = $filter[$i][1][1]; 
+                } 
+                elseif (is_array($filter[$i][1])) {
+                    $placeholders = implode(',', array_fill(0, count($filter[$i][1]), '?'));
+                    $consulta .= $filter[$i][0] . " IN (" . $placeholders . ")";
+                    foreach ($filter[$i][1] as $value) {
+                        $param[] = $value;
+                    }
+                } 
+                else {
+                    $consulta .= $filter[$i][0] . " = ?";
+                    $param[] = $filter[$i][1]; 
+                }
+            }
+        }
+
+        try {
+            $conexion = connect::con();
+            $stmt = $conexion->prepare($consulta);
+            $stmt->execute($param);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $conexion = null;
+
+            return $result ? (int)$result['total'] : 0;
+
+        } catch (PDOException $e) {
+            return 0; 
         }
     }
 }

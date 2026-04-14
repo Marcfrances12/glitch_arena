@@ -100,9 +100,12 @@ switch ($_GET['op']) {
 
 case 'get_filters_config':
     try {
+
         $daoshop = new DAOShop();
         $config = $daoshop->get_dynamic_filters();
-        ob_end_clean(); // Limpia el buffer antes de responder
+
+
+        ob_end_clean(); 
         header('Content-Type: application/json');
         echo json_encode($config);
     } catch (Exception $e) {
@@ -112,5 +115,17 @@ case 'get_filters_config':
     }
     exit;
 break;
+
+case 'count_filters':
+    try {
+        $daoshop = new DAOShop();
+        
+        $filtros = (isset($_POST['filtros'])) ? $_POST['filtros'] : [];
+        $total = $daoshop->count_filtros($filtros);
+        echo json_encode($total);
+    } catch (Exception $e) {
+        echo json_encode(0);
+    }
+    break;
 
 }

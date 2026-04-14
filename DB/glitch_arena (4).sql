@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 24-03-2026 a las 17:36:46
+-- Tiempo de generación: 14-04-2026 a las 14:05:41
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -72,6 +72,37 @@ INSERT INTO `cities` (`id_city`, `city_name`, `city_img`) VALUES
 (4, 'Valencia', 'view/img/city/val.jpg'),
 (5, 'Sevilla', 'view/img/city/sevi.jpg'),
 (6, 'Extremadura', 'view/img/city/extre.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `config_filters`
+--
+
+DROP TABLE IF EXISTS `config_filters`;
+CREATE TABLE IF NOT EXISTS `config_filters` (
+  `id_filter` int NOT NULL AUTO_INCREMENT,
+  `display_name` varchar(100) NOT NULL,
+  `db_column` varchar(100) NOT NULL,
+  `html_type` enum('select','radio','check','slider') NOT NULL,
+  `orden` int DEFAULT '0',
+  `join_table` varchar(100) DEFAULT NULL,
+  `join_label` varchar(100) DEFAULT NULL,
+  `pivot_table` varchar(100) DEFAULT NULL,
+  `pivot_fk` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_filter`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `config_filters`
+--
+
+INSERT INTO `config_filters` (`id_filter`, `display_name`, `db_column`, `html_type`, `orden`, `join_table`, `join_label`, `pivot_table`, `pivot_fk`) VALUES
+(1, 'Categoría', 'cat_name', 'select', 1, 'categories', 'cat_name', 'torn_categories', 'id_category'),
+(2, 'Plataforma', 'platform_name', 'radio', 2, 'platforms', 'platform_name', 'torn_platforms', 'id_platform'),
+(3, 'Ciudades', 'city_name', 'check', 3, 'cities', 'city_name', NULL, 'id_city'),
+(4, 'Rango de Precio', 'price', 'slider', 4, NULL, NULL, NULL, NULL),
+(5, 'Juego', 'game_name', 'select', 5, 'games', 'game_name', 'torn_games', 'id_game');
 
 -- --------------------------------------------------------
 

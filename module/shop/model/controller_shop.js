@@ -415,7 +415,7 @@ function print_filtros() {
                         <h3 class="text-xs font-semibold uppercase tracking-widest text-slate-500">${filtro.display_name}</h3>`;
 
             if (filtro.html_type === 'select') {
-                html += `<select id="select_${filtro.db_column}" class="dynamic-select w-full bg-[#1e293b] border border-slate-700 text-slate-200 text-sm rounded-lg p-2.5 outline-none">
+                html += `<select id="select_${filtro.db_column}" class="dynamic-filter-input dynamic-select w-full bg-[#1e293b] border border-slate-700 text-slate-200 text-sm rounded-lg p-2.5 outline-none">
                             <option value="">Todas</option>`;
                 filtro.valores.forEach(v => { html += `<option value="${v}">${v}</option>`; });
                 html += `</select>`;
@@ -424,7 +424,7 @@ function print_filtros() {
                 html += `<div class="flex flex-col gap-3">`;
                 filtro.valores.forEach(v => {
                     html += `<label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="radio" name="${filtro.db_column}" value="${v}" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700">
+                                <input type="radio" class="dynamic-filter-input" name="${filtro.db_column}" value="${v}" class="w-4 h-4 text-blue-600 bg-transparent border-slate-700">
                                 <span class="text-sm text-slate-300 group-hover:text-blue-500">${v}</span>
                              </label>`;
                 });
@@ -434,7 +434,7 @@ function print_filtros() {
                 html += `<div class="flex flex-col gap-2">`;
                 filtro.valores.forEach(v => {
                     html += `<label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="${filtro.db_column}" value="${v}" class="filter-checkbox">
+                                <input type="checkbox" class="dynamic-filter-input" name="${filtro.db_column}" value="${v}" class="filter-checkbox">
                                 <span class="text-sm text-slate-300 group-hover:text-blue-500">${v}</span>
                              </label>`;
                 });
@@ -444,14 +444,17 @@ function print_filtros() {
                 html += `<div class="flex justify-between items-center">
                             <span id="price-display" class="text-sm font-bold text-blue-500">${filtro.valores.min}€ - ${filtro.valores.max}€</span>
                          </div>
-                         <div id="slider-range" data-column="${filtro.db_column}" data-min="${filtro.valores.min}" data-max="${filtro.valores.max}" class="h-1.5 bg-slate-700 rounded-lg border-none mt-4"></div>`;
+                         <div id="slider-range" class="dynamic-filter-input" data-column="${filtro.db_column}" data-min="${filtro.valores.min}" data-max="${filtro.valores.max}" class="h-1.5 bg-slate-700 rounded-lg border-none mt-4"></div>`;
             }
             html += `</div>`;
         });
 
         html += `
                 <div class="pt-6 border-t border-slate-800 flex flex-col gap-3">
-                    <button id="Button_filter" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-lg">Aplicar Filtros</button>
+                    <button id="Button_filter" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-lg">
+                        <span>Aplicar Filtros</span>
+                        <span id="count-results" class="bg-blue-800 text-xs py-1 px-2 rounded-full">--</span>
+                    </button>
                     <button id="Remove_filter" class="w-full py-2 px-4 bg-slate-800/50 hover:bg-slate-700 text-slate-400 font-semibold rounded-lg text-xs">Limpiar Todo</button>
                 </div>
             </div></aside>`;
@@ -475,6 +478,7 @@ function print_filtros() {
             });
         }
         highlightFilters();
+        update_count();
         
     }).catch(error => console.error("Error cargando configuración:", error));
 }
@@ -526,7 +530,7 @@ function filter_button() {
             filtro.push([db_col, rangeValues]);
         }
 
-        console.log("Filtros listos para enviar:", filtro); 
+        console.log("Filtros :", filtro); 
         if (filtro.length > 0) {
             localStorage.setItem('filtros', JSON.stringify(filtro));
         } else {
@@ -559,7 +563,6 @@ function highlightFilters() {
             let inputs = $(`input[name="${columna}"]`);
             if (inputs.length > 0) {
                 if (Array.isArray(valor)) {
-                    
                     valor.forEach(v => {
                         $(`input[name="${columna}"][value="${v}"]`).prop('checked', true);
                     });
@@ -581,6 +584,61 @@ function highlightFilters() {
     }
 }
 
+$(document).on('change', '.dynamic-filter-input', function() {
+    update_count();
+});
+
+
+$(document).on('slidestop', '#slider-range', function() {
+    update_count();
+});
+
+function update_count() {
+    let filtros = get_active_filters(); 
+    
+    ajaxPromise('module/shop/controller/controller_shop.php?op=count_filters', 'POST', 'JSON', { 'filtros': filtros })
+    .then(function(data) {
+        $('#count-results').text(data);
+    });
+}
+
+function get_active_filters() {
+    let filtros = [];
+
+    $('.dynamic-filter-input').filter('select').each(function() {
+        let valor = $(this).val();
+        if (valor && valor !== "") {
+            
+            let columna = $(this).attr('id').replace('select_', '');
+            filtros.push([columna, valor]);
+        }
+    });
+
+    let agrupados = {};
+    $('input.dynamic-filter-input:checked').each(function() {
+        let columna = $(this).attr('name');
+        let valor = $(this).val();
+
+        if (!agrupados[columna]) {
+            agrupados[columna] = [];
+        }
+        agrupados[columna].push(valor);
+    });
+
+    for (let columna in agrupados) {
+        let valorFinal = (agrupados[columna].length > 1) ? agrupados[columna] : agrupados[columna][0];
+        filtros.push([columna, valorFinal]);
+    }
+
+    if ($("#slider-range").length > 0 && $("#slider-range").hasClass('ui-slider')) {
+        let columnaPrecio = $("#slider-range").attr('data-column') || 'price';
+        let valoresPrecio = $("#slider-range").slider("values"); 
+        
+        filtros.push([columnaPrecio, valoresPrecio]);
+    }
+
+    return filtros;
+}
 $(document).ready(function() {
     loadEventos();
     clicks();
@@ -588,5 +646,6 @@ $(document).ready(function() {
     filter_button();
     remove_filters();
     // highlightFilters();
+    // update_count();
     shopTodo();
 });
