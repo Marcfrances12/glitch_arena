@@ -42,3 +42,25 @@ input[type="radio"]:checked::after {
 .group:hover span {
     color: #3b82f6; /* blue-500 */
 }
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2563eb; /* Un azul moderno (tipo Tailwind) */
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    width: 24px;  /* Ancho fijo para asegurar el círculo */
+    height: 24px; /* Alto fijo */
+    border-radius: 9999px; /* Hace que sea un círculo perfecto */
+    margin-left: 5px;
+    transition: all 0.3s ease; /* Para que el cambio de número sea suave */
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3); /* Sombra azulada suave */
+}
+
+/* Estilo cuando el contador es 0 (opcional: se vuelve gris o transparente) */
+.badge:is(:empty, [value="0"]) {
+    background-color: #94a3b8;
+    opacity: 0.5;
+}

@@ -75,28 +75,24 @@ switch ($_GET['op']) {
     break;
     
     case 'filtros': 
+    $daoshop = new DAOShop();
+    try {
+        // Recogemos el filtro. Si no existe, array vacío para que el DAO traiga todo.
+        $filtros = (isset($_POST['filtro']) && !empty($_POST['filtro'])) ? $_POST['filtro'] : [];
         
-        if (!isset($_POST['filtro']) || empty($_POST['filtro'])) {
-            echo json_encode(["error" => "No se han seleccionado criterios"]);
-            exit;
-        }
+        $filt = $daoshop->filtros($filtros);
 
-        $daoshop = new DAOShop();
-
-        try {
-            $filt = $daoshop->filtros($_POST['filtro']);
-            if (!empty($filt)) {
-                echo json_encode($filt);
-            } else {
-                echo json_encode(["error" => "No hay torneos con esa selección"]);
-            }
-        } catch (Exception $e) {
-            echo json_encode(["error" => "Error en la consulta: " . $e->getMessage()]);
+        if (!empty($filt)) {
+            echo json_encode($filt);
+        } else {
+            echo json_encode([]); // Devolvemos array vacío si no hay resultados
         }
-    
+    } catch (Exception $e) {
+        echo json_encode(["error" => $e->getMessage()]);
+    }
     break;
 
-    ob_start(); // Captura cualquier output accidental
+    ob_start(); 
 
 case 'get_filters_config':
     try {

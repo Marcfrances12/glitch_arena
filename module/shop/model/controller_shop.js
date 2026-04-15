@@ -132,6 +132,27 @@ function clicks() {
         loadDetails(id_torn);
         loadExtras(id_torn);
     });
+
+    $(document).on('change', '.dynamic-filter-input', function() {
+        update_count();
+        aplicar_filtros_auto();
+    });
+
+    $(document).on('slidestop', '#slider-range', function() {
+        update_count();
+        aplicar_filtros_auto();
+    });
+
+    $(document).on('click', '#Remove_filter', function() {
+        localStorage.removeItem('filtros');
+        location.reload();
+    });
+
+    $(document).on('input', '#price-slider', function() {
+        let val = $(this).val();
+        $('#price-display').text(val + '€');
+    });
+
 }
 
 function loadDetails(id_torn) {
@@ -406,7 +427,12 @@ function print_filtros() {
             <aside class="w-full lg:w-64 flex-shrink-0 bg-[#0f172a] p-6 rounded-xl border border-slate-800 shadow-2xl">
                 <div class="mb-8">
                     <h1 class="text-2xl font-bold tracking-tight text-white mb-1">Eventos Actuales</h1>
-                    <p class="text-slate-400 text-xs font-medium">Filtros Dinámicos</p>
+                    <br>
+                    <p id="container-active-filters" style="display: none;">
+                        Filtros Activos: <span id="count-active-filters" class="badge">0</span>
+                    </p>
+                   
+                    
                 </div>
                 <div class="space-y-8">`;
 
@@ -452,7 +478,7 @@ function print_filtros() {
         html += `
                 <div class="pt-6 border-t border-slate-800 flex flex-col gap-3">
                     <button id="Button_filter" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-lg">
-                        <span>Aplicar Filtros</span>
+                        <span>Num Resultados:</span>
                         <span id="count-results" class="bg-blue-800 text-xs py-1 px-2 rounded-full">--</span>
                     </button>
                     <button id="Remove_filter" class="w-full py-2 px-4 bg-slate-800/50 hover:bg-slate-700 text-slate-400 font-semibold rounded-lg text-xs">Limpiar Todo</button>
@@ -482,11 +508,6 @@ function print_filtros() {
         
     }).catch(error => console.error("Error cargando configuración:", error));
 }
-
-$(document).on('input', '#price-slider', function() {
-    let val = $(this).val();
-    $('#price-display').text(val + '€');
-});
 
 function filter_button() {
     
@@ -541,13 +562,6 @@ function filter_button() {
     });
 }
 
-function remove_filters() {
-    $(document).on('click', '#Remove_filter', function() {
-        localStorage.removeItem('filtros');
-        location.reload();
-    });
-}
-
 function highlightFilters() {
     var filtros = JSON.parse(localStorage.getItem('filtros'));
 
@@ -584,24 +598,6 @@ function highlightFilters() {
     }
 }
 
-$(document).on('change', '.dynamic-filter-input', function() {
-    update_count();
-});
-
-
-$(document).on('slidestop', '#slider-range', function() {
-    update_count();
-});
-
-function update_count() {
-    let filtros = get_active_filters(); 
-    
-    ajaxPromise('module/shop/controller/controller_shop.php?op=count_filters', 'POST', 'JSON', { 'filtros': filtros })
-    .then(function(data) {
-        $('#count-results').text(data);
-    });
-}
-
 function get_active_filters() {
     let filtros = [];
 
@@ -631,21 +627,74 @@ function get_active_filters() {
     }
 
     if ($("#slider-range").length > 0 && $("#slider-range").hasClass('ui-slider')) {
-        let columnaPrecio = $("#slider-range").attr('data-column') || 'price';
-        let valoresPrecio = $("#slider-range").slider("values"); 
-        
-        filtros.push([columnaPrecio, valoresPrecio]);
+        let minOriginal = parseInt($("#slider-range").attr('data-min'));
+        let maxOriginal = parseInt($("#slider-range").attr('data-max'));
+        let valoresActuales = $("#slider-range").slider("values");
+
+        if (valoresActuales[0] !== minOriginal || valoresActuales[1] !== maxOriginal) {
+            filtros.push([$("#slider-range").attr('data-column'), valoresActuales]);
+        }
     }
 
     return filtros;
 }
+
+function aplicar_filtros_auto() {
+    let filtros = get_active_filters();
+    
+   if (filtros.length > 0) {
+        localStorage.setItem('filtros', JSON.stringify(filtros));
+        console.log("LocalStorage:", filtros);
+    } else {
+        localStorage.removeItem('filtros');
+    }
+
+    ajaxForSearch('module/shop/controller/controller_shop.php?op=filtros', filtros);
+}
+
+function update_count() {
+    let filtros = get_active_filters(); 
+
+    let total_filtros_activos = 0;
+    filtros.forEach(f => {
+        let valor = f[1];
+        
+        total_filtros_activos += Array.isArray(valor) ? valor.length : 1;
+    });
+
+    const $container = $('#container-active-filters');
+    const $badge = $('#count-active-filters');
+
+    if (total_filtros_activos > 0) {
+        $badge.text(total_filtros_activos);
+        $container.fadeIn(300); 
+    } else {
+        $container.fadeOut(300); 
+    }
+
+    if (filtros.length === 0) {
+        $('#count-results').text('0'); 
+        return; 
+    }
+
+    // if (filtros.length === 0) {
+    //     $('#count-results').text('0'); 
+    //     return; 
+    // }
+    ajaxPromise('module/shop/controller/controller_shop.php?op=count_filters', 'POST', 'JSON', { 'filtros': filtros })
+    .then(function(data) {
+        $('#count-results').text(data);
+    })
+    .catch(function() {
+        $('#count-results').text('0');
+    });
+}
+
 $(document).ready(function() {
     loadEventos();
     clicks();
     print_filtros();
     filter_button();
-    remove_filters();
     // highlightFilters();
-    // update_count();
     shopTodo();
 });
