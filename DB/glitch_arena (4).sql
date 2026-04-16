@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 14-04-2026 a las 14:05:41
+-- Tiempo de generación: 16-04-2026 a las 15:02:12
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -467,6 +467,8 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
   `id_city` int DEFAULT NULL,
   `id_venue` int DEFAULT NULL,
   `id_type` int DEFAULT NULL,
+  `latitud` decimal(10,8) DEFAULT NULL,
+  `longitud` decimal(11,8) DEFAULT NULL,
   `visits` int DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_torn`),
@@ -479,15 +481,15 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
 -- Volcado de datos para la tabla `tournaments`
 --
 
-INSERT INTO `tournaments` (`id_torn`, `title`, `description`, `start_date`, `end_date`, `price`, `capacity`, `organizer`, `status`, `prizes`, `id_city`, `id_venue`, `id_type`, `visits`, `created_at`) VALUES
-(1, 'CS2 Summer Cup', 'Torneo de CS2 presencial', '20-06-2026 10:00:00', NULL, 20.00, 100, 'Valve', 'Abierto', '{\"1st\": \"3000€ + Dragon Lore\", \"2nd\": \"1500€ + 3 x Wepon Case\", \"3rd\": \"900€\", \"MVP\": \"Karambit Fade\"}', 1, 1, 1, 0, '2026-03-11 15:31:46'),
-(2, 'RL Winter Cup', 'Torneo online', '15-02-2026 12:00:00', NULL, 24.00, 50, 'Psyonix', 'Abierto', '{\"1st\": \"2500€ + 15 x Black Market Case\", \"2nd\": \"1250€ + 10 x Mytical Case\", \"3rd\": \"750€ + 5 x Epic Case\", \"MVP\": \"Fennec Blanco Titanio\"}', 2, 2, 2, 0, '2026-03-11 15:31:46'),
-(3, 'LoL Spring Clash', 'Torneo competitivo de League of Legends para equipos amateur.', '05-04-2026 11:00:00', '2026-04-07 16:00:00', 15.00, 60, 'Summoners League', 'Cancelado', '{\"1st\": \"1500€\", \"2nd\": \"800€\", \"3rd\": \"500€\", \"MVP\": \"Skin Mítica\"}', 1, 1, 1, 0, '2026-03-11 15:31:47'),
-(4, 'Dota 2 Regional Qualifier', 'Clasificatorio regional para el torneo mayor de Dota 2.', '10-05-2026 10:00:00', NULL, 10.00, 120, 'Valve', 'Abierto', '{\"1st\": \"1000€\", \"2nd\": \"500€\", \"3rd\": \"250€\", \"MVP\": \"Arcana Set\"}', 3, 3, 9, 0, '2026-03-24 16:39:43'),
-(5, 'Valorant Masters Sevilla', 'Torneo presencial de alto nivel competitivo en el sur.', '15-06-2026 16:00:00', '20-06-2026 22:00:00', 25.00, 200, 'Riot Games', 'Abierto', '{\"1st\": \"5000€\", \"2nd\": \"2500€\", \"3rd\": \"1000€\"}', 5, 5, 1, 0, '2026-03-24 16:39:43'),
-(6, 'Gran Premio Digital Vlc', 'Campeonato híbrido de F1 usando simuladores y formato online.', '20-07-2026 12:00:00', NULL, 30.00, 60, 'FIA Esports', 'Abierto', '{\"1st\": \"Volante Fanatec\", \"2nd\": \"Pedales Pro\", \"3rd\": \"150€\"}', 4, 4, 3, 0, '2026-03-24 16:39:43'),
-(7, 'Copa de Campeones FC 26', 'Torneo online crossplay para demostrar quién es el rey de la pista.', '05-08-2026 18:00:00', NULL, 15.00, 256, 'LVP', 'Abierto', '{\"1st\": \"1500€ + PS5\", \"2nd\": \"800€\", \"3rd\": \"DualSense Edge\"}', 1, 1, 2, 0, '2026-03-24 16:39:43'),
-(8, 'Super Smash Extremadura', 'El evento presencial más grande de lucha en la región.', '10-09-2026 10:00:00', '12-09-2026 20:00:00', 12.00, 128, 'Nintendo ES', 'Abierto', '{\"1st\": \"2000€\", \"2nd\": \"Nintendo Switch OLED\", \"3rd\": \"Mando Pro\"}', 6, 6, 1, 0, '2026-03-24 16:39:43');
+INSERT INTO `tournaments` (`id_torn`, `title`, `description`, `start_date`, `end_date`, `price`, `capacity`, `organizer`, `status`, `prizes`, `id_city`, `id_venue`, `id_type`, `latitud`, `longitud`, `visits`, `created_at`) VALUES
+(1, 'CS2 Summer Cup', 'Torneo de CS2 presencial', '20-06-2026 10:00:00', NULL, 20.00, 100, 'Valve', 'Abierto', '{\"1st\": \"3000€ + Dragon Lore\", \"2nd\": \"1500€ + 3 x Wepon Case\", \"3rd\": \"900€\", \"MVP\": \"Karambit Fade\"}', 1, 1, 1, 40.42349562, -3.69414120, 0, '2026-03-11 15:31:46'),
+(2, 'RL Winter Cup', 'Torneo online', '15-02-2026 12:00:00', NULL, 24.00, 50, 'Psyonix', 'Abierto', '{\"1st\": \"2500€ + 15 x Black Market Case\", \"2nd\": \"1250€ + 10 x Mytical Case\", \"3rd\": \"750€ + 5 x Epic Case\", \"MVP\": \"Fennec Blanco Titanio\"}', 2, 2, 2, 41.38314615, 2.16486833, 0, '2026-03-11 15:31:46'),
+(3, 'LoL Spring Clash', 'Torneo competitivo de League of Legends para equipos amateur.', '05-04-2026 11:00:00', '2026-04-07 16:00:00', 15.00, 60, 'Summoners League', 'Cancelado', '{\"1st\": \"1500€\", \"2nd\": \"800€\", \"3rd\": \"500€\", \"MVP\": \"Skin Mítica\"}', 1, 1, 1, 40.40985022, -3.70280691, 0, '2026-03-11 15:31:47'),
+(4, 'Dota 2 Regional Qualifier', 'Clasificatorio regional para el torneo mayor de Dota 2.', '10-05-2026 10:00:00', NULL, 10.00, 120, 'Valve', 'Abierto', '{\"1st\": \"1000€\", \"2nd\": \"500€\", \"3rd\": \"250€\", \"MVP\": \"Arcana Set\"}', 3, 3, 9, 42.86743753, -8.53109452, 0, '2026-03-24 16:39:43'),
+(5, 'Valorant Masters Sevilla', 'Torneo presencial de alto nivel competitivo en el sur.', '15-06-2026 16:00:00', '20-06-2026 22:00:00', 25.00, 200, 'Riot Games', 'Abierto', '{\"1st\": \"5000€\", \"2nd\": \"2500€\", \"3rd\": \"1000€\"}', 5, 5, 1, 37.37952151, -5.97881081, 0, '2026-03-24 16:39:43'),
+(6, 'Gran Premio Digital Vlc', 'Campeonato híbrido de F1 usando simuladores y formato online.', '20-07-2026 12:00:00', NULL, 30.00, 60, 'FIA Esports', 'Abierto', '{\"1st\": \"Volante Fanatec\", \"2nd\": \"Pedales Pro\", \"3rd\": \"150€\"}', 4, 4, 3, 39.47685943, -0.36847044, 0, '2026-03-24 16:39:43'),
+(7, 'Copa de Campeones FC 26', 'Torneo online crossplay para demostrar quién es el rey de la pista.', '05-08-2026 18:00:00', NULL, 15.00, 256, 'LVP', 'Abierto', '{\"1st\": \"1500€ + PS5\", \"2nd\": \"800€\", \"3rd\": \"DualSense Edge\"}', 1, 1, 2, 40.42500551, -3.69609014, 0, '2026-03-24 16:39:43'),
+(8, 'Super Smash Extremadura', 'El evento presencial más grande de lucha en la región.', '10-09-2026 10:00:00', '12-09-2026 20:00:00', 12.00, 128, 'Nintendo ES', 'Abierto', '{\"1st\": \"2000€\", \"2nd\": \"Nintendo Switch OLED\", \"3rd\": \"Mando Pro\"}', 6, 6, 1, 38.92562942, -6.32881183, 0, '2026-03-24 16:39:43');
 
 -- --------------------------------------------------------
 
