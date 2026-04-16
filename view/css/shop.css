@@ -565,3 +565,12 @@
     font-weight: 600;
     color: #f1f5f9;
 }
+
+#map {
+    height: 400px;    /* Ajusta la altura a tu gusto */
+    width: 100%;      /* Que ocupe todo el ancho disponible */
+    border-radius: 15px; /* Para que quede moderno y redondeado */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Un poco de sombra para que resalte */
+    margin-bottom: 20px;
+    z-index: 1;       /* Asegúrate de que no tape a tus desplegables */
+}

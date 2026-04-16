@@ -36,6 +36,8 @@ class DAOShop
                     "title"             => $row["title"],        
                     "price"             => $row["price"],        
                     "start_date"        => $row["start_date"],
+                    "latitud"         => $row["latitud"],
+                    "longitud"         => $row["longitud"],
                     "city_name"         => $row["city_name"],
                     "venue_name"        => $row["venue_name"],
                     "game_name"         => !empty($row["game_name"])
@@ -194,6 +196,8 @@ class DAOShop
                     "title"             => $row["title"],        
                     "price"             => $row["price"],        
                     "start_date"        => $row["start_date"],
+                    "latitud"         => $row["latitud"],
+                    "longitud"         => $row["longitud"],
                     "city_name"         => $row["city_name"],
                     "venue_name"        => $row["venue_name"],
                     "game_name"         => !empty($row["game_name"]) 

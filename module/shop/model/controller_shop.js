@@ -89,7 +89,10 @@ function ajaxForSearch(url, filtro) {
                     }
                    
                 }
-                
+
+                if (data !== "error" && data.length > 0) {
+                    mapa(data);
+                }   
 
                     document.querySelectorAll('.swiper').forEach((el) => {
 
@@ -672,15 +675,11 @@ function update_count() {
         $container.fadeOut(300); 
     }
 
-    if (filtros.length === 0) {
-        $('#count-results').text('0'); 
-        return; 
-    }
-
     // if (filtros.length === 0) {
     //     $('#count-results').text('0'); 
     //     return; 
     // }
+
     ajaxPromise('module/shop/controller/controller_shop.php?op=count_filters', 'POST', 'JSON', { 'filtros': filtros })
     .then(function(data) {
         $('#count-results').text(data);
@@ -689,6 +688,47 @@ function update_count() {
         $('#count-results').text('0');
     });
 }
+
+
+let mapInstance = null;
+
+function mapa(data) {
+    
+    if (mapInstance !== null) {
+        mapInstance.remove();
+    }
+
+    mapInstance = L.map('map').setView([38.83966492354664, -0.61667], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(mapInstance);
+
+    data.forEach(mapa => {
+        
+        // console.log(`Evento: ${mapa.title} | Lat: ${mapa.latitud} | Lon: ${mapa.longitud}`);
+        const marker = L.marker([mapa.latitud, mapa.longitud]).addTo(mapInstance);
+
+        const popupContent = `
+            <div style="text-align:center; min-width: 150px;">
+                <h3 style="margin-bottom: 5px; font-weight: bold;">${row.title || row.brand_name}</h3>
+                <p style="margin: 2px 0;">Modelo: <b>${row.modelo || 'Evento'}</b></p>
+                <p style="margin: 2px 0;">Precio: <b>${row.price || row.precio}€</b></p>
+                <img src="${row.img}" style="width:100%; height:auto; border-radius:8px; margin-top:8px;"/>
+                <br>
+                <a class="more_info_list link" 
+                   id="${row.id_torn || row.id}" 
+                   style="display:inline-block; margin-top:10px; cursor:pointer; color:#2563eb; font-weight:bold;">
+                   Read More
+                </a>
+            </div>
+        `;
+
+        marker.bindPopup(popupContent);
+    });
+}
+
+
 
 $(document).ready(function() {
     loadEventos();
