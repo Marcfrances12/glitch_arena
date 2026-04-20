@@ -698,33 +698,87 @@ function mapa(data) {
         mapInstance.remove();
     }
 
-    mapInstance = L.map('map').setView([38.83966492354664, -0.61667], 6);
+    mapInstance = L.map('map').setView([40.4167, -3.7037], 5);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapInstance);
 
-    data.forEach(mapa => {
+    data.forEach(row => {
+        if (row.latitud && row.longitud) {
+            
+            
+            let slidesHtml = '';
+            
+            let images = Array.isArray(row.tournament_images) 
+                         ? row.tournament_images 
+                         : row.tournament_images.split(', ');
+
+            images.forEach(imgUrl => {
+                slidesHtml += `
+                    <div class="swiper-slide">
+                        <img src="${imgUrl}" class="map-img-carousel">
+                    </div>`;
+            });
+
+            const popupContent = `
+                <div class="popup-card">
+                    <div id="map-carousel-${row.id_torn}" class="swiper map-swiper-container">
+                        <div class="swiper-wrapper">${slidesHtml}</div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+
+                    <div class="popup-body">
+                        <h3 class="popup-title">${row.title}</h3>
+                        
+                        <div class="popup-info-item">
+                            <span class="material-symbols-outlined">calendar_month</span>
+                            <span>${row.start_date.split(' ')[0]}</span> </div>
+                        
+                        <div class="popup-info-item">
+                            <span class="material-symbols-outlined">location_on</span>
+                            <span>${row.city_name}</span> </div>
+
+                        <div class="popup-footer">
+                            <div>
+                                <p class="popup-price-value">${row.price}€</p>
+                            </div>
+                            <button class="popup-btn more_info_list" id="${row.id_torn}">
+                                Entradas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const marker = L.marker([row.latitud, row.longitud]).addTo(mapInstance);
+            marker.bindPopup(popupContent);
+        }
+    });
+
+    
+    mapInstance.on('popupopen', function(e) {
         
-        // console.log(`Evento: ${mapa.title} | Lat: ${mapa.latitud} | Lon: ${mapa.longitud}`);
-        const marker = L.marker([mapa.latitud, mapa.longitud]).addTo(mapInstance);
-
-        const popupContent = `
-            <div style="text-align:center; min-width: 150px;">
-                <h3 style="margin-bottom: 5px; font-weight: bold;">${row.title || row.brand_name}</h3>
-                <p style="margin: 2px 0;">Modelo: <b>${row.modelo || 'Evento'}</b></p>
-                <p style="margin: 2px 0;">Precio: <b>${row.price || row.precio}€</b></p>
-                <img src="${row.img}" style="width:100%; height:auto; border-radius:8px; margin-top:8px;"/>
-                <br>
-                <a class="more_info_list link" 
-                   id="${row.id_torn || row.id}" 
-                   style="display:inline-block; margin-top:10px; cursor:pointer; color:#2563eb; font-weight:bold;">
-                   Read More
-                </a>
-            </div>
-        `;
-
-        marker.bindPopup(popupContent);
+        const container = e.popup._contentNode.querySelector('.map-swiper-container');
+        
+        if (container) {
+            new Swiper(container, {
+                speed: 600,
+                loop: container.querySelectorAll('.swiper-slide').length > 1,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                slidesPerView: 1,
+                observer: true,
+                observeParents: true,
+                navigation: {
+                    nextEl: container.querySelector('.swiper-button-next'),
+                    prevEl: container.querySelector('.swiper-button-prev'),
+                },
+            });
+        }
     });
 }
 

@@ -216,7 +216,6 @@ class DAOShop
         }
     }
 
-
     function get_dynamic_filters() {
         try {
             $conexion = connect::con();
