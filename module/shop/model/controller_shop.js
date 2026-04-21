@@ -1,11 +1,29 @@
 
 function shopTodo() {
-    var filtro = JSON.parse(localStorage.getItem('filtros')) || null;
-    console.log(" filtros:", filtro);
+    let filtro_shop = JSON.parse(localStorage.getItem('filtros')); 
+    let filtro_home = JSON.parse(localStorage.getItem('filters')); 
     
+    let filtro_final = null;
+
+    if (filtro_home) {
+        console.log("HOME:", filtro_home);
+        filtro_final = filtro_home;
+        
+    
+        localStorage.setItem('filtros', JSON.stringify(filtro_home));
+        localStorage.removeItem('filters'); 
+        
+    } else if (filtro_shop) {
+        console.log("SHOP:", filtro_shop);
+        filtro_final = filtro_shop;
+    } else {
+        console.log("No hay filtros, cargando todo...");
+        filtro_final = null;
+    }
+
     
     $('#content_shop_evento').addClass('hidden');
-    loadEventos(filtro);
+    loadEventos(filtro_final);
 }
 
 function loadEventos(filtro) {

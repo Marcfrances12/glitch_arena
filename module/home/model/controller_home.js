@@ -85,6 +85,7 @@ function loadCategories() {
             $("<div/>")
                 .addClass("swiper-slide card") 
                 .attr('id', data[row].id_category)
+                .attr('data-cat_name', data[row].cat_name)
                 .appendTo('#containerCategories')
                 .html(`
                 
@@ -141,6 +142,7 @@ function loadPlataform() {
             $("<div/>")
                 .addClass("user_card card-vertical") 
                 .attr('id', data[row].id_platform)
+                .attr('data-plataform_name', data[row].platform_name)
                 .appendTo('#containerPlatform')
                 .html(`
                     <div class="card-img-container">
@@ -340,6 +342,49 @@ function loadType() {
     });
 }
 
+function clicks(){
+
+    $(document).on("click",'#containerCategories > div', function (){
+      var nameCat = $(this).attr('data-cat_name');
+
+        if (nameCat) {
+        var filters = [];
+        
+        filters.push(["cat_name", nameCat]);
+
+        localStorage.removeItem('filters');
+        localStorage.setItem('filters', JSON.stringify(filters));
+
+        console.log("Redirigiendo con filtro:", nameCat);
+
+            setTimeout(function () {
+                window.location.href = 'index.php?page=controller_shop&op=list';
+            }, 500); 
+        }
+       
+    });
+
+     $(document).on("click",'#containerPlatform > div', function (){
+      var nameplat = $(this).attr('data-plataform_name');
+
+        if (nameplat) {
+        var filters = [];
+        
+        filters.push(["platform_name", nameplat]);
+
+        localStorage.removeItem('filters');
+        localStorage.setItem('filters', JSON.stringify(filters));
+
+        console.log("Redirigiendo con filtro:", nameplat);
+
+            setTimeout(function () {
+                window.location.href = 'index.php?page=controller_shop&op=list';
+            }, 500); 
+        }
+       
+    });
+}
+
 $(document).ready(function () {
     loadCarousel();
     loadCategories();
@@ -347,5 +392,6 @@ $(document).ready(function () {
     loadGames();
     loadCity();
     loadType();
+    clicks();
     
 });
