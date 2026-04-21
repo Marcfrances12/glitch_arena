@@ -206,62 +206,72 @@ function loadDetails(id_torn) {
         $('main').hide(); 
         $('main > div.flex').hide();
 
-        var imagenes_html = "";
-        for (row in data[1][0]) {
-            imagenes_html += "<div class='date_img_dentro'>" +
-                                "<img src='" + data[1][0][row].image_url + "' class='banner-img' style='width: 100%; border-radius: 12px; aspect-ratio: 16/9; object-fit: cover; display:block;'>" +
-                            "</div>";
-        }
+       const imagenes_html = data[1][0].map(img => `
+            <div class='date_img_dentro'>
+                <img src='${img.image_url}' class='banner-img' style='width: 100%; border-radius: 12px; aspect-ratio: 16/9; object-fit: cover; display:block;'>
+            </div>
+        `).join('');
 
-        $('<div></div>').attr({ 'id': data[0].id_torn, class: 'date_car_dentro' }).appendTo('.date_evento')
-            .html(
-                "<button class='btn-back-shop' onclick='window.location.reload()' style='margin-bottom: 20px; color:#256af4; font-weight:bold; cursor:pointer; background:none; border:none;'><span class='material-symbols-outlined' style='vertical-align: middle;'>arrow_back</span> Volver a la Tienda</button>" +
-                
-                "<div class='details-grid'>" +
-                    "<!-- ZONA IZQUIERDA -->" +
-                    "<div class='details-left'>" +
-                        "<div class='banner-wrapper'>" +
-                            "<div class='date_img'>" + imagenes_html + "</div>" + 
+        $('.date_evento').empty(); 
+
+        $(`<div id='${data[0].id_torn}' class='date_car_dentro'></div>`)
+            .appendTo('.date_evento')
+            .html(`
+                <button class='btn-back-shop' onclick='window.location.reload()' style='margin-bottom: 20px; color:#256af4; font-weight:bold; cursor:pointer; background:none; border:none;'>
+                    <span class='material-symbols-outlined' style='vertical-align: middle;'>arrow_back</span> 
+                    Volver a la Tienda
+                </button>
+
+                <div class='details-grid'>
+                    <div class='details-left'>
+                        <div class='banner-wrapper'>
+                            <div class='date_img'>${imagenes_html}</div> 
                             
-                            "<div class='banner-overlay' style='pointer-events: none;'>" +
-                                "<span class='banner-badge'>" + (data[0].type_name || 'TORNEO') + "</span>" +
-                                    "<h1 class='banner-title' style='margin: 0;'>" + data[0].title + "</h1>" +
-            
-                                "<p class='banner-subtitle'>Juegos: " + data[0].game_names + "</p>" +
-                                "<div class='slick-arrows-details'></div>" +
-                            "</div>" +
-                        "</div>" +
-                        
-                    "</div>" +
+                            <div class='banner-overlay' style='pointer-events: none;'>
+                                <span class='banner-badge'>${data[0].type_name || 'TORNEO'}</span>
+                                <h1 class='banner-title' style='margin: 0;'>${data[0].title}</h1>
+                                <p class='banner-subtitle'>Juegos: ${data[0].game_names}</p>
+                                <div class='slick-arrows-details'></div>
+                            </div>
+                        </div>
+                    </div>
 
-                    "<!-- ZONA DERECHA -->" +
-                    "<aside class='details-right'>" +
-                        "<div class='info-card'>" +
-                            "<h3><span class='material-symbols-outlined text-primary' style='color:#256af4; vertical-align:middle;'>event_note</span> Detalles del Evento</h3>" +
-                            "<hr class='hr-shop'> <br>" +
-                            "<div class='info-row'><div class='info-icon'><span class='material-symbols-outlined'>calendar_today</span></div><div><p class='info-text-label'>Fecha</p><p class='info-text-value'>" + data[0].start_date + "</p></div></div>" +
-                            "<div class='info-row'><div class='info-icon'><span class='material-symbols-outlined'>location_on</span></div><div><p class='info-text-label'>Ubicación</p><p class='info-text-value'>" + data[0].venue_name + ", " + data[0].city_name + "</p></div></div>" +
-                            "<hr class='hr-shop'><br>" +
-                            "<div class='info-row'><div><p class='info-text-label'>Precio Entrada</p><p class='price-value'>" + data[0].price + "€</p></div></div>" +
-                            "<button id='" + data[0].id_torn + "' class='btn-buy-large'>COMPRAR ENTRADA</button>" +
-                        "</div>" +
-                    "</aside>" +
-                "</div>" +
+                    <aside class='details-right'>
+                        <div class='info-card'>
+                            <h3><span class='material-symbols-outlined text-primary' style='color:#256af4; vertical-align:middle;'>event_note</span> Detalles del Evento</h3>
+                            <hr class='hr-shop'> <br>
+                            <div class='info-row'>
+                                <div class='info-icon'><span class='material-symbols-outlined'>calendar_today</span></div>
+                                <div><p class='info-text-label'>Fecha</p><p class='info-text-value'>${data[0].start_date}</p></div>
+                            </div>
+                            <div class='info-row'>
+                                <div class='info-icon'><span class='material-symbols-outlined'>location_on</span></div>
+                                <div><p class='info-text-label'>Ubicación</p><p class='info-text-value'>${data[0].venue_name}, ${data[0].city_name}</p></div>
+                            </div>
+                            <hr class='hr-shop'><br>
+                            <div class='info-row'>
+                                <div><p class='info-text-label'>Precio Entrada</p><p class='price-value'>${data[0].price}€</p></div>
+                            </div>
+                            <button id='${data[0].id_torn}' class='btn-buy-large'>COMPRAR ENTRADA</button>
+                        </div>
+                    </aside>
+                </div>
 
-                "<!-- ZONA INFERIOR (Las 3 columnas que me dijiste) -->" +
-                "<div class='details-bottom-grid' style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;'>" +
-                    "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>gavel</span>Más Detalles</h3>" + 
-                    detalles_extra
-                    + "</div>" +
-                    "<div class='info-card'><h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>military_tech</span> Premios</h3>" + premios + "</div>" +
-                
-                 "<!-- EL MAPA QUE FALTABA -->" +
-                        "<div class='info-card'grid-template-columns: repeat(3, 1fr);>" +
-                            "<h3><span class='material-symbols-outlined text-primary' style='color:#256af4; vertical-align:middle;'>map</span> Mapa</h3>" +
-                            "<div style='width:100%; height:150px; background:#1b1f27; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#64748b;'>Aquí irá tu mapa</div>" +
-                        "</div>" +
-                "</div>" 
-            );
+                <div class='details-bottom-grid' style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;'>
+                    <div class='info-card'>
+                        <h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>gavel</span> Más Detalles</h3>
+                        ${detalles_extra}
+                    </div>
+                    <div class='info-card'>
+                        <h3><span class='material-symbols-outlined' style='color:#256af4; vertical-align:middle;'>military_tech</span> Premios</h3>
+                        ${premios}
+                    </div>
+                    <div class='info-card'>
+                        <h3><span class='material-symbols-outlined text-primary' style='color:#256af4; vertical-align:middle;'>map</span> Mapa</h3>
+                        <div id='map-details' style='width:100%; height:300px; background:#1b1f27; border-radius:8px;'></div>
+                    </div>
+                </div>
+            `);
 
         
         if ($.fn.slick) {
@@ -278,7 +288,7 @@ function loadDetails(id_torn) {
                 nextArrow: '<button type="button" class="slick-next">&#10095;</button>'  
             });
         }
-
+        mapatDetails(data[0], data[1][0]);
 
     }).catch(function(err) {
          console.error("Error al cargar Detalles", err);
@@ -782,6 +792,62 @@ function mapa(data) {
     });
 }
 
+function mapatDetails(row, galleryImages) {
+    if (!row || !row.latitud || !row.longitud) return;
+
+    const mapDetails = L.map('map-details', {
+        zoomControl: false, 
+        scrollWheelZoom: false 
+    }).setView([row.latitud, row.longitud], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapDetails);
+
+    let slidesHtml = '';
+    if (galleryImages && galleryImages.length > 0) {
+        galleryImages.forEach(img => {
+            slidesHtml += `<div class="swiper-slide"><img src="${img.image_url}" class="img-pop"></div>`;
+        });
+    } else {
+        slidesHtml = `<div class="swiper-slide"><img src="${row.img || row.image_url}" class="img-pop"></div>`;
+    }
+
+    const popupContent = `
+        <div class="simple-popup">
+            <div class="swiper swiper-details-pop">
+                <div class="swiper-wrapper">${slidesHtml}</div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="pop-title-wrapper">
+                <h3>${row.title}</h3>
+            </div>
+        </div>`;
+
+    const marker = L.marker([row.latitud, row.longitud]).addTo(mapDetails);
+
+    marker.bindPopup(popupContent, {
+        closeButton: false,    
+        autoClose: false,      
+        closeOnClick: false,  
+        className: 'custom-pop' 
+    }).openPopup();            
+
+    const swiperPop = new Swiper('.swiper-details-pop', {
+        loop: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+        },
+        observer: true,
+        observeParents: true
+    });
+
+    setTimeout(() => { mapDetails.invalidateSize(); }, 400);
+}
 
 
 $(document).ready(function() {

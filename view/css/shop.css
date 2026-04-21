@@ -702,3 +702,63 @@
     background-color: #1d4ed8;
     transform: translateY(-1px);
 }
+
+/* DETAIIIIILS MAAPAAA */
+
+/* 1. Reset de Leaflet para hacerlo moderno */
+.custom-pop .leaflet-popup-content-wrapper {
+    background: #111827 !important; /* Gris muy oscuro/negro */
+    color: white !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    border: 1px solid #1f2937;
+}
+
+.custom-pop .leaflet-popup-tip {
+    background: #111827 !important;
+    border: 1px solid #1f2937;
+}
+
+.custom-pop .leaflet-popup-content {
+    margin: 0 !important;
+    width: 220px !important; /* Ajusta el ancho a tu gusto */
+}
+
+/* 2. Estilo de la imagen y título */
+.img-pop {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+}
+
+.pop-title-wrapper {
+    padding: 12px;
+    text-align: center;
+}
+
+.pop-title-wrapper h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #3b82f6; /* Azul brillante */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.swiper-details-pop .swiper-button-next,
+.swiper-details-pop .swiper-button-prev {
+    color: white !important;
+    background: rgba(0,0,0,0.3);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.swiper-details-pop .swiper-button-next:after,
+.swiper-details-pop .swiper-button-prev:after {
+    font-size: 10px !important;
+    font-weight: bold;
+}
