@@ -8,6 +8,7 @@ function loadCarousel() {
             $("<div/>")
             .addClass("swiper-slide hero-slide")
             .appendTo('#containerCarousel') 
+            .attr('data-carou_id', data[row].id_torn)
             .html(`
                 <div class="hero-card" style="background-image: linear-gradient(to right, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.2) 100%), url('${data[row].image_url}');">
                     <div class="hero-content">
@@ -253,6 +254,7 @@ function loadCity() {
             $("<div/>")
                 .addClass("swiper-slide") 
                 .appendTo('#containerCities') 
+                .attr('data-city_name', data[row].city_name)
                 .html(`
                     <div class="city-card" id="${data[row].id_city}">
                         <div class="city-card-img-wrapper">
@@ -307,6 +309,7 @@ function loadType() {
             $("<div/>")
                 .addClass("swiper-slide") 
                 .appendTo('#containerType')
+                .attr('data-type_name', data[row].type_name)
                 .html(`
                     <div class="card-vertical-type" id="${data[row].id_type}">
                         <div class="card-img-container-type">
@@ -349,12 +352,12 @@ function clicks(){
       var nameCat = $(this).attr('data-cat_name');
 
         if (nameCat) {
-        var filters = [];
+        var filtros = [];
         
-        filters.push(["cat_name", nameCat]);
+        filtros.push(["cat_name", nameCat]);
 
-        localStorage.removeItem('filters');
-        localStorage.setItem('filters', JSON.stringify(filters));
+        localStorage.removeItem('filtros');
+        localStorage.setItem('filtros', JSON.stringify(filtros));
 
         console.log("Redirigiendo con filtro:", nameCat);
 
@@ -369,12 +372,12 @@ function clicks(){
       var nameplat = $(this).attr('data-plataform_name');
 
         if (nameplat) {
-        var filters = [];
+        var filtros = [];
         
-        filters.push(["platform_name", nameplat]);
+        filtros.push(["platform_name", nameplat]);
 
-        localStorage.removeItem('filters');
-        localStorage.setItem('filters', JSON.stringify(filters));
+        localStorage.removeItem('filtros');
+        localStorage.setItem('filtros', JSON.stringify(filtros));
 
         console.log("Redirigiendo con filtro:", nameplat);
 
@@ -385,21 +388,77 @@ function clicks(){
        
     });
 
-    $(document).on("click",'#game-card > div', function (){
-      var namegame = $(this).attr('data-game_name');
 
-        if (namegame) {
-        var filters = [];
+    $(document).on("click",'.game-card', function (){
+      var nameGame = $(this).attr('data-game_name');
+
+        if (nameGame) {
+        var filtros = [];
         
-        filters.push(["game_name", namegame]);
+        filtros.push(["game_name", nameGame]);
 
-        localStorage.removeItem('filters');
-        localStorage.setItem('filters', JSON.stringify(filters));
+        localStorage.removeItem('filtros');
+        localStorage.setItem('filtros', JSON.stringify(filtros));
 
-        console.log("Redirigiendo con filtro:", namegame);
+        console.log("Redirigiendo con filtro:", nameGame);
 
             setTimeout(function () {
                 window.location.href = 'index.php?page=controller_shop&op=list';
+            }, 500); 
+        }
+       
+    });
+
+    $(document).on("click",'#containerType > div', function (){
+      var nameType = $(this).attr('data-type_name');
+
+        if (nameType) {
+        var filtros = [];
+        
+        filtros.push(["type_name", nameType]);
+
+        localStorage.removeItem('filtros');
+        localStorage.setItem('filtros', JSON.stringify(filtros));
+
+        console.log("Redirigiendo con filtro:", nameType);
+
+            setTimeout(function () {
+                window.location.href = 'index.php?page=controller_shop&op=list';
+            }, 500); 
+        }
+       
+    });
+
+    $(document).on("click",'#containerCities > div', function (){
+      var nameCity = $(this).attr('data-city_name');
+
+        if (nameCity) {
+        var filtros = [];
+        
+        filtros.push(["city_name", nameCity]);
+
+        localStorage.removeItem('filtros');
+        localStorage.setItem('filtros', JSON.stringify(filtros));
+
+        console.log("Redirigiendo con filtro:", nameCity);
+
+            setTimeout(function () {
+                window.location.href = 'index.php?page=controller_shop&op=list';
+            }, 500); 
+        }
+       
+    });
+    
+     $(document).on("click",'#containerCarousel > div', function (){
+      var id = $(this).attr('data-carou_id');
+
+        if (id) {
+        
+
+        console.log("Redirigiendo con id:", id);
+
+            setTimeout(function () {
+                window.location.href = 'index.php?page=controller_shop&op=list&detalle=' + id;
             }, 500); 
         }
        

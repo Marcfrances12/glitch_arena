@@ -1,21 +1,12 @@
 
 function shopTodo() {
-    let filtro_shop = JSON.parse(localStorage.getItem('filtros')); 
-    let filtro_home = JSON.parse(localStorage.getItem('filters')); 
+    let filtros = JSON.parse(localStorage.getItem('filtros')) || false; 
     
     let filtro_final = null;
 
-    if (filtro_home) {
-        console.log("HOME:", filtro_home);
-        filtro_final = filtro_home;
-        
-    
-        localStorage.setItem('filtros', JSON.stringify(filtro_home));
-        localStorage.removeItem('filters'); 
-        
-    } else if (filtro_shop) {
-        console.log("SHOP:", filtro_shop);
-        filtro_final = filtro_shop;
+    if (filtros) {
+        console.log("SHOP:", filtros);
+        filtro_final = filtros;
     } else {
         console.log("No hay filtros, cargando todo...");
         filtro_final = null;
@@ -875,4 +866,10 @@ $(document).ready(function() {
     filter_button();
     // highlightFilters();
     shopTodo();
+    
+    const params = new URLSearchParams(window.location.search);
+    const detalle = params.get('detalle');
+    if (detalle) {
+        loadDetails(detalle);
+    }
 });
