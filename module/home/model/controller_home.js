@@ -184,6 +184,7 @@ function loadGames() {
             let $currentCard = $("<div/>")
                 .addClass("game-card swiper-slide") 
                 .attr('id', data[row].id_game) 
+                .attr('data-game_name', data[row].game_name)
                 .appendTo('#main-wrapper') 
                 .html(`
                     <div class="game-card-header">
@@ -376,6 +377,26 @@ function clicks(){
         localStorage.setItem('filters', JSON.stringify(filters));
 
         console.log("Redirigiendo con filtro:", nameplat);
+
+            setTimeout(function () {
+                window.location.href = 'index.php?page=controller_shop&op=list';
+            }, 500); 
+        }
+       
+    });
+
+    $(document).on("click",'#game-card > div', function (){
+      var namegame = $(this).attr('data-game_name');
+
+        if (namegame) {
+        var filters = [];
+        
+        filters.push(["game_name", namegame]);
+
+        localStorage.removeItem('filters');
+        localStorage.setItem('filters', JSON.stringify(filters));
+
+        console.log("Redirigiendo con filtro:", namegame);
 
             setTimeout(function () {
                 window.location.href = 'index.php?page=controller_shop&op=list';

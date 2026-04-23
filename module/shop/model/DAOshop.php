@@ -132,11 +132,13 @@ class DAOShop
         $consulta = "SELECT 
                     t.*, 
                     c.city_name, 
+                    tt.type_name,
                     v.venue_name, 
                     GROUP_CONCAT(DISTINCT g.game_name SEPARATOR ', ') AS game_name,
                     GROUP_CONCAT(DISTINCT ti.image_url SEPARATOR ', ') AS tournament_images
                 FROM tournaments t
                 LEFT JOIN cities c ON t.id_city = c.id_city
+                LEFT JOIN tournament_types tt ON t.id_type = tt.id_type
                 LEFT JOIN venues v ON t.id_venue = v.id_venue
                 LEFT JOIN torn_games tg ON t.id_torn = tg.id_torn
                 LEFT JOIN games g ON tg.id_game = g.id_game
@@ -199,6 +201,7 @@ class DAOShop
                     "latitud"         => $row["latitud"],
                     "longitud"         => $row["longitud"],
                     "city_name"         => $row["city_name"],
+                    "type_name"         => $row["type_name"],
                     "venue_name"        => $row["venue_name"],
                     "game_name"         => !empty($row["game_name"]) 
                                             ? explode(", ", $row["game_name"]) 
@@ -290,6 +293,7 @@ class DAOShop
         $consulta = "SELECT COUNT(DISTINCT t.id_torn) as total
                     FROM tournaments t
                     LEFT JOIN cities c ON t.id_city = c.id_city
+                    LEFT JOIN tournament_types tt ON t.id_type = tt.id_type
                     LEFT JOIN venues v ON t.id_venue = v.id_venue
                     LEFT JOIN torn_games tg ON t.id_torn = tg.id_torn
                     LEFT JOIN games g ON tg.id_game = g.id_game
