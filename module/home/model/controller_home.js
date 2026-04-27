@@ -453,9 +453,7 @@ function clicks(){
       var id = $(this).attr('data-carou_id');
 
         if (id) {
-        
-
-        console.log("Redirigiendo con id:", id);
+            console.log("Redirigiendo con id:", id);
 
             setTimeout(function () {
                 window.location.href = 'index.php?page=controller_shop&op=list&detalle=' + id;

@@ -3,7 +3,7 @@
 // die('<script>console.log('.json_encode( $data ) .');</script>');
 
 $path = $_SERVER['DOCUMENT_ROOT'] . '/glitch_arena/';
-include($path . "module/home/model/DAOHome.php");
+include($path . "module/home/model/DAOhome.php");
 
 @session_start();
 
