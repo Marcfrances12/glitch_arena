@@ -64,3 +64,84 @@ input[type="radio"]:checked::after {
     background-color: #94a3b8;
     opacity: 0.5;
 }
+
+#search_auto {
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 100%;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 0.5rem;
+    z-index: 100;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.searchElement {
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.searchElement:hover {
+    background: #3b82f6; 
+}
+
+/* Contenedor del botón para alinearlo con los inputs */
+.search-container-capsule input, 
+.search-container-capsule select {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    appearance: none; /* Quita flecha nativa en algunos navegadores */
+}
+
+/* Opcional: Si quieres mantener una flechita sutil en los select */
+.custom-minimal-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1em;
+    padding-right: 1.5rem !important;
+}
+
+/* Efecto al pasar el ratón por encima de cada sección */
+.search-container-capsule > div:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 9999px;
+}
+
+/* Ajuste del botón para que sea circular perfecto */
+#search-btn {
+    min-width: 40px;
+    padding: 0;
+}
+
+
+/* 1. Estilo para cuando el select está enfocado (clicado) */
+.custom-minimal-select:focus {
+    background-color: rgba(59, 130, 246, 0.1); /* Un azul muy suave de fondo */
+    border-radius: inherit;
+    outline: none;
+}
+
+/* 2. MUY IMPORTANTE: Estilo de las opciones (el desplegable) */
+/* Esto asegura que las letras se vean aunque el fondo sea oscuro */
+.custom-minimal-select option {
+    background-color: #0f172a; /* Color pizarra oscuro (bg-slate-900) */
+    color: white;
+    padding: 10px;
+}
+
+/* 3. Estilo para el input de ciudad cuando escribes */
+#autocom:focus {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-radius: 0; /* Para que no choque con la forma de la cápsula */
+}
+
+/* 4. Feedback visual en toda la sección al hacer click */
+.search-container-capsule div:focus-within {
+    background-color: rgba(59, 130, 246, 0.05);
+    border-radius: 20px;
+}

@@ -29,9 +29,12 @@ function load_plataform(category) {
         ajaxPromise('module/search/controller/controller_search.php?op=search_plataforma', 'POST', 'JSON', category)
             .then(function (data) {
                 console.log(data);
+                $('<option value="0">Plataforma</option>').attr('selected', true).attr('disabled', true).appendTo('.search_plataforma');
                 for (row in data) {
                     $('<option value="' + data[row].id_platform + '">' + data[row].platform_name + '</option>').appendTo('.search_plataforma')
                 }
+
+              
             }).catch(function () {
                 window.location.href = "index.php?modules=exception&op=503&error=fail_loas_category_2&type=503";
             });
@@ -52,41 +55,87 @@ function launch_search() {
 }
 
 function autocomplete() {
-    $("#autocom").on("keyup", function () {
-        let sdata = { complete: $(this).val() };
-        if (($('.search_category').val() != 0)) {
-            sdata.cat_name = $('.search_category').val();
-            if (($('.search_category').val() != 0) && ($('.search_plataforma').val() != 0)) {
-                sdata.platform_name = $('.search_plataforma').val();
-            }
-        }
-        if (($('.search_category').val() == undefined) && ($('.search_plataforma').val() != 0)) {
-            sdata.platform_name = $('.search_plataforma').val();
-        }
+    const buscar_ciudades = () => {
+        let sdata = { 
+            complete: $("#autocom").val(), 
+            category: $('.search_category').val() != "0" ? $('.search_category').val() : null,
+            id_platform: $('.search_plataforma').val() != "0" ? $('.search_plataforma').val() : null
+        };
+
         ajaxPromise('module/search/controller/controller_search.php?op=autocomplete', 'POST', 'JSON', sdata)
             .then(function (data) {
-                console.log(data);
-                $('#search_auto').empty();
-                $('#search_auto').fadeIn(10000000);
-                for (row in data) {
-                    $('<div></div>').appendTo('#search_auto').html(data[row].city_name).attr({ 'class': 'searchElement', 'id': data[row].id_city });
-                }
-                $(document).on('click', '.searchElement', function () {
-                    $('#autocom').val(this.getAttribute('id'));
-                    $('#search_auto').fadeOut(1000);
-                });
-                $(document).on('click scroll', function (event) {
-                    if (event.target.id !== 'autocom') {
-                        $('#search_auto').fadeOut(1000);
+                $('#search_auto').empty().show(); 
+                
+                if (data == "error" || data.length === 0) {
+                    $('#search_auto').append('<div class="searchElement">No hay sedes disponibles</div>');
+                } else {
+                    for (row in data) {
+                        $('<div></div>').appendTo('#search_auto')
+                            .html(data[row].city_name)
+                            .attr({ 'class': 'searchElement', 'id': data[row].city_name });
                     }
-                });
+                }
             }).catch(function () {
-                $('#search_auto').fadeOut(500);
+                $('#search_auto').fadeOut(200);
             });
+    };
+
+   
+    $("#autocom").on("keyup", buscar_ciudades);
+
+    
+    // $(document).on('change', '.search_category, .search_plataforma', function() {
+    //     buscar_ciudades();
+    // });
+
+    // $("#autocom").on("focus", buscar_ciudades);
+
+    $(document).on('click', '.searchElement', function () {
+        let city = $(this).text();
+        if (city !== "No hay sedes disponibles") {
+            $('#autocom').val(city);
+        }
+        $('#search_auto').fadeOut(200);
+    });
+
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('#autocom, #search_auto').length) {
+            $('#search_auto').fadeOut(200);
+        }
+    });
+}
+
+function button_search() {
+    $('#search-btn').on('click', function () {
+        var filtros = [];
+
+        if ($('.search_category').val() != undefined && $('.search_category').val() != "0") {
+            var namecat = $('.search_category option:selected').text(); 
+            filtros.push(["cat_name", namecat]);
+        }
+
+        if ($('.search_plataforma').val() != undefined && $('.search_plataforma').val() != "0") {
+            var nameplat = $('.search_plataforma option:selected').text();
+            filtros.push(["platform_name", nameplat]);
+        }
+
+        if ($('#autocom').val() != undefined && $('#autocom').val() != "") {
+            var city = $('#autocom').val();
+            filtros.push(["city_name", city]);
+        }
+
+        localStorage.removeItem('filtros');
+
+        if (filtros.length != 0) {
+            localStorage.setItem('filtros', JSON.stringify(filtros));
+        }
+
+        window.location.href = 'index.php?page=controller_shop&op=list';
     });
 }
 
 $(document).ready(function () {
    launch_search();
    autocomplete();
+   button_search();
 });

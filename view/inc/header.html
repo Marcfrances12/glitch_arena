@@ -9,18 +9,31 @@
         </a>
     </div>
 
-    <div class="flex-1 flex justify-center">
-        <div class="div_search w-full max-w-[120px]">
-            <select class="search_category w-full p-2 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-700"></select>
-        </div>
-        <div class="div_search w-full max-w-[120px]">
-            <select class="search_plataforma w-full p-2 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-700"></select>
-        </div>
-        <input type="text" class="text-black" id="autocom" autocomplete="off" placeholder="City" style="width: 50%;" />
-        <div id="search_auto"></div>
-    </div>
-    <!-- <div class="flex-1 flex justify-center">
+    <div class="flex-[4] flex justify-end items-center pr-4">
         
-    </div> -->
+    <div class="search-container-capsule flex items-center bg-slate-100 dark:bg-slate-900 border border-slate-700 rounded-full p-1 shadow-lg">
+        
+        <div class="div_search w-full max-w-[120px]">
+            <select class="search_category custom-minimal-select w-full bg-transparent p-2 pl-4 focus:outline-none border-none text-sm cursor-pointer"></select>
+        </div>
+        
+        <div class="h-6 border-l border-slate-700 mx-1"></div>
+        
+        <div class="div_search w-full max-w-[120px]">
+            <select class="search_plataforma custom-minimal-select w-full bg-transparent p-2 focus:outline-none border-none text-sm cursor-pointer"></select>
+        </div>
+        
+        <div class="h-6 border-l border-slate-700 mx-1"></div>
+        
+        <div class="relative max-w-[180px]">
+            <input type="text" class="bg-transparent text-black dark:text-white w-full p-2 focus:outline-none border-none text-sm" id="autocom" autocomplete="off" placeholder="City" />
+            <div id="search_auto" class="absolute top-full left-0 w-full z-[100]"></div>
+        </div>
+
+        <button id="search-btn" class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full w-[40px] h-[40px] ml-2 transition-all">
+             <span class="material-symbols-outlined text-sm">search</span>
+        </button>
+        </div>
+    </div>
 
     <div class="flex-1 flex justify-end items-center">

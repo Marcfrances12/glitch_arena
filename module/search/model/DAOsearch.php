@@ -39,11 +39,11 @@ function search_plataforma($categoria = null)
         $sql = "SELECT DISTINCT c.city_name FROM tournaments t INNER JOIN cities c ON t.id_city = c.id_city ";
 
         if ($categoria) {
-            $sql .= " INNER JOIN tournament_categories tc ON t.id_torn = tc.id_torn";
+            $sql .= " INNER JOIN torn_categories tc ON t.id_torn = tc.id_torn";
         }
 
         if ($plataforma) {
-            $sql .= " INNER JOIN tournament_platforms tp ON t.id_torn = tp.id_torn";
+            $sql .= " INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn";
         }
 
         $sql .= " WHERE c.city_name LIKE '$complete%'";
