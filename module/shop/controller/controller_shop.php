@@ -75,53 +75,69 @@ switch ($_GET['op']) {
     break;
     
     case 'filtros': 
-    $daoshop = new DAOShop();
-    try {
-        // Recogemos el filtro. Si no existe, array vacío para que el DAO traiga todo.
-        $filtros = (isset($_POST['filtro']) && !empty($_POST['filtro'])) ? $_POST['filtro'] : [];
-        
-        $filt = $daoshop->filtros($filtros);
+        $daoshop = new DAOShop();
+        try {
+            // Recogemos el filtro. Si no existe, array vacío para que el DAO traiga todo.
+            $filtros = (isset($_POST['filtro']) && !empty($_POST['filtro'])) ? $_POST['filtro'] : [];
+            
+            $filt = $daoshop->filtros($filtros);
 
-        if (!empty($filt)) {
-            echo json_encode($filt);
-        } else {
-            echo json_encode([]); // Devolvemos array vacío si no hay resultados
+            if (!empty($filt)) {
+                echo json_encode($filt);
+            } else {
+                echo json_encode([]); // Devolvemos array vacío si no hay resultados
+            }
+        } catch (Exception $e) {
+            echo json_encode(["error" => $e->getMessage()]);
         }
-    } catch (Exception $e) {
-        echo json_encode(["error" => $e->getMessage()]);
-    }
     break;
 
     ob_start(); 
 
-case 'get_filters_config':
-    try {
+    case 'get_filters_config':
+        try {
 
-        $daoshop = new DAOShop();
-        $config = $daoshop->get_dynamic_filters();
+            $daoshop = new DAOShop();
+            $config = $daoshop->get_dynamic_filters();
 
 
-        ob_end_clean(); 
-        header('Content-Type: application/json');
-        echo json_encode($config);
-    } catch (Exception $e) {
-        ob_end_clean();
-        header('Content-Type: application/json');
-        echo json_encode(["error" => $e->getMessage()]);
-    }
-    exit;
-break;
+            ob_end_clean(); 
+            header('Content-Type: application/json');
+            echo json_encode($config);
+        } catch (Exception $e) {
+            ob_end_clean();
+            header('Content-Type: application/json');
+            echo json_encode(["error" => $e->getMessage()]);
+        }
+        exit;
+    break;
 
-case 'count_filters':
-    try {
-        $daoshop = new DAOShop();
-        
-        $filtros = (isset($_POST['filtros'])) ? $_POST['filtros'] : [];
-        $total = $daoshop->count_filtros($filtros);
-        echo json_encode($total);
-    } catch (Exception $e) {
-        echo json_encode(0);
-    }
+    case 'count_filters':
+        try {
+            $daoshop = new DAOShop();
+            
+            $filtros = (isset($_POST['filtros'])) ? $_POST['filtros'] : [];
+            $total = $daoshop->count_filtros($filtros);
+            echo json_encode($total);
+        } catch (Exception $e) {
+            echo json_encode(0);
+        }
+    break;
+
+    case 'contar_eventos';
+        try{
+            $daoshop = new DAOShop();
+            $SelectCategory = $daoshop->contar_eventos();
+        } catch(Exception $e){
+            echo json_encode("error");
+        }
+            
+        if(!empty($SelectCategory)){
+            echo json_encode($SelectCategory); 
+        }
+        else{
+            echo json_encode("error");
+        }
     break;
 
 }
