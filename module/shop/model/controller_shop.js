@@ -28,8 +28,9 @@ function loadEventos(filtro) {
     ajaxForSearch(url, filtro);
 }
 
-function ajaxForSearch(url, filtro) {
-    ajaxPromise(url, 'POST', 'JSON', { 'filtro': filtro })
+function ajaxForSearch(url, filtro, limit = 4, offset = 0) {
+    ajaxPromise(url, 'POST', 'JSON', { 'filtro': filtro, 'limit': limit, 
+        'offset': offset })
         .then(function(data) {
             console.log(data);
            $('#content_shop_evento').empty().removeClass('hidden');

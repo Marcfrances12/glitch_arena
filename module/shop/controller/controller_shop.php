@@ -16,12 +16,14 @@ switch ($_GET['op']) {
     break;  
 
     case 'all_eventos':
-        // $prod = $_POST['total_prod'];
-        // $items = $_POST['items_page'];
+        
+        // $limit = isset($_POST['limit']) ? (int)$_POST['limit'] : 4;
+        // $offset = isset($_POST['offset']) ? (int)$_POST['offset'] : 0;
+
         try {
             $daoshop = new DAOShop();
-            $Dates_eventos = $daoshop->select_all_eventos();
-            // $prod, $items
+            $Dates_eventos = $daoshop->select_all_eventos($_POST['limit'], $_POST['offset']);
+            
         } catch (Exception $e) {
             echo json_encode("error");
         }
@@ -76,16 +78,17 @@ switch ($_GET['op']) {
     
     case 'filtros': 
         $daoshop = new DAOShop();
+
+        
         try {
-            // Recogemos el filtro. Si no existe, array vacío para que el DAO traiga todo.
             $filtros = (isset($_POST['filtro']) && !empty($_POST['filtro'])) ? $_POST['filtro'] : [];
             
-            $filt = $daoshop->filtros($filtros);
+            $filt = $daoshop->filtros($filtros, $_POST['limit'], $_POST['offset']);
 
             if (!empty($filt)) {
                 echo json_encode($filt);
             } else {
-                echo json_encode([]); // Devolvemos array vacío si no hay resultados
+                echo json_encode([]); 
             }
         } catch (Exception $e) {
             echo json_encode(["error" => $e->getMessage()]);

@@ -5,7 +5,7 @@ include($path . "model/connect.php");
 class DAOShop
 {
 
-    function select_all_eventos(){
+    function select_all_eventos($limit, $offset){
         $sql = "SELECT 
                     t.*, 
                     c.city_name, 
@@ -19,7 +19,8 @@ class DAOShop
                 LEFT JOIN games g ON tg.id_game = g.id_game
                 LEFT JOIN torn_images ti ON t.id_torn = ti.id_torn
                 GROUP BY t.id_torn
-                ORDER BY t.start_date ASC";
+                ORDER BY t.start_date ASC
+                LIMIT $limit OFFSET $offset";
 
         try {
             $conexion = connect::con();
@@ -127,7 +128,7 @@ class DAOShop
         }
     }
 
-    function filtros($filter) {
+    function filtros($filter, $limit, $offset) {
     
         $consulta = "SELECT 
                     t.*, 
@@ -179,7 +180,7 @@ class DAOShop
             }
         }
    
-        $consulta .= " GROUP BY t.id_torn ORDER BY t.start_date ASC";
+        $consulta .= " GROUP BY t.id_torn ORDER BY t.start_date ASC LIMIT $limit OFFSET $offset";
 
        
         try {
