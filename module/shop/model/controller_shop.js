@@ -149,11 +149,13 @@ function clicks() {
     $(document).on('change', '.dynamic-filter-input', function() {
         update_count();
         aplicar_filtros_auto();
+        pagination();
     });
 
     $(document).on('slidestop', '#slider-range', function() {
         update_count();
         aplicar_filtros_auto();
+        pagination();
     });
 
     $(document).on('click', '#Remove_filter', function() {
@@ -582,6 +584,7 @@ function filter_button() {
         }
         
         location.reload(); 
+        
     });
 }
 
@@ -673,6 +676,7 @@ function aplicar_filtros_auto() {
     }
 
     ajaxForSearch('module/shop/controller/controller_shop.php?op=filtros', filtros);
+    pagination();
 }
 
 function update_count() {
@@ -859,6 +863,75 @@ function mapatDetails(row, galleryImages) {
     setTimeout(() => { mapDetails.invalidateSize(); }, 400);
 }
 
+function pagination(filtros = null) {
+    var filtros = filtros || JSON.parse(localStorage.getItem('filtros')) || null;
+    
+    var url_count = "";
+    var data_count = {};
+
+    if (filtros) {
+        url_count = "module/shop/controller/controller_shop.php?op=count_filters";
+        data_count = { 'filtros': filtros };
+    } else {
+        url_count = "module/shop/controller/controller_shop.php?op=contar_eventos";
+        data_count = {};
+    }
+
+    ajaxPromise(url_count, 'POST', 'JSON', data_count)
+        .then(function(data) {
+            console.log(data);
+
+
+            var total_items = 0; 
+
+            if (data && typeof data === 'object' && data.total !== undefined) {
+                total_items = parseInt(data.total);
+            }else{
+                total_items = parseInt(data);
+            }
+            if (isNaN(total_items)) {
+                total_items = 0;
+            }
+
+            var items_per_page = 4; 
+            var total_pages = Math.ceil(total_items / items_per_page);
+
+            if (total_pages < 1) total_pages = 1;
+
+            $('#pagination').empty();
+
+            $('#pagination').bootpag({
+                total: total_pages,
+                page: 1, 
+                maxVisible: 5,
+                leaps: true,
+                firstLastUse: true,
+                first: '←',
+                last: '→',
+                wrapClass: 'pagination',
+                activeClass: 'active',
+                disabledClass: 'disabled',
+                nextClass: 'next',
+                prevClass: 'prev',
+                lastClass: 'last',
+                firstClass: 'first'
+            }).on('page', function(event, num) {
+                
+                var offset = (num - 1) * items_per_page;
+                
+                if (filtros) {
+                    ajaxForSearch("module/shop/controller/controller_shop.php?op=filtros", filtros, items_per_page, offset);
+                } else {
+                    ajaxForSearch("module/shop/controller/controller_shop.php?op=all_eventos", null, items_per_page, offset);
+                }
+
+                // $('html, body').animate({ scrollTop: 0 }, 500);
+            });
+
+        }).catch(function(err) {
+            console.error("Error al calcular el total de páginas" + err);
+        });
+}
 
 $(document).ready(function() {
     loadEventos();
@@ -867,6 +940,7 @@ $(document).ready(function() {
     filter_button();
     // highlightFilters();
     shopTodo();
+    pagination();
     
     const params = new URLSearchParams(window.location.search);
     const detalle = params.get('detalle');

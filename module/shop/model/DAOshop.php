@@ -343,12 +343,12 @@ class DAOShop
     }
 
     function contar_eventos(){
-		$sql = "SELECT COUNT(*) AS contar FROM tournaments";
+		$sql = "SELECT COUNT(*) AS total FROM tournaments";
 
 		$conexion = connect::con();
         $res = $conexion->prepare($sql);
         $res->execute();
-        $retrArray = $res->fetchAll(PDO::FETCH_ASSOC);
+        $retrArray = $res->fetch(PDO::FETCH_ASSOC);
         connect::close($conexion);
         return $retrArray;
     }

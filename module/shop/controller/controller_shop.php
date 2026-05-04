@@ -16,9 +16,6 @@ switch ($_GET['op']) {
     break;  
 
     case 'all_eventos':
-        
-        // $limit = isset($_POST['limit']) ? (int)$_POST['limit'] : 4;
-        // $offset = isset($_POST['offset']) ? (int)$_POST['offset'] : 0;
 
         try {
             $daoshop = new DAOShop();
@@ -78,8 +75,6 @@ switch ($_GET['op']) {
     
     case 'filtros': 
         $daoshop = new DAOShop();
-
-        
         try {
             $filtros = (isset($_POST['filtro']) && !empty($_POST['filtro'])) ? $_POST['filtro'] : [];
             

@@ -785,3 +785,66 @@
 .searchElement:hover {
     background: #3b82f6; 
 }
+
+
+/* PAGINNNNNNAAAAAAAAAAACIOOOOON */
+
+¡Hecho! Vamos a darle ese toque final. Para que los números y las flechas sean siempre blancos y tengan un efecto visual al pasar el ratón (hover), he ajustado los colores.
+
+He elegido un tono de azul más brillante para el hover, para que se note que el botón reacciona, manteniendo siempre el texto en blanco puro.
+
+CSS Actualizado (Oscuro + Hover + Texto Blanco)
+Copia y reemplaza el bloque anterior por este en tu archivo .css:
+
+CSS
+/* Contenedor principal para asegurar que no haya fondos extraños */
+#pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    background: transparent !important;
+}
+
+/* Lista de la paginación */
+.pagination {
+    display: flex !important;
+    list-style: none !important;
+    padding: 0 !important;
+    gap: 6px !important;
+}
+
+/* Estilo base de los botones (Números y Flechas) */
+.pagination li a {
+    background-color: #1e293b !important; /* Fondo gris oscuro */
+    color: #ffffff !important;            /* Texto BLANCO */
+    padding: 10px 16px !important;
+    border: 1px solid #334155 !important;
+    text-decoration: none !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important; /* Transición suave para el hover */
+}
+
+/* EFECTO HOVER: Cuando pasas el ratón por encima */
+.pagination li a:hover {
+    background-color: #334155 !important; /* Un gris un poco más claro */
+    color: #ffffff !important;            /* Mantiene el texto blanco */
+    border-color: #3b82f6 !important;     /* Borde azul brillante */
+    transform: translateY(-2px);          /* Pequeño salto hacia arriba */
+}
+
+/* PÁGINA ACTIVA: El número donde estás ahora */
+.pagination li.active a {
+    background-color: #2563eb !important; /* Azul intenso */
+    border-color: #60a5fa !important;
+    color: #ffffff !important;            /* Texto blanco */
+    cursor: default;
+}
+
+/* BOTONES DESHABILITADOS (Flechas cuando no hay más páginas) */
+.pagination li.disabled a {
+    opacity: 0.4 !important;
+    color: #94a3b8 !important;            /* Texto grisáceo */
+    pointer-events: none !important;      /* No se puede clicar */
+    background-color: #0f172a !important;
+}
