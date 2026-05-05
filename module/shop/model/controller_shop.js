@@ -896,7 +896,13 @@ function pagination(filtros = null) {
             var items_per_page = 4; 
             var total_pages = Math.ceil(total_items / items_per_page);
 
-            if (total_pages < 1) total_pages = 1;
+            if (total_items <= items_per_page) {
+                $('#pagination').hide(); 
+            } else {
+                $('#pagination').show(); 
+            }
+
+            if (total_pages < 1) total_pages = 1
 
             $('#pagination').empty();
 

@@ -141,7 +141,7 @@ function loadPlataform() {
         console.log(data);
         for (let row = 0; row < data.length; row++) {
             $("<div/>")
-                .addClass("user_card card-vertical") 
+                .addClass("swiper-slide user_card card-vertical") 
                 .attr('id', data[row].id_platform)
                 .attr('data-plataform_name', data[row].platform_name)
                 .appendTo('#containerPlatform')
@@ -155,6 +155,42 @@ function loadPlataform() {
                 `);
                 
         }
+        new Swiper(".mySwiperPlat", {
+
+                slidesPerView: 3,
+                spaceBetween: 15,
+                slidesPerGroup: 1,
+                loop: true,
+                loopedSlides: 5,
+
+                navigation: {
+                    nextEl: ".btn-next-plat",
+                    prevEl: ".btn-prev-plat"
+                },
+                autoplay: { 
+                    delay: 3000,
+                    disableOnInteraction: false
+                },
+
+                breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                576: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 20
+                }
+            }
+            });
     }).catch(function() {
         //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Type_Categories HOME";
     });

@@ -65,18 +65,24 @@
 
 /* Contenedor de la carta PLATAFORMAAA */
 
+.mySwiperPlat {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.mySwiperPlat .swiper-slide {
+    height: auto;
+}
+
 #containerPlatform {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 300px)); 
-  gap: 1.5rem;
-  padding: 20px;
-  justify-content: center; 
-  width: 100%;
-  margin: 0 auto;
+    padding: 0;           /* ← era padding: 20px, eso cortaba el primer slide */
+    width: 100%;
 }
 
 .card-vertical {
-    width: 300px; /* Aquí controlas el ANCHO de la carta */
+    width: 100%; /* Aquí controlas el ANCHO de la carta */
     background: #172030;
     border-radius: 15px;
     overflow: hidden; /* Importante para que la imagen no se salga de las esquinas redondeadas */
