@@ -63,6 +63,7 @@ class DAOShop
                     v.venue_name, 
                     v.address AS venue_address,
                     tt.type_name,
+                    p.platform_name,
                     GROUP_CONCAT(DISTINCT g.game_name SEPARATOR ', ') AS game_names
                 FROM tournaments t
                 LEFT JOIN cities c ON t.id_city = c.id_city
@@ -70,8 +71,10 @@ class DAOShop
                 LEFT JOIN tournament_types tt ON t.id_type = tt.id_type
                 LEFT JOIN torn_games tg ON t.id_torn = tg.id_torn
                 LEFT JOIN games g ON tg.id_game = g.id_game
+                LEFT JOIN torn_platforms tp ON t.id_torn = tp.id_torn
+                LEFT JOIN platforms p ON tp.id_platform = p.id_platform
                 WHERE t.id_torn = :id
-                GROUP BY t.id_torn";
+                GROUP BY t.id_torn;";
 
         try {
             $conexion = connect::con();
@@ -352,4 +355,36 @@ class DAOShop
         connect::close($conexion);
         return $retrArray;
     }
+
+    function count_related_events($platform_name, $id_torn) {
+        $sql = "SELECT COUNT(*) AS total 
+                FROM tournaments t INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn
+                INNER JOIN platforms p ON tp.id_platform = p.id_platform
+                WHERE p.platform_name = '$platform_name' AND t.id_torn != '$id_torn'";
+
+        $conexion = connect::con();
+        $res = $conexion->prepare($sql);
+        $res->execute();
+        $retrArray = $res->fetch(PDO::FETCH_ASSOC);
+        connect::close($conexion);
+        
+        return $retrArray;
+    }   
+
+    function select_related_events($platform_name, $id_torn, $loaded, $items) {
+    $sql = "SELECT * 
+         	FROM tournaments t INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn
+            INNER JOIN platforms p ON tp.id_platform = p.id_platform
+            WHERE p.platform_name = '$platform_name' AND t.id_torn != '$id_torn'
+            LIMIT $loaded, $items";
+
+    $conexion = connect::con();
+    $res = $conexion->prepare($sql);
+    $res->execute();
+    $retrArray = $res->fetchAll(PDO::FETCH_ASSOC); 
+    connect::close($conexion);
+    
+        return $retrArray;
+    }
+
 }

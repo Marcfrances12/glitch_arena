@@ -138,4 +138,46 @@ switch ($_GET['op']) {
         }
     break;
 
+    case 'count_events_related':
+        $platform_name = $_POST['platform_name'];
+        $id_torn = $_POST['id_torn'];
+        try {
+            $daoshop = new DAOShop();
+            $rdo = $daoshop->count_related_events($platform_name, $id_torn);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+        if (!$rdo) {
+            echo json_encode("error");
+            exit;
+        } else {
+            echo json_encode($rdo);
+        }
+    break;
+
+    case 'events_related':
+        $platform_name = $_POST['platform_name'];
+        $id_torn = $_POST['id_torn'];
+        $loaded = $_POST['loaded'];
+        $items = $_POST['items'];
+        try {
+            $daoshop = new DAOShop();
+            $rdo = $daoshop->select_related_events($platform_name, $id_torn, $loaded, $items);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+        if (!$rdo) {
+            echo json_encode("error");
+            exit;
+        } else {
+            $dinfo = array();
+            foreach ($rdo as $row) {
+                array_push($dinfo, $row);
+            }
+            echo json_encode($dinfo);
+        }
+    break;
+
 }

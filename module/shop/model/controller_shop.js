@@ -283,6 +283,7 @@ function loadDetails(id_torn) {
                         <div id='map-details' style='width:100%; height:300px; background:#1b1f27; border-radius:8px;'></div>
                     </div>
                 </div>
+                <div id='related_anchor'></div>
             `);
 
         
@@ -301,6 +302,10 @@ function loadDetails(id_torn) {
             });
         }
         mapatDetails(data[0], data[1][0]);
+        setTimeout(function() {
+            $('<div id="related_anchor"></div>').appendTo('.container_extras_det');
+            more_events_related(data[0].platform_name, data[0].id_torn);
+        }, 500);
 
     }).catch(function(err) {
          console.error("Error al cargar Detalles", err);
@@ -937,6 +942,181 @@ function pagination(filtros = null) {
         }).catch(function(err) {
             console.error("Error al calcular el total de páginas" + err);
         });
+}
+
+function events_related(loadeds = 0, platform_name, total_items, id_torn) {
+    let items = 4;
+    let loaded = loadeds;
+    let total_item = total_items;
+
+    ajaxPromise("module/shop/controller/controller_shop.php?op=events_related", 'POST', 'JSON', {
+        'platform_name': platform_name,
+        'id_torn': id_torn,
+        'loaded': loaded,
+        'items': items
+    })
+    .then(function(data) {
+
+        if (loaded == 0) {
+            $('<div></div>').attr({ 'id': 'related_content', 'class': 'related_content' }).appendTo('#related_anchor')
+                .html('<h2 class="cat">Torneos Relacionados</h2>');
+
+            for (row in data) {
+                if (data[row].id_torn != undefined) {
+                    console.log(data);
+
+                    $('<div class="flex-item more_info_list" id="' + data[row].id_torn + '"></div>')
+                        .appendTo('#related_content')
+                        .html(`
+                            <article class="card-evento">
+                                <div class="evento-img-wrapper">
+                                    <div id="list-carousel-${data[row].id_torn}" class="swiper">
+                                        <div class="swiper-wrapper container_listCarousel"></div>
+                                        <div class="swiper-button-prev"></div>
+                                        <div class="swiper-button-next"></div>
+                                    </div>
+                                </div>
+                                <div class="evento-body">
+                                    <h3 class="evento-title">${data[row].title}</h3>
+                                    <div class="evento-info-group">
+                                        <div class="evento-info-item">
+                                            <span class="material-symbols-outlined" style="font-size:1rem">calendar_month</span>
+                                            <span>${data[row].start_date}</span>
+                                        </div>
+                                        <div class="evento-info-item">
+                                            <span class="material-symbols-outlined" style="font-size:1rem">location_on</span>
+                                            <span>${data[row].venue_name}, ${data[row].city_name}</span>
+                                        </div>
+                                    </div>
+                                    <div class="evento-footer">
+                                        <div class="evento-price-box">
+                                            <p style="font-size: 0.75rem; color: #94a3b8; margin:0">Desde</p>
+                                            <p class="evento-price-value">${data[row].price}€</p>
+                                        </div>
+                                        <button id="${data[row].id_torn}" class="evento-btn buy-ticket-btn">
+                                            Comprar Entrada
+                                        </button>
+                                    </div>
+                                </div>
+                            </article>
+                        `);
+
+                    for (img in data[row].tournament_images) {
+                        $('<div></div>')
+                            .attr('class', 'carousel-item-c swiper-slide')
+                            .attr('id', data[row].tournament_images[img])
+                            .appendTo(`#list-carousel-${data[row].id_torn} .container_listCarousel`)
+                            .html(`
+                                <img src="${data[row].tournament_images[img]}" alt="${data[row].title}" class="evento-img">
+                            `);
+                    }
+                }
+            }
+
+            $('<div></div>').attr({ 'id': 'more_related_button', 'class': 'more_related_button' }).appendTo('#related_content')
+                .html('<button class="load_more_button" id="load_more_related_btn">CARGAR MÁS</button>');
+        }
+
+        if (loaded >= 4) {
+            for (row in data) {
+                if (data[row].id_torn != undefined) {
+
+                    $('<div class="flex-item more_info_list" id="' + data[row].id_torn + '"></div>')
+                        .insertBefore('#more_related_button')
+                        .html(`
+                            <article class="card-evento">
+                                <div class="evento-img-wrapper">
+                                    <div id="list-carousel-${data[row].id_torn}" class="swiper">
+                                        <div class="swiper-wrapper container_listCarousel"></div>
+                                        <div class="swiper-button-prev"></div>
+                                        <div class="swiper-button-next"></div>
+                                    </div>
+                                </div>
+                                <div class="evento-body">
+                                    <h3 class="evento-title">${data[row].title}</h3>
+                                    <div class="evento-info-group">
+                                        <div class="evento-info-item">
+                                            <span class="material-symbols-outlined" style="font-size:1rem">calendar_month</span>
+                                            <span>${data[row].start_date}</span>
+                                        </div>
+                                        <div class="evento-info-item">
+                                            <span class="material-symbols-outlined" style="font-size:1rem">location_on</span>
+                                            <span>${data[row].venue_name}, ${data[row].city_name}</span>
+                                        </div>
+                                    </div>
+                                    <div class="evento-footer">
+                                        <div class="evento-price-box">
+                                            <p style="font-size: 0.75rem; color: #94a3b8; margin:0">Desde</p>
+                                            <p class="evento-price-value">${data[row].price}€</p>
+                                        </div>
+                                        <button id="${data[row].id_torn}" class="evento-btn buy-ticket-btn">
+                                            Comprar Entrada
+                                        </button>
+                                    </div>
+                                </div>
+                            </article>
+                        `);
+
+                    for (img in data[row].tournament_images) {
+                        $('<div></div>')
+                            .attr('class', 'carousel-item-c swiper-slide')
+                            .attr('id', data[row].tournament_images[img])
+                            .appendTo(`#list-carousel-${data[row].id_torn} .container_listCarousel`)
+                            .html(`
+                                <img src="${data[row].tournament_images[img]}" alt="${data[row].title}" class="evento-img">
+                            `);
+                    }
+                }
+            }
+
+            let total_restante = total_item - 4;
+            if (total_restante <= loaded) {
+                $('#more_related_button').empty();
+            } else {
+                $('#more_related_button').empty();
+                $('#more_related_button').html('<button class="load_more_button" id="load_more_related_btn">CARGAR MÁS</button>');
+
+                $('#load_more_related_btn').off('click').on('click', function() {
+                    loaded += 4;
+                    events_related(loaded, platform_name, total_item, id_torn);
+                });
+            }
+        }
+
+       
+        if (loaded == 0) {
+            $('#load_more_related_btn').off('click').on('click', function() {
+                loaded += 4;
+                events_related(loaded, platform_name, total_item, id_torn);
+            });
+        }
+
+    }).catch(function() {
+        console.log("error events_related");
+    });
+}
+
+function more_events_related(platform_name, id_torn) {
+    var items = 0;
+
+    ajaxPromise('module/shop/controller/controller_shop.php?op=count_events_related', 'POST', 'JSON', {
+        'platform_name': platform_name,
+        'id_torn': id_torn
+    })
+    .then(function(data) {
+        console.log(data);
+        var total_items = data.total;
+        events_related(0, platform_name, total_items, id_torn);
+
+        $(document).on('click', '#load_more_related_btn', function() {
+            items = items + 4;
+            $('#more_related_button').empty();
+            events_related(items, platform_name, total_items, id_torn);
+        });
+
+    }).catch(function() {
+        console.log('error more_events_related');
+    });
 }
 
 $(document).ready(function() {

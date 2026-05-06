@@ -848,3 +848,14 @@ CSS
     pointer-events: none !important;      /* No se puede clicar */
     background-color: #0f172a !important;
 }
+
+#related_content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+#related_content h2.cat,
+#more_related_button {
+    grid-column: 1 / -1;
+}
