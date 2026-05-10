@@ -859,3 +859,43 @@ CSS
 #more_related_button {
     grid-column: 1 / -1;
 }
+
+#related_content > div {
+    min-width: 0;
+}
+#related_anchor {
+    margin-top: 30px;
+}
+#related_content h2.cat {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #256af4;
+}
+
+#more_related_button {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#more_related_button .load_more_button {
+    background-color: #256af4;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.2s ease;
+}
+
+#more_related_button .load_more_button:hover {
+    background-color: #1a55d4;
+}

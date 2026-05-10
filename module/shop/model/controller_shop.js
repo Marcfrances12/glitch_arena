@@ -283,7 +283,7 @@ function loadDetails(id_torn) {
                         <div id='map-details' style='width:100%; height:300px; background:#1b1f27; border-radius:8px;'></div>
                     </div>
                 </div>
-                <div id='related_anchor'></div>
+                
             `);
 
         
@@ -303,7 +303,7 @@ function loadDetails(id_torn) {
         }
         mapatDetails(data[0], data[1][0]);
         setTimeout(function() {
-            $('<div id="related_anchor"></div>').appendTo('.container_extras_det');
+        $('<div id="related_anchor"></div>').appendTo('.container_extras_det');
             more_events_related(data[0].platform_name, data[0].id_torn);
         }, 500);
 
@@ -1010,11 +1010,26 @@ function events_related(loadeds = 0, platform_name, total_items, id_torn) {
                                 <img src="${data[row].tournament_images[img]}" alt="${data[row].title}" class="evento-img">
                             `);
                     }
-                }
-            }
 
-            $('<div></div>').attr({ 'id': 'more_related_button', 'class': 'more_related_button' }).appendTo('#related_content')
-                .html('<button class="load_more_button" id="load_more_related_btn">CARGAR MÁS</button>');
+                     new Swiper(`#list-carousel-${data[row].id_torn}`, {
+                        loop: true,
+                        autoplay: {
+                                delay: 2500,
+                                disableOnInteraction: false,
+                        },
+                        navigation: {
+                            nextEl: `#list-carousel-${data[row].id_torn} .swiper-button-next`,
+                            prevEl: `#list-carousel-${data[row].id_torn} .swiper-button-prev`,
+                        },
+                    });
+                    
+                }
+                
+            }
+            if (total_item > 4) {
+                $('<div></div>').attr({ 'id': 'more_related_button', 'class': 'more_related_button' }).appendTo('#related_content')
+                    .html('<button class="load_more_button" id="load_more_related_btn">CARGAR MÁS</button>');
+            }
         }
 
         if (loaded >= 4) {
@@ -1066,6 +1081,19 @@ function events_related(loadeds = 0, platform_name, total_items, id_torn) {
                                 <img src="${data[row].tournament_images[img]}" alt="${data[row].title}" class="evento-img">
                             `);
                     }
+
+                      new Swiper(`#list-carousel-${data[row].id_torn}`, {
+                        loop: true,
+                        autoplay: {
+                                delay: 2500,
+                                disableOnInteraction: false,
+                            },
+                        navigation: {
+                            nextEl: `#list-carousel-${data[row].id_torn} .swiper-button-next`,
+                            prevEl: `#list-carousel-${data[row].id_torn} .swiper-button-prev`,
+                        },
+                    });       
+                    
                 }
             }
 
@@ -1106,13 +1134,14 @@ function more_events_related(platform_name, id_torn) {
     .then(function(data) {
         console.log(data);
         var total_items = data.total;
+        if (total_items == 0) return;
         events_related(0, platform_name, total_items, id_torn);
 
-        $(document).on('click', '#load_more_related_btn', function() {
-            items = items + 4;
-            $('#more_related_button').empty();
-            events_related(items, platform_name, total_items, id_torn);
-        });
+        // $(document).on('click', '#load_more_related_btn', function() {
+        //     items = items + 4;
+        //     $('#more_related_button').empty();
+        //     events_related(items, platform_name, total_items, id_torn);
+        // });
 
     }).catch(function() {
         console.log('error more_events_related');

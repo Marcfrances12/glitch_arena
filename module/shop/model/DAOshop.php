@@ -372,19 +372,58 @@ class DAOShop
     }   
 
     function select_related_events($platform_name, $id_torn, $loaded, $items) {
-    $sql = "SELECT * 
-         	FROM tournaments t INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn
-            INNER JOIN platforms p ON tp.id_platform = p.id_platform
-            WHERE p.platform_name = '$platform_name' AND t.id_torn != '$id_torn'
-            LIMIT $loaded, $items";
+        $sql = "SELECT 
+                    t.*, 
+                    c.city_name, 
+                    v.venue_name, 
+                    GROUP_CONCAT(DISTINCT g.game_name SEPARATOR ', ') AS game_name,
+                    GROUP_CONCAT(DISTINCT ti.image_url SEPARATOR ', ') AS tournament_images
+                FROM tournaments t
+                INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn
+                INNER JOIN platforms p ON tp.id_platform = p.id_platform
+                LEFT JOIN cities c ON t.id_city = c.id_city
+                LEFT JOIN venues v ON t.id_venue = v.id_venue
+                LEFT JOIN torn_games tg ON t.id_torn = tg.id_torn
+                LEFT JOIN games g ON tg.id_game = g.id_game
+                LEFT JOIN torn_images ti ON t.id_torn = ti.id_torn
+                WHERE p.platform_name = '$platform_name' AND t.id_torn != '$id_torn'
+                GROUP BY t.id_torn
+                ORDER BY t.start_date ASC
+                LIMIT $loaded, $items";
 
-    $conexion = connect::con();
-    $res = $conexion->prepare($sql);
-    $res->execute();
-    $retrArray = $res->fetchAll(PDO::FETCH_ASSOC); 
-    connect::close($conexion);
-    
-        return $retrArray;
+        try {
+            $conexion = connect::con();
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $conexion = null;
+
+            $retrArray = [];
+
+            foreach ($rows as $row) {
+                $retrArray[] = array(
+                    "id_torn"           => $row["id_torn"],
+                    "title"             => $row["title"],
+                    "price"             => $row["price"],
+                    "start_date"        => $row["start_date"],
+                    "latitud"           => $row["latitud"],
+                    "longitud"          => $row["longitud"],
+                    "city_name"         => $row["city_name"],
+                    "venue_name"        => $row["venue_name"],
+                    "game_name"         => !empty($row["game_name"])
+                                                ? explode(", ", $row["game_name"])
+                                                : [],
+                    "tournament_images" => !empty($row["tournament_images"])
+                                                ? explode(", ", $row["tournament_images"])
+                                                : [],
+                );
+            }
+
+            return $retrArray;
+
+        } catch (PDOException $e) {
+            return [];
+        }
     }
 
 }

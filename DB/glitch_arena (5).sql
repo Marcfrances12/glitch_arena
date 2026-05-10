@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 16-04-2026 a las 15:02:12
+-- Tiempo de generación: 10-05-2026 a las 19:31:29
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `config_filters` (
   `pivot_table` varchar(100) DEFAULT NULL,
   `pivot_fk` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_filter`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `config_filters`
@@ -102,7 +102,8 @@ INSERT INTO `config_filters` (`id_filter`, `display_name`, `db_column`, `html_ty
 (2, 'Plataforma', 'platform_name', 'radio', 2, 'platforms', 'platform_name', 'torn_platforms', 'id_platform'),
 (3, 'Ciudades', 'city_name', 'check', 3, 'cities', 'city_name', NULL, 'id_city'),
 (4, 'Rango de Precio', 'price', 'slider', 4, NULL, NULL, NULL, NULL),
-(5, 'Juego', 'game_name', 'select', 5, 'games', 'game_name', 'torn_games', 'id_game');
+(5, 'Tipos', 'type_name', 'select', 5, 'tournament_types', 'type_name', NULL, 'id_type'),
+(6, 'Juego', 'game_name', 'select', 6, 'games', 'game_name', 'torn_games', 'id_game');
 
 -- --------------------------------------------------------
 
@@ -149,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `games` (
   `developer` varchar(100) DEFAULT NULL,
   `game_img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_game`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `games`
@@ -163,7 +164,8 @@ INSERT INTO `games` (`id_game`, `game_name`, `developer`, `game_img`) VALUES
 (5, 'Valorant', 'Riot Games', 'view/img/games/val.jpg'),
 (6, 'F1', 'Electronics Arts', 'view/img/games/f1.jpg'),
 (7, 'FC 26', 'Electronics Arts', 'view/img/games/fc.jpg'),
-(8, 'Smahs Bros Ultimate', 'Nintendo', 'view/img/games/smash.jpg');
+(8, 'Smahs Bros Ultimate', 'Nintendo', 'view/img/games/smash.jpg'),
+(9, 'Clash Royale', 'Supercell', 'view/img/games/cr.jpg');
 
 -- --------------------------------------------------------
 
@@ -178,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `game_images` (
   `game_img` varchar(255) NOT NULL,
   PRIMARY KEY (`id_game_img`),
   KEY `fk_game` (`id_game`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `game_images`
@@ -208,7 +210,10 @@ INSERT INTO `game_images` (`id_game_img`, `id_game`, `game_img`) VALUES
 (21, 7, 'view/img/games/fc_1.jpg'),
 (22, 7, 'view/img/games/fc_2.jpg'),
 (23, 8, 'view/img/games/smash_1.jpg'),
-(24, 8, 'view/img/games/smash_2.jpeg');
+(24, 8, 'view/img/games/smash_2.jpeg'),
+(25, 9, 'view/img/games/cr1.jpg'),
+(26, 9, 'view/img/games/cr2.jpg'),
+(27, 9, 'view/img/games/cr2.jpg');
 
 -- --------------------------------------------------------
 
@@ -222,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `platforms` (
   `platform_name` varchar(100) NOT NULL,
   `platform_logo` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_platform`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `platforms`
@@ -232,7 +237,8 @@ INSERT INTO `platforms` (`id_platform`, `platform_name`, `platform_logo`) VALUES
 (1, 'PC', 'view/img/plataforma/pc.jpg'),
 (2, 'PS5', 'view/img/plataforma/ps5.jpg'),
 (3, 'Xbox', 'view/img/plataforma/xbox.png'),
-(4, 'Nintendo', 'view/img/plataforma/nintendo.jpg');
+(4, 'Nintendo', 'view/img/plataforma/nintendo.jpg'),
+(5, 'Mobile', 'view/img/plataforma/mobile.jpg');
 
 -- --------------------------------------------------------
 
@@ -260,7 +266,8 @@ INSERT INTO `torn_categories` (`id_torn`, `id_category`) VALUES
 (5, 1),
 (6, 5),
 (7, 3),
-(8, 4);
+(8, 4),
+(9, 6);
 
 -- --------------------------------------------------------
 
@@ -295,6 +302,7 @@ INSERT INTO `torn_extra` (`id_torn`, `id_extra`) VALUES
 (5, 2),
 (6, 2),
 (7, 2),
+(9, 2),
 (1, 3),
 (4, 3),
 (5, 3),
@@ -310,25 +318,30 @@ INSERT INTO `torn_extra` (`id_torn`, `id_extra`) VALUES
 (6, 5),
 (7, 5),
 (8, 5),
+(9, 5),
 (1, 6),
 (3, 6),
 (5, 6),
 (6, 6),
 (8, 6),
+(9, 6),
 (2, 7),
 (3, 7),
 (4, 7),
 (7, 7),
+(9, 7),
 (2, 8),
 (3, 8),
 (5, 8),
 (6, 8),
 (7, 8),
+(9, 8),
 (1, 9),
 (3, 9),
 (4, 9),
 (7, 9),
 (8, 9),
+(9, 9),
 (1, 10),
 (2, 10),
 (5, 10),
@@ -340,6 +353,7 @@ INSERT INTO `torn_extra` (`id_torn`, `id_extra`) VALUES
 (5, 11),
 (6, 11),
 (7, 11),
+(9, 11),
 (2, 12),
 (4, 12),
 (6, 12),
@@ -372,7 +386,8 @@ INSERT INTO `torn_games` (`id_torn`, `id_game`) VALUES
 (5, 5),
 (6, 6),
 (7, 7),
-(8, 8);
+(8, 8),
+(9, 9);
 
 -- --------------------------------------------------------
 
@@ -387,7 +402,7 @@ CREATE TABLE IF NOT EXISTS `torn_images` (
   `image_url` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id_image`),
   KEY `id_torn` (`id_torn`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `torn_images`
@@ -412,7 +427,9 @@ INSERT INTO `torn_images` (`id_image`, `id_torn`, `image_url`) VALUES
 (16, 7, 'view/img/torneos/fc_t.jpg'),
 (17, 7, 'view/img/torneos/fc_t_1.jpeg'),
 (18, 8, 'view/img/torneos/smash_t.jpg'),
-(19, 8, 'view/img/torneos/smash_t_1.jpg');
+(19, 8, 'view/img/torneos/smash_t_1.jpg'),
+(20, 9, 'view/img/torneos/cr1.jpg'),
+(21, 9, 'view/img/torneos/cr2.jpeg');
 
 -- --------------------------------------------------------
 
@@ -444,7 +461,8 @@ INSERT INTO `torn_platforms` (`id_torn`, `id_platform`) VALUES
 (6, 3),
 (7, 2),
 (7, 3),
-(8, 4);
+(8, 4),
+(9, 5);
 
 -- --------------------------------------------------------
 
@@ -475,7 +493,7 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
   KEY `id_city` (`id_city`),
   KEY `id_venue` (`id_venue`),
   KEY `id_type` (`id_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `tournaments`
@@ -489,7 +507,8 @@ INSERT INTO `tournaments` (`id_torn`, `title`, `description`, `start_date`, `end
 (5, 'Valorant Masters Sevilla', 'Torneo presencial de alto nivel competitivo en el sur.', '15-06-2026 16:00:00', '20-06-2026 22:00:00', 25.00, 200, 'Riot Games', 'Abierto', '{\"1st\": \"5000€\", \"2nd\": \"2500€\", \"3rd\": \"1000€\"}', 5, 5, 1, 37.37952151, -5.97881081, 0, '2026-03-24 16:39:43'),
 (6, 'Gran Premio Digital Vlc', 'Campeonato híbrido de F1 usando simuladores y formato online.', '20-07-2026 12:00:00', NULL, 30.00, 60, 'FIA Esports', 'Abierto', '{\"1st\": \"Volante Fanatec\", \"2nd\": \"Pedales Pro\", \"3rd\": \"150€\"}', 4, 4, 3, 39.47685943, -0.36847044, 0, '2026-03-24 16:39:43'),
 (7, 'Copa de Campeones FC 26', 'Torneo online crossplay para demostrar quién es el rey de la pista.', '05-08-2026 18:00:00', NULL, 15.00, 256, 'LVP', 'Abierto', '{\"1st\": \"1500€ + PS5\", \"2nd\": \"800€\", \"3rd\": \"DualSense Edge\"}', 1, 1, 2, 40.42500551, -3.69609014, 0, '2026-03-24 16:39:43'),
-(8, 'Super Smash Extremadura', 'El evento presencial más grande de lucha en la región.', '10-09-2026 10:00:00', '12-09-2026 20:00:00', 12.00, 128, 'Nintendo ES', 'Abierto', '{\"1st\": \"2000€\", \"2nd\": \"Nintendo Switch OLED\", \"3rd\": \"Mando Pro\"}', 6, 6, 1, 38.92562942, -6.32881183, 0, '2026-03-24 16:39:43');
+(8, 'Super Smash Extremadura', 'El evento presencial más grande de lucha en la región.', '10-09-2026 10:00:00', '12-09-2026 20:00:00', 12.00, 128, 'Nintendo ES', 'Abierto', '{\"1st\": \"2000€\", \"2nd\": \"Nintendo Switch OLED\", \"3rd\": \"Mando Pro\"}', 6, 6, 1, 38.92562942, -6.32881183, 0, '2026-03-24 16:39:43'),
+(9, 'Clash Royale Grand Prix ', 'El mayor torneo de Clash Royale del interior valenciano. Formato eliminación directa con fase de grupos. Abierto a todos los niveles.', '12-07-2026 10:00:00', '12-07-2026 22:00:00', 18.00, 64, 'Supercell ES', 'Abierto', '{\"1st\": \"1500€ + Cuenta Legendaria\", \"2nd\": \"750€ + 50.000 Gemas\", \"3rd\": \"300€ + 20.000 Gemas\", \"MVP\": \"Skin Exclusiva Torre\"}', 4, 4, 1, 38.73514000, -0.82371000, 0, '2026-05-05 15:30:54');
 
 -- --------------------------------------------------------
 
