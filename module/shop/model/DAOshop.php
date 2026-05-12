@@ -131,7 +131,7 @@ class DAOShop
         }
     }
 
-    function filtros($filter, $limit, $offset) {
+    function filtros($filter, $order, $direction, $limit, $offset) {
     
         $consulta = "SELECT 
                     t.*, 
@@ -183,7 +183,7 @@ class DAOShop
             }
         }
    
-        $consulta .= " GROUP BY t.id_torn ORDER BY t.start_date ASC LIMIT $limit OFFSET $offset";
+        $consulta .= " GROUP BY t.id_torn ORDER BY t.$order $direction LIMIT $limit OFFSET $offset";
 
        
         try {

@@ -17,7 +17,7 @@ function shopTodo() {
     loadEventos(filtro_final);
 }
 
-function loadEventos(filtro) {
+function loadEventos(filtro, order = 'id_torn', direction = 'DESC') {
     var url;
    
     if (filtro && filtro.length > 0) {
@@ -25,11 +25,11 @@ function loadEventos(filtro) {
     } else {
         url = "module/shop/controller/controller_shop.php?op=all_eventos";
     }
-    ajaxForSearch(url, filtro);
+    ajaxForSearch(url, filtro, order, direction);
 }
 
-function ajaxForSearch(url, filtro, limit = 4, offset = 0) {
-    ajaxPromise(url, 'POST', 'JSON', { 'filtro': filtro, 'limit': limit, 
+function ajaxForSearch(url, filtro, order = '0', direction = 'DESC', limit = 4, offset = 0) {
+    ajaxPromise(url, 'POST', 'JSON', { 'filtro': filtro, 'order': order, 'direction': direction,  'limit': limit, 
         'offset': offset })
         .then(function(data) {
             console.log(data);
@@ -135,6 +135,7 @@ function ajaxForSearch(url, filtro, limit = 4, offset = 0) {
 }
     
 function clicks() {
+
     $(document).on("click", ".more_info_list", function(e) {
 
         if ($(e.target).closest(".swiper-button-prev").length) return;
@@ -160,12 +161,23 @@ function clicks() {
 
     $(document).on('click', '#Remove_filter', function() {
         localStorage.removeItem('filtros');
+        localStorage.removeItem('order_selected');
+        localStorage.removeItem('direction_selected');
         location.reload();
     });
 
     $(document).on('input', '#price-slider', function() {
         let val = $(this).val();
         $('#price-display').text(val + '€');
+    });
+
+   $(document).on('click', '.order-btn', function() {
+        var val = $('#orderby').val();
+        if (val === '0') return;
+        var parts = val.split('|');
+        var order = parts[0];
+        var direction = parts[1];
+        aplicar_filtros_auto(order, direction);
     });
 
 }
@@ -464,7 +476,10 @@ function print_filtros() {
                    
                     
                 </div>
-                <div class="space-y-8">`;
+                <div class="space-y-8">
+                
+               
+                `;
 
         data.forEach(filtro => {
             html += `<div class="space-y-3">
@@ -586,6 +601,7 @@ function filter_button() {
             localStorage.setItem('filtros', JSON.stringify(filtro));
         } else {
             localStorage.removeItem('filtros');
+            
         }
         
         location.reload(); 
@@ -626,6 +642,12 @@ function highlightFilters() {
                 }
             }
         });
+    }
+    var order = localStorage.getItem('order_selected');
+    var direction = localStorage.getItem('direction_selected');
+
+    if (order && direction) {
+        $('#orderby').val(order + '|' + direction);
     }
 }
 
@@ -670,9 +692,12 @@ function get_active_filters() {
     return filtros;
 }
 
-function aplicar_filtros_auto() {
+function aplicar_filtros_auto(order = 'id_torn', direction = 'DESC') {
     let filtros = get_active_filters();
     
+    localStorage.setItem('order_selected', order);
+    localStorage.setItem('direction_selected', direction); 
+
    if (filtros.length > 0) {
         localStorage.setItem('filtros', JSON.stringify(filtros));
         console.log("LocalStorage:", filtros);
@@ -680,8 +705,8 @@ function aplicar_filtros_auto() {
         localStorage.removeItem('filtros');
     }
 
-    ajaxForSearch('module/shop/controller/controller_shop.php?op=filtros', filtros);
-    pagination();
+    ajaxForSearch('module/shop/controller/controller_shop.php?op=filtros', filtros, order, direction);
+    pagination(filtros, order, direction);
 }
 
 function update_count() {
@@ -868,9 +893,11 @@ function mapatDetails(row, galleryImages) {
     setTimeout(() => { mapDetails.invalidateSize(); }, 400);
 }
 
-function pagination(filtros = null) {
+function pagination(filtros = null, order ='0', direction = 'DESC') {
     var filtros = filtros || JSON.parse(localStorage.getItem('filtros')) || null;
-    
+    var order = order || localStorage.getItem('order_selected') || 'id_torn';
+    var direction = direction || localStorage.getItem('direction_selected') || 'DESC';
+
     var url_count = "";
     var data_count = {};
 
@@ -931,9 +958,9 @@ function pagination(filtros = null) {
                 var offset = (num - 1) * items_per_page;
                 
                 if (filtros) {
-                    ajaxForSearch("module/shop/controller/controller_shop.php?op=filtros", filtros, items_per_page, offset);
+                    ajaxForSearch("module/shop/controller/controller_shop.php?op=filtros", filtros, order, direction, items_per_page, offset);
                 } else {
-                    ajaxForSearch("module/shop/controller/controller_shop.php?op=all_eventos", null, items_per_page, offset);
+        ajaxForSearch("module/shop/controller/controller_shop.php?op=filtros", [], order, direction, items_per_page, offset);
                 }
 
                 // $('html, body').animate({ scrollTop: 0 }, 500);
@@ -1147,6 +1174,7 @@ function more_events_related(platform_name, id_torn) {
         console.log('error more_events_related');
     });
 }
+
 
 $(document).ready(function() {
     loadEventos();

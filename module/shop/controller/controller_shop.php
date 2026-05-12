@@ -73,12 +73,21 @@ switch ($_GET['op']) {
         }
     break;
     
-    case 'filtros': 
+   case 'filtros': 
         $daoshop = new DAOShop();
         try {
             $filtros = (isset($_POST['filtro']) && !empty($_POST['filtro'])) ? $_POST['filtro'] : [];
             
-            $filt = $daoshop->filtros($filtros, $_POST['limit'], $_POST['offset']);
+            $allowed_order = ['price', 'start_date', 'id_torn'];
+            $allowed_direction = ['ASC', 'DESC'];
+
+            $order = (isset($_POST['order']) && in_array($_POST['order'], $allowed_order)) 
+                ? $_POST['order'] : 'id_torn';
+
+            $direction = (isset($_POST['direction']) && in_array($_POST['direction'], $allowed_direction)) 
+                ? $_POST['direction'] : 'DESC';
+
+            $filt = $daoshop->filtros($filtros, $order, $direction, $_POST['limit'], $_POST['offset']);
 
             if (!empty($filt)) {
                 echo json_encode($filt);

@@ -167,7 +167,18 @@
 <span class="material-symbols-outlined">chevron_right</span>
 </button>
 </div> -->
-
+ <div class="flex items-center gap-3 mb-6">
+        <select id="orderby" class="bg-[#0f172a] border border-slate-700 text-slate-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option value="0">Order by...</option>
+            <option value="price|ASC">Precio: menor a mayor</option>
+            <option value="price|DESC">Precio: mayor a menor</option>
+            <option value="start_date|ASC">Fecha: más próxima</option>
+            <option value="start_date|DESC">Fecha: más lejana</option>
+        </select>
+        <button id="order-btn" class="order-btn bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all">
+            Ordenar
+        </button>
+    </div>
 
 <div id="content_shop_evento"></div>
 
