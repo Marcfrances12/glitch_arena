@@ -426,4 +426,16 @@ class DAOShop
         }
     }
 
+    function update_visits($id_torn) {
+        try {
+            $conexion = connect::con();
+            $stmt = $conexion->prepare("UPDATE tournaments SET visits = visits + 1 WHERE id_torn = ?");
+            $stmt->execute([$id_torn]);
+            $conexion = null;
+            return true;
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
+
 }

@@ -87,4 +87,27 @@ class DAOHome
 		return $res;
 	}
 
+	function get_popular_eventos() {
+		try {
+			$conexion = connect::con();
+			$stmt = $conexion->prepare("
+				SELECT t.id_torn, t.title, t.price, t.start_date, t.visits,
+					c.city_name, v.venue_name,
+					GROUP_CONCAT(DISTINCT ti.image_url SEPARATOR ', ') AS tournament_images
+				FROM tournaments t
+				LEFT JOIN cities c ON t.id_city = c.id_city
+				LEFT JOIN venues v ON t.id_venue = v.id_venue
+				LEFT JOIN torn_images ti ON t.id_torn = ti.id_torn
+				GROUP BY t.id_torn
+				ORDER BY t.visits DESC
+				LIMIT 6
+			");
+			$stmt->execute();
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} catch (PDOException $e) {
+			return ["error" => $e->getMessage()];
+		}
+	}
+
+
 }

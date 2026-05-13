@@ -382,6 +382,60 @@ function loadType() {
     });
 }
 
+function loadPopularEventos() {
+    ajaxPromise('module/home/controller/controller_home.php?op=popular_eventos', 'GET', 'JSON')
+    .then(function(data) {
+        // console.log(data);
+        $('#containerPopular').empty();
+
+        for (let row = 0; row < data.length; row++) {
+            let images = data[row].tournament_images 
+                ? data[row].tournament_images.split(', ') 
+                : [];
+
+            $("<div/>")
+                .addClass("swiper-slide popular-card")
+                .attr('id', data[row].id_torn)
+                .appendTo('#containerPopular')
+                .html(`
+                    <div class="popular-card-img-wrapper">
+                        <img src="${images[0] || 'view/img/default.png'}" alt="${data[row].title}" class="popular-card-img">
+                        <div class="popular-card-badge">
+                            <span class="material-symbols-outlined" style="font-size:0.9rem">trending_up</span>
+                            ${data[row].visits} visitas
+                        </div>
+                    </div>
+                    <div class="popular-card-body">
+                        <h3 class="popular-card-title">${data[row].title}</h3>
+                        <div class="popular-card-info">
+                            <span class="material-symbols-outlined" style="font-size:1rem">location_on</span>
+                            <span>${data[row].venue_name}, ${data[row].city_name}</span>
+                        </div>
+                        <div class="popular-card-footer">
+                            <span class="popular-card-price">${data[row].price}€</span>
+                            <button class="popular-card-btn">Ver evento</button>
+                        </div>
+                    </div>
+                `);
+        }
+
+        new Swiper(".mySwiperPopular", {
+            slidesPerView: 3,
+            spaceBetween: 20,
+            loop: false,
+            navigation: {
+                nextEl: ".btn-next-popular",
+                prevEl: ".btn-prev-popular"
+            },
+            breakpoints: {
+                320: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
+            }
+        });
+    });
+}
+
 function clicks(){
 
     $(document).on("click",'#containerCategories > div', function (){
@@ -497,6 +551,18 @@ function clicks(){
         }
        
     });
+
+    $(document).on("click", '#containerPopular > div', function() {
+    var id = $(this).attr('id');
+    if (id) {
+        
+        ajaxPromise('module/shop/controller/controller_shop.php?op=update_visits', 'POST', 'JSON', { 'id_torn': id });
+        
+        setTimeout(function() {
+            window.location.href = 'index.php?page=controller_shop&op=list&detalle=' + id;
+        }, 300);
+    }
+});
 }
 
 $(document).ready(function () {
@@ -506,6 +572,7 @@ $(document).ready(function () {
     loadGames();
     loadCity();
     loadType();
+    loadPopularEventos();
     clicks();
     
 });

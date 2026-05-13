@@ -145,6 +145,7 @@ function clicks() {
         var id_torn = this.getAttribute('id');
         loadDetails(id_torn);
         loadExtras(id_torn);
+        update_visits(id_torn);
     });
 
     $(document).on('change', '.dynamic-filter-input', function() {
@@ -1175,6 +1176,9 @@ function more_events_related(platform_name, id_torn) {
     });
 }
 
+function update_visits(id_torn) {
+    ajaxPromise('module/shop/controller/controller_shop.php?op=update_visits', 'POST', 'JSON', { 'id_torn': id_torn });
+}
 
 $(document).ready(function() {
     loadEventos();

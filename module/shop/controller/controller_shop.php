@@ -78,7 +78,7 @@ switch ($_GET['op']) {
         try {
             $filtros = (isset($_POST['filtro']) && !empty($_POST['filtro'])) ? $_POST['filtro'] : [];
             
-            $allowed_order = ['price', 'start_date', 'id_torn'];
+            $allowed_order = ['price', 'start_date', 'id_torn', 'visits'];
             $allowed_direction = ['ASC', 'DESC'];
 
             $order = (isset($_POST['order']) && in_array($_POST['order'], $allowed_order)) 
@@ -186,6 +186,16 @@ switch ($_GET['op']) {
                 array_push($dinfo, $row);
             }
             echo json_encode($dinfo);
+        }
+    break;
+
+    case 'update_visits':
+        $daoshop = new DAOShop();
+        try {
+            $result = $daoshop->update_visits($_POST['id_torn']);
+            echo json_encode($result);
+        } catch (Exception $e) {
+            echo json_encode(["error" => $e->getMessage()]);
         }
     break;
 

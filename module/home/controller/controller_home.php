@@ -130,7 +130,15 @@ switch ($_GET['op']) {
         }
     break;
 
-    
+    case 'popular_eventos':
+        $daohome = new DAOHome();
+        try {
+            $data = $daohome->get_popular_eventos();
+            echo json_encode($data);
+        } catch (Exception $e) {
+            echo json_encode(["error" => $e->getMessage()]);
+        }
+    break;
     default:
     include("view/inc/error404.php");
     break;
