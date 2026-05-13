@@ -144,6 +144,7 @@ function clicks() {
 
         var id_torn = this.getAttribute('id');
         loadDetails(id_torn);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         loadExtras(id_torn);
         update_visits(id_torn);
     });
@@ -743,7 +744,6 @@ function update_count() {
         $('#count-results').text('0');
     });
 }
-
 
 let mapInstance = null;
 

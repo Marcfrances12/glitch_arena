@@ -1,0 +1,153 @@
+
+
+
+    <!-- Background glows -->
+    <div class="bg-glow">
+        <div class="bg-glow-top"></div>
+        <div class="bg-glow-bottom"></div>
+    </div>
+
+    <!-- Background decoration image -->
+    <div class="bg-decoration">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKULnD_h632vP3XeLhhaXO2B2h7EcsKstmJYPcSmP4d_OhXHAfuthaPop4I9zbzxxj9_c94ew1TFbShGCxN1WG8svXEPBqtB0mWFH8oJ_3qMSFxV50L74ZpRfSiYUcjpCrtxu77UY7Bn5j85I-E9YmQGoY4JGNgwUJrZkhG7lvRS6BP-XYYGQY3aMCaNafZCirhbJf5nUbaKGi1rTbzjCMpmByp8Sw8PpuBPUo-_e_UFU1x6cYjvh0Ol7U0mCl76Av8sGMqxzSROw" alt="Arena background" />
+    </div>
+
+    <!-- Auth Container -->
+    <div class="auth-wrapper">
+
+        <a href="index.php?page=controller_home&op=view" class=" hover:opacity-80 transition-opacity decoration-none text-inherit">
+            <div class="brand">
+                <h1 class="brand-title">GLITCH ARENA</h1 >
+                <p class="brand-subtitle">ENTER THE GAME</p>
+            </div>
+        </a>
+        <!-- Auth Card -->
+        <div class="auth-card">
+
+            <!-- Tab Switcher -->
+            <div class="tab-switcher">
+                <div class="tab-indicator" id="tab-indicator"></div>
+                <button class="tab-btn" id="tab-login" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn inactive" id="tab-signup" onclick="switchTab('signup')">Signup</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div id="login-form-container">
+                <form onsubmit="return false;">
+
+                    <div class="form-group">
+                        <label class="form-label">Correo Electronico</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">mail</span>
+                            <input class="form-input" type="email" placeholder="commander@glitch.gg" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label class="form-label" style="margin:0">Contraseña</label>
+                            <a class="forgot-link" href="#">Olvidaste la contraseña?</a>
+                        </div>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">lock</span>
+                            <input class="form-input" type="password" placeholder="••••••••••••" />
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" type="submit">
+                        LOGIN TO ARENA
+                        <span class="material-symbols-outlined arrow-icon">bolt</span>
+                    </button>
+
+                </form>
+            </div>
+
+            <!-- SIGNUP FORM -->
+            <div id="signup-form-container" class="hidden">
+                <form onsubmit="return false;">
+
+                    <div class="form-group">
+                        <label class="form-label">Nombre</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">person</span>
+                            <input class="form-input" type="text" placeholder="Glitch_Overlord" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Correo Electronico</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">mail</span>
+                            <input class="form-input" type="email" placeholder="commander@glitch.gg" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Contraseña</label>
+                        <div class="input-wrapper">
+                            <span class="material-symbols-outlined input-icon">lock</span>
+                            <input class="form-input" type="password" placeholder="••••••••••••" />
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" type="submit">
+                        CREAR CUENTA
+                    </button>
+
+                </form>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider">
+                <hr />
+                <span class="divider-label">ACCESO RAPIDO</span>
+            </div>
+
+            <!-- Social Buttons -->
+            <div class="social-buttons">
+                <button class="social-btn" title="Google">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhQnxs6ac_BpyM9d60DlVBAPK-z_SCF8du2fST80Grv8hdzsSHFPbk_Hrj3nkPYChNclKp3vV8N_uqyaSWvN3ktNlfUlX5zc-VbHDdaDiPipLFe979r7aB5Wus1Op04sZDiXO2mhzigRNIiMxKFE1FQPkY_IsfrtZQcsBR-ly-9iBXP_Fdr--ktd7MIf5AgVJM-CJb2qNmwWrHG6pZipcYSHxeiv4o0OAGkOj6lpI6AJvBbI-T5MCtO6ZG6cydpg9pgtGnWLoAej4" alt="Google" />
+                </button>
+                <button class="social-btn" title="Discord">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaFcnx6LQ6qesDLvYJoT9aryNfRSjepQaIGUwTQnqvW1VnbKwZVBtGrIApni_Jhu6dZt5Zxrr7rYJCykozNsq7HkE6ofXcIisiGmNvLGaArPN14TkoqXu4roZDlmmd33Ff6JBTTGR73-6v5NvkOyEOpjlM2F-v94xuzscP7S4YvjmULNqsw8N-4L4MDdVLQUF4OHRsSziV4ncRvi8Lh0zVza-sBmZaP-6Ny6xO3baA5p5BaKbNx4WluOAZxjF14tElTUjktnkrFcc" alt="Discord" />
+                </button>
+                <button class="social-btn" title="Steam">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAeLN46I53CMc4Lr3alKYI7w4DQ-06Y8Kd1b4G1utL_PXlPYCJmFYsAhcvITTAGJVkIBnj7_XLrSluCvBiRppZ5pWfVc2h2NLCg9ojXPwFGjRxyiX1YG4wdjptDdlY4TFkVLD9XV02XoMsoWQulBdvH2MlW5X1JPiL_4qTuJunpYAo2U4uWDBBXYYRQFEZi39u5nPyuhFGsKHMRdELV5yNi-Ytjt23Zaairv5D8FH3cFT_LCYlLTHPVSP_Cfo6ApVmjFfeCTsJU4Y" alt="Steam" />
+                </button>
+            </div>
+
+        </div><!-- /.auth-card -->
+
+        <!-- Support -->
+        <p class="support-text">
+            Facing issues? <a class="support-link" href="#">Contact Support</a>
+        </p>
+
+    </div><!-- /.auth-wrapper -->
+
+    <script>
+        function switchTab(type) {
+            const loginContainer = document.getElementById('login-form-container');
+            const signupContainer = document.getElementById('signup-form-container');
+            const indicator = document.getElementById('tab-indicator');
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+
+            if (type === 'login') {
+                loginContainer.classList.remove('hidden');
+                signupContainer.classList.add('hidden');
+                indicator.style.transform = 'translateX(0)';
+                tabLogin.classList.remove('inactive');
+                tabSignup.classList.add('inactive');
+            } else {
+                loginContainer.classList.add('hidden');
+                signupContainer.classList.remove('hidden');
+                indicator.style.transform = 'translateX(100%)';
+                tabSignup.classList.remove('inactive');
+                tabLogin.classList.add('inactive');
+            }
+        }
+    </script>
+
+</body>
+</html>
