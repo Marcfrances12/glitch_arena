@@ -1,4 +1,4 @@
-# 🎮 Glitch Arena
+<img width="1919" height="920" alt="image" src="https://github.com/user-attachments/assets/4ce2e2de-63db-4b98-a5a5-5c704387c7f1" /># 🎮 Glitch Arena
 
 **Glitch Arena** es una plataforma web de gestión y compra de entradas para **torneos de esports**, donde los usuarios pueden descubrir eventos competitivos, filtrarlos por categoría, plataforma, ciudad, juego o precio, y acceder a los detalles de cada torneo.
 
@@ -7,13 +7,14 @@
 ## 📸 Capturas
 
 ### 🏠 Home — Hero Carousel
-![Home Hero](screenshots/home_hero.png)
+<img width="1909" height="828" alt="image" src="https://github.com/user-attachments/assets/07834dae-8863-4446-a79f-499a15753105" />
 
 ### 🔥 Home — Eventos Populares & Categorías
-![Home Popular](screenshots/home_popular.png)
+<img width="1907" height="811" alt="image" src="https://github.com/user-attachments/assets/4f7c9c55-4c6d-4a46-88b4-011e76dde017" />
 
 ### 🛒 Shop — Filtros + Mapa + Order By
-![Shop](screenshots/shop.png)
+<img width="1919" height="920" alt="image" src="https://github.com/user-attachments/assets/96ba40b8-e000-4630-9b4c-7792b01fa370" />
+
 
 ---
 
