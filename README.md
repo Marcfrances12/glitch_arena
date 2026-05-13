@@ -1,5 +1,3 @@
-<img width="1919" height="920" alt="image" src="https://github.com/user-attachments/assets/4ce2e2de-63db-4b98-a5a5-5c704387c7f1" /># 🎮 Glitch Arena
-
 **Glitch Arena** es una plataforma web de gestión y compra de entradas para **torneos de esports**, donde los usuarios pueden descubrir eventos competitivos, filtrarlos por categoría, plataforma, ciudad, juego o precio, y acceder a los detalles de cada torneo.
 
 ---
