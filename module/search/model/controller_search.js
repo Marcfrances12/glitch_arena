@@ -1,7 +1,7 @@
 function load_category() {
     ajaxPromise('module/search/controller/controller_search.php?op=search_category', 'POST', 'JSON')
         .then(function (data) {
-            console.log(data);
+            // console.log(data);
             $('<option>Categorias</option>').attr('selected', true).attr('disabled', true).appendTo('.search_category')
             for (row in data) {
                 $('<option value="' + data[row].id_category + '">' + data[row].cat_name + '</option>').appendTo('.search_category')
@@ -13,7 +13,7 @@ function load_category() {
 
 function load_plataform(category) {
     $('.search_plataforma').empty();
-    console.log(category);
+    // console.log(category);
     if (category == undefined) {
         ajaxPromise('module/search/controller/controller_search.php?op=search_plataforma_null', 'POST', 'JSON')
             .then(function (data) {
@@ -28,7 +28,7 @@ function load_plataform(category) {
     else {
         ajaxPromise('module/search/controller/controller_search.php?op=search_plataforma', 'POST', 'JSON', category)
             .then(function (data) {
-                console.log(data);
+                // console.log(data);
                 $('<option value="0">Plataforma</option>').attr('selected', true).attr('disabled', true).appendTo('.search_plataforma');
                 for (row in data) {
                     $('<option value="' + data[row].id_platform + '">' + data[row].platform_name + '</option>').appendTo('.search_plataforma')

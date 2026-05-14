@@ -5,10 +5,10 @@ function shopTodo() {
     let filtro_final = null;
 
     if (filtros) {
-        console.log("SHOP:", filtros);
+        // console.log("SHOP:", filtros);
         filtro_final = filtros;
     } else {
-        console.log("No hay filtros, cargando todo...");
+        // console.log("No hay filtros, cargando todo...");
         filtro_final = null;
     }
 
@@ -32,7 +32,7 @@ function ajaxForSearch(url, filtro, order = '0', direction = 'DESC', limit = 4, 
     ajaxPromise(url, 'POST', 'JSON', { 'filtro': filtro, 'order': order, 'direction': direction,  'limit': limit, 
         'offset': offset })
         .then(function(data) {
-            console.log(data);
+            // console.log(data);
            $('#content_shop_evento').empty().removeClass('hidden');
 
             if (data === "error" || data.error || data.length === 0) {
@@ -300,7 +300,6 @@ function loadDetails(id_torn) {
                 
             `);
 
-        
         if ($.fn.slick) {
             $('.date_img').slick({
                 infinite: true,
@@ -702,7 +701,7 @@ function aplicar_filtros_auto(order = 'id_torn', direction = 'DESC') {
 
    if (filtros.length > 0) {
         localStorage.setItem('filtros', JSON.stringify(filtros));
-        console.log("LocalStorage:", filtros);
+        // console.log("LocalStorage:", filtros);
     } else {
         localStorage.removeItem('filtros');
     }
@@ -912,9 +911,7 @@ function pagination(filtros = null, order ='0', direction = 'DESC') {
 
     ajaxPromise(url_count, 'POST', 'JSON', data_count)
         .then(function(data) {
-            console.log(data);
-
-
+            // console.log(data);
             var total_items = 0; 
 
             if (data && typeof data === 'object' && data.total !== undefined) {
@@ -961,7 +958,7 @@ function pagination(filtros = null, order ='0', direction = 'DESC') {
                 if (filtros) {
                     ajaxForSearch("module/shop/controller/controller_shop.php?op=filtros", filtros, order, direction, items_per_page, offset);
                 } else {
-        ajaxForSearch("module/shop/controller/controller_shop.php?op=filtros", [], order, direction, items_per_page, offset);
+                    ajaxForSearch("module/shop/controller/controller_shop.php?op=filtros", [], order, direction, items_per_page, offset);
                 }
 
                 // $('html, body').animate({ scrollTop: 0 }, 500);
@@ -1164,12 +1161,6 @@ function more_events_related(platform_name, id_torn) {
         var total_items = data.total;
         if (total_items == 0) return;
         events_related(0, platform_name, total_items, id_torn);
-
-        // $(document).on('click', '#load_more_related_btn', function() {
-        //     items = items + 4;
-        //     $('#more_related_button').empty();
-        //     events_related(items, platform_name, total_items, id_torn);
-        // });
 
     }).catch(function() {
         console.log('error more_events_related');

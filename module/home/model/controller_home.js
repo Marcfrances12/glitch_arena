@@ -46,7 +46,7 @@ function loadCarousel() {
                 slidesPerView: 1,
                 slidesPerGroup: 1,
                 loop: true,
-                effect: "fade", // Opcional: añade esto para un efecto pro de desvanecimiento
+                effect: "fade", 
                 fadeEffect: {
                     crossFade: true
                 },

@@ -213,7 +213,9 @@ body {
 }
 
 .forgot-link:hover {
-    color: var(--live-red);
+    color: #256af4;
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 /* Input wrapper */
@@ -378,7 +380,7 @@ body {
 }
 
 .support-link {
-    color: var(--live-red);
+     color: #256af4;
     text-decoration: none;
 }
 
@@ -395,4 +397,8 @@ body {
 
 html, body {
     overflow-y: scroll;
+}
+
+.form-input {
+    padding-left: 2rem !important;
 }
