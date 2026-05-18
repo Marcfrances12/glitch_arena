@@ -402,3 +402,8 @@ html, body {
 .form-input {
     padding-left: 2rem !important;
 }
+
+.error-msg {
+    color: #ff4d4d;
+    font-size: 0.8rem;
+}

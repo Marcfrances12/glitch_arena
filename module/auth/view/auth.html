@@ -33,14 +33,15 @@
 
             <!-- LOGIN FORM -->
             <div id="login-form-container">
-                <form onsubmit="return false;">
+                <form id="login__form" onsubmit="return false;">
 
                     <div class="form-group">
-                        <label class="form-label">Correo Electronico</label>
+                        <label class="form-label">Nombre Usuario</label>
                         <div class="input-wrapper">
-                            <span class="material-symbols-outlined input-icon">mail</span>
-                            <input class="form-input" type="email" placeholder="commander@glitch.gg" />
+                            <span class="material-symbols-outlined input-icon">person</span>
+                            <input class="form-input" type="text" id="username_log" name="username_log" placeholder="Glitch_Overlord" />
                         </div>
+                        <span id="error_username_log" class="error-msg"></span>
                     </div>
 
                     <div class="form-group">
@@ -50,11 +51,12 @@
                         </div>
                         <div class="input-wrapper">
                             <span class="material-symbols-outlined input-icon">lock</span>
-                            <input class="form-input" type="password" placeholder="••••••••••••" />
+                            <input class="form-input" type="password" id="passwd_log" name="passwd_log" placeholder="••••••••••••" />
                         </div>
+                        <span id="error_passwd_log" class="error-msg"></span>
                     </div>
 
-                    <button class="btn-primary" type="submit">
+                    <button class="btn-primary" type="submit" id="login">
                         LOGIN TO ARENA
                         <span class="material-symbols-outlined arrow-icon">bolt</span>
                     </button>
@@ -63,34 +65,37 @@
             </div>
 
             <!-- SIGNUP FORM -->
-            <div id="signup-form-container" class="hidden">
-                <form onsubmit="return false;">
+           <div id="signup-form-container" class="hidden">
+                <form id="register__form" onsubmit="return false;">
 
                     <div class="form-group">
                         <label class="form-label">Nombre</label>
                         <div class="input-wrapper">
                             <span class="material-symbols-outlined input-icon">person</span>
-                            <input class="form-input" type="text" placeholder="Glitch_Overlord" />
+                            <input class="form-input" type="text" id="username_reg" name="username_reg" placeholder="Glitch_Overlord" />
                         </div>
+                        <span id="error_username_reg" class="error-msg"></span>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Correo Electronico</label>
+                        <label class="form-label">Correo Electrónico</label>
                         <div class="input-wrapper">
                             <span class="material-symbols-outlined input-icon">mail</span>
-                            <input class="form-input" type="email" placeholder="commander@glitch.gg" />
+                            <input class="form-input" type="email" id="email_reg" name="email_reg" placeholder="commander@glitch.gg" />
                         </div>
+                        <span id="error_email_reg" class="error-msg"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Contraseña</label>
                         <div class="input-wrapper">
                             <span class="material-symbols-outlined input-icon">lock</span>
-                            <input class="form-input" type="password" placeholder="••••••••••••" />
+                            <input class="form-input" type="password" id="passwd1_reg" name="passwd1_reg" placeholder="••••••••••••" />
                         </div>
+                        <span id="error_passwd1_reg" class="error-msg"></span>
                     </div>
 
-                    <button class="btn-primary" type="submit">
+                    <button class="btn-primary" type="submit" id="register">
                         CREAR CUENTA
                     </button>
 
