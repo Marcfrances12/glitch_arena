@@ -1,7 +1,6 @@
 function register() {
     if (validate_register() != 0) {
         var data = $('#register__form').serialize();
-
         ajaxPromise('module/auth/controller/controller_auth.php?op=register', 'POST', 'JSON', data)
             .then(function(result) {
                 if (result == "error_email") {

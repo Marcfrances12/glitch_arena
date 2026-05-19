@@ -17,37 +17,44 @@ switch ($_GET['op']) {
 
         try {
             $daoLog = new DAOauth();
-            $check = $daoLog->select_email($_POST['email_reg']);
+            $check_email = $daoLog->select_email($_POST['email_reg']);
         } catch (Exception $e) {
             echo json_encode("error");
             exit;
         }
 
-        if ($check) {
-            $check_email = false;
-        } else {
-            $check_email = true;
-        }
-
         if ($check_email) {
-            try {
-                $daoLog = new DAOauth();
-                $rdo = $daoLog->insert_user($_POST['username_reg'], $_POST['email_reg'], $_POST['passwd1_reg']);
-            } catch (Exception $e) {
-                echo json_encode("error");
-                exit;
-            }
-            if (!$rdo) {
-                echo json_encode("error_user");
-                exit;
-            } else {
-                echo json_encode("ok");
-                exit;
-            }
-        } else {
             echo json_encode("error_email");
             exit;
         }
+
+        try {
+            $check_username = $daoLog->select_user($_POST['username_reg']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+
+        if ($check_username != "error_user") {
+            echo json_encode("error_user");
+            exit;
+        }
+
+        try {
+            $rdo = $daoLog->insert_user($_POST['username_reg'], $_POST['email_reg'], $_POST['passwd1_reg']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+
+        if (!$rdo) {
+            echo json_encode("error");
+            exit;
+        } else {
+            echo json_encode("ok");
+            exit;
+        }
+
         break;
 
     case 'login':
@@ -62,7 +69,7 @@ switch ($_GET['op']) {
 
             if (password_verify($_POST['passwd_log'], $rdo['password'])) {
                 $_SESSION['username']   = $rdo['username'];
-                $_SESSION['type_user']  = $rdo['type_user'];
+                $_SESSION['role']  = $rdo['role'];
                 $_SESSION['avatar']     = $rdo['avatar'];
                 $_SESSION['tiempo']     = time();
                 echo json_encode("ok");

@@ -16,11 +16,16 @@ class DAOauth
     }
 
     function insert_user($username, $email, $password) {
-        $hashed_pass = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
-        $avatar = "https://api.dicebear.com/9.x/pixel-art/svg?seed=" . urlencode($username);
+        $hashed_pass = password_hash($password, PASSWORD_ARGON2ID, [
+            'memory_cost' => 65536, 
+            'time_cost'   => 4,   
+            'threads'     => 3,   
+        ]);
+        $hashusername = hash('sha256', strtolower(trim($username))); 
+        $avatar = "https://api.dicebear.com/9.x/pixel-art/svg?seed=" . urlencode($hashusername);
 
         $conexion = connect::con();
-        $sql = "INSERT INTO `users` (`username`, `password`, `email`, `type_user`, `avatar`) 
+        $sql = "INSERT INTO `users` (`username`, `password`, `email`, `role`, `avatar`) 
                 VALUES (:username, :password, :email, 'client', :avatar)";
         $stmt = $conexion->prepare($sql);
         $res = $stmt->execute([
@@ -29,13 +34,14 @@ class DAOauth
             ':email'    => $email,
             ':avatar'   => $avatar,
         ]);
+        
         connect::close($conexion);
         return $res;
     }
 
     function select_user($username) {
         $conexion = connect::con();
-        $sql = "SELECT `username`, `password`, `email`, `type_user`, `avatar` FROM `users` WHERE username = :username OR email = :email";
+        $sql = "SELECT `username`, `password`, `email`, `role`, `avatar` FROM `users` WHERE username = :username OR email = :email";
         $stmt = $conexion->prepare($sql);
         $stmt->execute([':username' => $username, ':email' => $username]);
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
