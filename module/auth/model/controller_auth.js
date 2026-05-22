@@ -37,6 +37,8 @@ function login() {
                 } else if (result == "error_passwd") {
                     document.getElementById('error_passwd_log').innerHTML = "* La contraseña es incorrecta";
                 } else {
+                    localStorage.setItem("token_JWT", result);
+                    console.log(localStorage.getItem("token_JWT"));
                     Swal.fire({
                         icon: 'success',
                         title: '¡Bienvenido!',

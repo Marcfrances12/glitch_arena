@@ -4,6 +4,7 @@
 
 $path = $_SERVER['DOCUMENT_ROOT'] . '/glitch_arena/';
 include($path . "module/auth/model/DAOauth.php");
+include($path . "model/middleware_auth.php");
 
 @session_start();
 
@@ -68,11 +69,12 @@ switch ($_GET['op']) {
             }
 
             if (password_verify($_POST['passwd_log'], $rdo['password'])) {
+                $token= create_token($rdo["username"]);
                 $_SESSION['username']   = $rdo['username'];
                 $_SESSION['role']  = $rdo['role'];
                 $_SESSION['avatar']     = $rdo['avatar'];
                 $_SESSION['tiempo']     = time();
-                echo json_encode("ok");
+                echo json_encode($token);
                 exit;
             } else {
                 echo json_encode("error_passwd");
