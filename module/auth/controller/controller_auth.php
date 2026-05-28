@@ -87,6 +87,23 @@ switch ($_GET['op']) {
         }
     break;
 
+
+    case 'logout':
+        unset($_SESSION['username']);
+        unset($_SESSION['tiempo']);
+        session_destroy();
+
+        echo json_encode('Done');
+    break;
+
+    case 'data_user':
+        $username = decode_token($_POST['token']);
+        $daoLog = new DAOauth();
+        $rdo = $daoLog->select_data_user($username);
+        echo json_encode($rdo);
+        exit;
+    break;
+
 default:
     include("view/inc/error404.php");
     break;

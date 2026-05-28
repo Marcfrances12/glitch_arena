@@ -1,13 +1,19 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <nav class="hidden md:flex items-center gap-8">
-            <a class="hover:text-primary transition-colors text-sm font-medium whitespace-nowrap" href="index.php?page=controller_shop&op=list">Shop</a>
-            <a class="hover:text-primary transition-colors text-sm font-medium whitespace-nowrap" href="#">Contactos</a>
-            <a class="bg-primary hover:bg-primary/90 text-white rounded-xl px-6 py-2 text-sm font-bold transition-all shadow-lg shadow-primary/20 flex items-center gap-1"
-                href="index.php?page=controller_auth&op=list">
-                <span class="material-symbols-outlined">
-                    person</span>Acceder</a>
-        
-        <button class="md:hidden text-slate-100 ml-4">
-            <span class="material-symbols-outlined">menu</span>
-        </button>
+    <a class="hover:text-primary transition-colors text-sm font-medium whitespace-nowrap" href="index.php?page=controller_shop&op=list">Shop</a>
+    <a class="hover:text-primary transition-colors text-sm font-medium whitespace-nowrap" href="#">Contactos</a>
+
+    <a id="btn_acceder" class="bg-primary hover:bg-primary/90 text-white rounded-xl px-6 py-2 text-sm font-bold transition-all shadow-lg shadow-primary/20 flex items-center gap-1"
+        href="index.php?page=controller_auth&op=list">
+        <span class="material-symbols-outlined">person</span>Acceder
+    </a>
+
+    <div id="user_info" class="hidden items-center gap-3">
+        <img id="user_avatar" src="" alt="Avatar" class="w-9 h-9 rounded-full" />
+        <span id="user_name" class="text-sm font-medium"></span>
+        <a id="btn_logout" class="bg-red-500 hover:bg-red-600 text-white rounded-xl px-4 py-2 text-sm font-bold transition-all cursor-pointer">Logout</a>
+    </div>
+</nav>
     
 </header>

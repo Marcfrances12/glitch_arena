@@ -54,4 +54,14 @@ class DAOauth
         }
     }
 
+    function select_data_user($username) {
+        $conexion = connect::con();
+        $sql = "SELECT * FROM users WHERE username = :username";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([':username' => $username]);
+        $res = $stmt->fetch(PDO::FETCH_OBJ);
+        connect::close($conexion);
+        return $res;
+    }
+
 }
