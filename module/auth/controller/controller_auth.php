@@ -71,8 +71,8 @@ switch ($_GET['op']) {
             if (password_verify($_POST['passwd_log'], $rdo['password'])) {
                 $token= create_token($rdo["username"]);
                 $_SESSION['username']   = $rdo['username'];
-                $_SESSION['role']  = $rdo['role'];
-                $_SESSION['avatar']     = $rdo['avatar'];
+                // $_SESSION['role']  = $rdo['role'];
+                // $_SESSION['avatar']     = $rdo['avatar'];
                 $_SESSION['tiempo']     = time();
                 echo json_encode($token);
                 exit;
@@ -99,8 +99,52 @@ switch ($_GET['op']) {
     case 'data_user':
         $username = decode_token($_POST['token']);
         $daoLog = new DAOauth();
-        $rdo = $daoLog->select_data_user($username);
+        $rdo = $daoLog->select_data_user($username["username"]);
         echo json_encode($rdo);
+        exit;
+    break;
+
+    case 'actividad':
+        if (!isset($_SESSION["tiempo"])) {
+            echo json_encode("inactivo");
+            exit();
+        } else {
+            if ((time() - $_SESSION["tiempo"]) >= 1800) { //1800s=30min
+                echo json_encode("inactivo");
+                exit();
+            } else {
+                echo json_encode("activo");
+                exit();
+            }
+        }
+    break;
+
+    case 'controluser':
+        $token_dec = decode_token($_POST['token']);
+
+        if ($token_dec['exp'] < time()) {
+            echo json_encode("Wrong_User");
+            exit();
+        }
+
+        if (isset($_SESSION['username']) && ($_SESSION['username']) == $token_dec['username']) {
+            echo json_encode("Correct_User");
+            exit();
+        } else {
+            echo json_encode("Wrong_User");
+            exit();
+        }
+    break;
+
+    case 'refresh_token':
+        $old_token = decode_token($_POST['token']);
+        $new_token = create_token($old_token['username']);
+        echo json_encode($new_token);
+    break;
+
+    case 'refresh_cookie':
+        session_regenerate_id();
+        echo json_encode("Done");
         exit;
     break;
 

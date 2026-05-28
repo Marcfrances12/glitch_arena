@@ -8,7 +8,7 @@ function decode_token($token){
     $JWT = new JWT;
     $token_dec = $JWT->decode($token, $secret);
     $rt_token = json_decode($token_dec, TRUE);
-    return $rt_token["username"];
+    return $rt_token;
 }
 
 function create_token($username){
