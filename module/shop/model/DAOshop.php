@@ -139,7 +139,8 @@ class DAOShop
                     tt.type_name,
                     v.venue_name, 
                     GROUP_CONCAT(DISTINCT g.game_name SEPARATOR ', ') AS game_name,
-                    GROUP_CONCAT(DISTINCT ti.image_url SEPARATOR ', ') AS tournament_images
+                    GROUP_CONCAT(DISTINCT ti.image_url SEPARATOR ', ') AS tournament_images,
+                    COUNT(DISTINCT lk.id_like) AS total_likes
                 FROM tournaments t
                 LEFT JOIN cities c ON t.id_city = c.id_city
                 LEFT JOIN tournament_types tt ON t.id_type = tt.id_type
@@ -147,6 +148,7 @@ class DAOShop
                 LEFT JOIN torn_games tg ON t.id_torn = tg.id_torn
                 LEFT JOIN games g ON tg.id_game = g.id_game
                 LEFT JOIN torn_images ti ON t.id_torn = ti.id_torn
+                LEFT JOIN likes lk ON t.id_torn = lk.id_torn
                 INNER JOIN torn_categories tc ON t.id_torn = tc.id_torn
                 INNER JOIN categories cat ON tc.id_category = cat.id_category
                 INNER JOIN torn_platforms tp ON t.id_torn = tp.id_torn
@@ -182,8 +184,9 @@ class DAOShop
                 $param[] = $filter[$i][1]; 
             }
         }
-   
-        $consulta .= " GROUP BY t.id_torn ORDER BY t.$order $direction LIMIT $limit OFFSET $offset";
+        error_log("Order recibido en filtros: '" . $order . "'");
+        $order_sql = ($order === 'total_likes') ? "total_likes" : "t.$order";
+        $consulta .= " GROUP BY t.id_torn ORDER BY $order_sql  $direction LIMIT $limit OFFSET $offset";
 
        
         try {
@@ -207,6 +210,7 @@ class DAOShop
                     "city_name"         => $row["city_name"],
                     "type_name"         => $row["type_name"],
                     "venue_name"        => $row["venue_name"],
+                    "total_likes"       => $row["total_likes"],
                     "game_name"         => !empty($row["game_name"]) 
                                             ? explode(", ", $row["game_name"]) 
                                             : [],
@@ -215,7 +219,8 @@ class DAOShop
                                             : []
                 );
             }
-
+            error_log("SQL: " . $consulta);
+            error_log("Params: " . implode(", ", $param));
             return $retrArray;
 
         } catch (PDOException $e) {
@@ -436,6 +441,49 @@ class DAOShop
         } catch (PDOException $e) {
             return ["error" => $e->getMessage()];
         }
+    }
+
+    function select_load_likes($username) {
+        $conexion = connect::con();
+        $sql = "SELECT l.id_torn FROM likes l 
+                WHERE l.id_user = (SELECT u.id_user FROM users u WHERE u.username = :username)";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([':username' => $username]);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        connect::close($conexion);
+        return $res;
+    }
+
+    function select_likes($id_torn, $username) {
+        $conexion = connect::con();
+        $sql = "SELECT l.id_torn FROM likes l
+                WHERE l.id_user = (SELECT u.id_user FROM users u WHERE u.username = :username)
+                AND l.id_torn = :id_torn";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([':username' => $username, ':id_torn' => $id_torn]);
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        connect::close($conexion);
+        return $res;
+    }
+
+    function like($id_torn, $username) {
+        $conexion = connect::con();
+        $sql = "INSERT INTO likes (id_user, id_torn) 
+                VALUES ((SELECT u.id_user FROM users u WHERE u.username = :username), :id_torn)";
+        $stmt = $conexion->prepare($sql);
+        $res = $stmt->execute([':username' => $username, ':id_torn' => $id_torn]);
+        connect::close($conexion);
+        return $res;
+    }
+
+    function dislike($id_torn, $username) {
+        $conexion = connect::con();
+        $sql = "DELETE FROM likes WHERE id_torn = :id_torn 
+                AND id_user = (SELECT u.id_user FROM users u WHERE u.username = :username)";
+        $stmt = $conexion->prepare($sql);
+        $res = $stmt->execute([':username' => $username, ':id_torn' => $id_torn]);
+        connect::close($conexion);
+        return $res;
     }
 
 }

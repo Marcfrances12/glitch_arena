@@ -899,3 +899,8 @@ CSS
 #more_related_button .load_more_button:hover {
     background-color: #1a55d4;
 }
+
+.like_red {
+    color: #ff4d4d !important;
+    font-variation-settings: 'FILL' 1;
+}

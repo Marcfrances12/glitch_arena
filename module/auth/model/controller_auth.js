@@ -38,15 +38,22 @@ function login() {
                     document.getElementById('error_passwd_log').innerHTML = "* La contraseña es incorrecta";
                 } else {
                     localStorage.setItem("token_JWT", result);
-                    console.log(localStorage.getItem("token_JWT"));
+                    var pending = localStorage.getItem('pending_like');
+
                     Swal.fire({
                         icon: 'success',
                         title: '¡Bienvenido!',
                         timer: 2000,
                         showConfirmButton: false
-                    }).then(() => {
-                        window.location.href = "index.php?page=controller_home&op=view";
                     });
+
+                    setTimeout(function() {
+                        if (pending) {
+                            window.location.href = "index.php?page=controller_shop&op=list";
+                        } else {
+                            window.location.href = "index.php?page=controller_home&op=view";
+                        }
+                    }, 2000);
                 }
             }).catch(function(textStatus) {
                 if (console && console.log) {

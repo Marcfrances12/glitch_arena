@@ -4,6 +4,8 @@
 
 $path = $_SERVER['DOCUMENT_ROOT'] . '/glitch_arena/';
 include($path . "module/shop/model/DAOshop.php");
+include($path . "model/middleware_auth.php");
+
 
 @session_start();
 
@@ -78,7 +80,7 @@ switch ($_GET['op']) {
         try {
             $filtros = (isset($_POST['filtro']) && !empty($_POST['filtro'])) ? $_POST['filtro'] : [];
             
-            $allowed_order = ['price', 'start_date', 'id_torn', 'visits'];
+            $allowed_order = ['price', 'start_date', 'id_torn', 'visits', 'total_likes'];
             $allowed_direction = ['ASC', 'DESC'];
 
             $order = (isset($_POST['order']) && in_array($_POST['order'], $allowed_order)) 
@@ -197,6 +199,45 @@ switch ($_GET['op']) {
         } catch (Exception $e) {
             echo json_encode(["error" => $e->getMessage()]);
         }
+    break;
+
+    case 'control_likes':
+        $token = $_POST['token'];
+        $id_torn = $_POST['id_torn'];
+
+        try {
+            $json = decode_token($token);
+            $dao = new DAOShop();
+            $rdo = $dao->select_likes($id_torn, $json['username']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+
+        if ($rdo) {
+            
+            $dao->dislike($id_torn, $json['username']);
+            echo json_encode("1");
+        } else {
+            
+            $dao->like($id_torn, $json['username']);
+            echo json_encode("0");
+        }
+        exit;
+    break;
+
+    case 'load_likes_user':
+        try {
+            $json = decode_token($_POST['token']);
+            $dao = new DAOShop();
+            $rdo = $dao->select_load_likes($json['username']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+
+        echo json_encode($rdo);
+        exit;
     break;
 
 }

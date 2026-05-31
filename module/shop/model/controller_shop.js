@@ -53,12 +53,18 @@ function ajaxForSearch(url, filtro, order = '0', direction = 'DESC', limit = 4, 
                     .appendTo('#content_shop_evento')
                         .html(`
                             <article class="card-evento">
-                                <div class="evento-img-wrapper">
+                                <div class="evento-img-wrapper" style="position:relative">
                                     <div id="list-carousel-${data[row].id_torn}" class="swiper">
                                         <div class="swiper-wrapper container_listCarousel"></div>
                                         <div class="swiper-button-prev"></div>
                                         <div class="swiper-button-next"></div>
                                     </div>
+                                    <span class="material-symbols-outlined torn__heart" 
+                                        data-id="${data[row].id_torn}" 
+                                        id="like_${data[row].id_torn}" 
+                                        style="position:absolute; top:10px; right:10px; cursor:pointer; font-size:1.8rem; color:white; z-index:10; text-shadow: 0 0 4px rgba(0,0,0,0.8)">
+                                        favorite
+                                    </span>
                                 </div>
 
                                 <div class="evento-body">
@@ -125,7 +131,7 @@ function ajaxForSearch(url, filtro, order = '0', direction = 'DESC', limit = 4, 
 
                     });
 
-            
+                    load_likes_user();
                  
                     
             }
@@ -141,6 +147,7 @@ function clicks() {
         if ($(e.target).closest(".swiper-button-prev").length) return;
         if ($(e.target).closest(".swiper-button-next").length) return;
         if ($(e.target).closest(".evento-btn").length) return;
+        if ($(e.target).closest(".torn__heart").length) return;
 
         var id_torn = this.getAttribute('id');
         loadDetails(id_torn);
@@ -179,13 +186,20 @@ function clicks() {
         var parts = val.split('|');
         var order = parts[0];
         var direction = parts[1];
+        console.log("Order:", order, "Direction:", direction);
         aplicar_filtros_auto(order, direction);
+    });
+
+    $(document).on("click", ".torn__heart", function() {
+        var id_torn = this.getAttribute('data-id');
+        click_like(id_torn);
     });
 
 }
 
 function loadDetails(id_torn) {
     console.log(id_torn);
+    localStorage.setItem('last_details', id_torn);
     ajaxPromise('module/shop/controller/controller_shop.php?op=details_evento&id=' + id_torn, 'GET', 'JSON')
     .then(function(data) {
         console.log(data);
@@ -259,6 +273,12 @@ function loadDetails(id_torn) {
                                 <p class='banner-subtitle'>Juegos: ${data[0].game_names}</p>
                                 <div class='slick-arrows-details'></div>
                             </div>
+                             <span class='material-symbols-outlined torn__heart' 
+                                data-id='${data[0].id_torn}' 
+                                id='like_${data[0].id_torn}' 
+                                style='position:absolute; top:10px; right:10px; cursor:pointer; font-size:2rem; color:white; z-index:20; text-shadow: 0 0 4px rgba(0,0,0,0.8)'>
+                                favorite
+                            </span>
                         </div>
                     </div>
 
@@ -315,6 +335,8 @@ function loadDetails(id_torn) {
             });
         }
         mapatDetails(data[0], data[1][0]);
+        load_likes_user();
+
         setTimeout(function() {
         $('<div id="related_anchor"></div>').appendTo('.container_extras_det');
             more_events_related(data[0].platform_name, data[0].id_torn);
@@ -1169,6 +1191,75 @@ function more_events_related(platform_name, id_torn) {
 
 function update_visits(id_torn) {
     ajaxPromise('module/shop/controller/controller_shop.php?op=update_visits', 'POST', 'JSON', { 'id_torn': id_torn });
+}
+
+function click_like(id_torn) {
+    var token = localStorage.getItem('token_JWT');
+    if (token) {
+        ajaxPromise("module/shop/controller/controller_shop.php?op=control_likes", 'POST', 'JSON', { 'id_torn': id_torn, 'token': token })
+            .then(function(data) {
+                console.log("Respuesta:", data);
+                console.log("Elemento:", $("#like_" + id_torn));
+                if (data == "0") {
+                    // Se ha dado like
+                    $("#like_" + id_torn).addClass('like_red');
+                } else if (data == "1") {
+                    // Se ha quitado like
+                    $("#like_" + id_torn).removeClass('like_red');
+                }
+            }).catch(function() {
+                console.log("Error en click_like");
+            });
+    } else {
+        localStorage.setItem('pending_like', id_torn);
+        localStorage.setItem('pending_like_page', $('#pagination .active a').text() || 1);
+        Swal.fire({
+            icon: 'warning',
+            title: 'Inicia sesión',
+            text: 'Debes iniciar sesión para dar like',
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            window.location.href = "index.php?page=controller_auth&op=list";
+        });
+    }
+}
+
+function load_likes_user() {
+    var token = localStorage.getItem('token_JWT');
+    if (token) {
+        ajaxPromise("module/shop/controller/controller_shop.php?op=load_likes_user", 'POST', 'JSON', { 'token': token })
+            .then(function(data) {
+                for (var row in data) {
+                    $("#like_" + data[row].id_torn).addClass('like_red');
+                }
+
+                
+              var pending = localStorage.getItem('pending_like');
+                if (pending) {
+                    var lastDetails = localStorage.getItem('last_details');
+                    localStorage.removeItem('pending_like');
+                    localStorage.removeItem('pending_like_page');
+                    
+                    if (lastDetails) {
+                        localStorage.removeItem('last_details');
+                        click_like(pending);
+                        loadDetails(lastDetails);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        click_like(pending);
+                        setTimeout(function() {
+                            var card = $("#" + pending + ".more_info_list");
+                            if (card.length) {
+                                $("html, body").animate({ scrollTop: card.offset().top - 100 }, 800);
+                            }
+                        }, 800);
+                    }
+                }
+            }).catch(function() {
+                console.log("Error en load_likes_user");
+            });
+    }
 }
 
 $(document).ready(function() {
