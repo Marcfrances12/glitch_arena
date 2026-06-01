@@ -10,8 +10,10 @@
     </a>
 
     <div id="user_info" class="hidden items-center gap-3">
-        <img id="user_avatar" src="" alt="Avatar" class="w-9 h-9 rounded-full" />
-        <span id="user_name" class="text-sm font-medium"></span>
+        <a href="index.php?page=controller_profile&op=list" class="flex items-center gap-3 hover:opacity-80 transition-all cursor-pointer">
+            <img id="user_avatar" src="" alt="Avatar" class="w-9 h-9 rounded-full" />
+            <span id="user_name" class="text-sm font-medium"></span>
+        </a>
         <a id="btn_logout" class="bg-red-500 hover:bg-red-600 text-white rounded-xl px-4 py-2 text-sm font-bold transition-all cursor-pointer">Logout</a>
     </div>
 </nav>

@@ -8,6 +8,8 @@
         include("view/inc/top_page_shop.html");
     } else if ($is_auth) {
         include("view/inc/top_page_auth.html");
+    } else if ($current_page === 'controller_profile') {
+        include("view/inc/top_page_profile.html");
     } else {
         include("view/inc/top_page_home.html");
     }
