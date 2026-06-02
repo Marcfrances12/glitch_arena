@@ -1,131 +1,157 @@
-<aside class="hidden lg:flex flex-col py-8 h-screen w-64 fixed left-0 top-0 bg-surface-slate-800 border-r border-surface-slate-800 shadow-2xl shadow-black/50 z-40">
-<div class="px-6 mb-12 mt-20">
-</div>
-<div class="flex-1 space-y-2">
-<a class="text-text-muted px-4 py-3 hover:bg-background-dark/50 hover:text-text-primary hover:translate-x-1 transition-all cursor-pointer flex items-center gap-3 font-body-md text-body-md" href="#">
-<span class="material-symbols-outlined">dashboard</span> Dashboard
+<!-- CONTENEDOR DE LA VISTA (Alinea el menú y el contenido principal) -->
+<div class="flex min-h-screen relative bg-surface-slate-900 w-full">
+
+    <!-- MENÚ LATERAL (ASIDE) - Sticky: Te sigue en el scroll pero se frena limpiamente antes del footer -->
+    <aside class="hidden lg:flex flex-col py-8 
+        h-[calc(100vh-5rem)] w-64 sticky top-20 left-0 
+        bg-surface-slate-800 border-r border-surface-slate-800 
+        shadow-2xl shadow-black/50 z-40 self-start">
+
+        <div class="px-6 mb-12 mt-4"></div>
+
+        <div class="flex-1 space-y-2">
+
+            <!-- DASHBOARD -->
+            <a class="text-text-muted px-4 py-3 hover:bg-background-dark/50 hover:text-text-primary 
+                hover:translate-x-1 transition-all cursor-pointer flex items-center gap-3 font-body-md text-body-md" 
+                href="#">
+                <span class="material-symbols-outlined">dashboard</span> Dashboard
             </a>
-<a class="text-text-muted px-4 py-3 hover:bg-background-dark/50 hover:text-text-primary hover:translate-x-1 transition-all cursor-pointer flex items-center gap-3 font-body-md text-body-md" href="#">
-<span class="material-symbols-outlined">sports_esports</span> My Matches
+
+            <!-- LIKES -->
+            <a class="text-text-muted px-4 py-3 hover:bg-background-dark/50 hover:text-text-primary 
+                hover:translate-x-1 transition-all cursor-pointer flex items-center gap-3 font-body-md text-body-md" 
+                href="#likes-section">
+                <span class="material-symbols-outlined">favorite</span> Likes
             </a>
-<a class="text-text-muted px-4 py-3 hover:bg-background-dark/50 hover:text-text-primary hover:translate-x-1 transition-all cursor-pointer flex items-center gap-3 font-body-md text-body-md" href="#likes-section">
-<span class="material-symbols-outlined">favorite</span> Likes
+
+            <!-- SETTINGS -->
+            <a class="text-text-muted px-4 py-3 hover:bg-background-dark/50 hover:text-text-primary 
+                hover:translate-x-1 transition-all cursor-pointer flex items-center gap-3 font-body-md text-body-md" 
+                href="#settings-section">
+                <span class="material-symbols-outlined">settings</span> Settings
             </a>
-<a class="text-text-muted px-4 py-3 hover:bg-background-dark/50 hover:text-text-primary hover:translate-x-1 transition-all cursor-pointer flex items-center gap-3 font-body-md text-body-md" href="#">
-<span class="material-symbols-outlined">settings</span> Settings
-            </a>
-<a class="text-text-muted px-4 py-3 hover:bg-background-dark/50 hover:text-text-primary hover:translate-x-1 transition-all cursor-pointer flex items-center gap-3 font-body-md text-body-md" href="#">
-<span class="material-symbols-outlined">help</span> Support
-            </a>
-</div>
-<div class="px-4 mt-auto">
-<button class="w-full py-4 rounded-lg bg-brand-blue/10 text-brand-blue border border-brand-blue/20 hover:bg-brand-blue hover:text-white transition-all duration-300 flex items-center justify-center gap-2 font-button text-button active:scale-95">
-<span class="material-symbols-outlined">logout</span> Logout
+
+        </div>
+
+        <!-- LOGOUT -->
+        <div class="px-4 mt-auto">
+            <button class="w-full py-4 rounded-lg bg-brand-blue/10 text-brand-blue border border-brand-blue/20 
+                hover:bg-brand-blue hover:text-white transition-all duration-300 flex items-center justify-center gap-2 
+                font-button text-button active:scale-95">
+                <span class="material-symbols-outlined">logout</span> Logout
             </button>
-</div>
-</aside>
-
-<main class="lg:ml-64 pt-20 pb-20 px-gutter max-w-container-max mx-auto">
-    <!-- Profile Header -->
-    <section class="mb-12 px-gutter">
-        <div class="glass-panel p-8 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-            <div class="absolute -right-20 -top-20 w-64 h-64 bg-accent-blue-glow rounded-full blur-[100px]"></div>
-            <div class="relative group">
-                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-brand-blue p-1">
-                    <img alt="Player Avatar" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_qVpZprWd2D-1JXO8YbQy2rUw7zJg2L4mNl1GAvYaHN70tDF3zExVatVtqXfMRc7Fb42DvPzJjY-aG_57MCj4fxzD2sp_VpEmvsL-U8yBjk8J2SbVF1S2HYoziLtaBKhGEXaJ11zWN4xea07SWNcPekUsTOKnabgkwcZXMLe_f506J0H1bStJFHKwFWhdWihftVD5DGWWedZbsKt-9dk8o4q2bPzUmRVvpEFO4_HRUsBMHQs5AT8YU3x5jX-2xRgb3JK7fuJWmtg"/>
-                </div>
-                <button class="absolute bottom-2 right-2 bg-background-dark border border-surface-slate-800 p-2 rounded-full text-text-muted hover:text-text-primary transition-all">
-                    <span class="material-symbols-outlined text-[18px]">edit</span>
-                </button>
-            </div>
-            <div class="text-center md:text-left flex-1">
-                <div class="flex flex-col md:flex-row items-center gap-4 mb-2">
-                    <h1 class="font-hero-display-mobile text-section-header italic uppercase tracking-tight">Player One</h1>
-                    <span class="bg-brand-blue text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 uppercase tracking-widest">
-                        <span class="w-2 h-2 bg-white rounded-full live-pulse"></span>
-                        Pro Rank #42
-                    </span>
-                </div>
-                <p class="font-body-md text-body-md text-text-muted max-w-lg">Veteran striker specialized in high-speed maneuvers.</p>
-            </div>
-            <div class="flex gap-4">
-                <div class="text-center px-6 border-r border-surface-slate-800">
-                    <div class="font-hero-display-mobile text-h2-italic text-text-primary">124</div>
-                    <div class="font-label-caps text-label-caps text-text-muted">MATCHES</div>
-                </div>
-                <div class="text-center px-6 border-r border-surface-slate-800">
-                    <div class="font-hero-display-mobile text-h2-italic text-text-primary">12</div>
-                    <div class="font-label-caps text-label-caps text-text-muted">TROPHIES</div>
-                </div>
-                <div class="text-center px-6">
-                    <div class="font-hero-display-mobile text-h2-italic text-text-primary">8.4k</div>
-                    <div class="font-label-caps text-label-caps text-text-muted">FOLLOWERS</div>
-                </div>
-            </div>
         </div>
-    </section>
+    </aside>
 
-    <!-- Two Column Settings -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 px-gutter mb-section-gap">
-        <div class="lg:col-span-8">
-            <div class="glass-panel p-card-padding rounded-xl">
-                <h2 class="font-hero-display-mobile text-section-header italic mb-8 border-l-4 border-brand-blue pl-4 uppercase">Account Settings</h2>
-                <form class="space-y-6">
-                    <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="font-label-caps text-label-caps text-text-muted uppercase">Full Name</label>
-                            <input class="w-full h-14 bg-background-dark border border-surface-slate-800 rounded-lg px-4 text-text-primary font-body-md input-focus-ring transition-all" placeholder="Enter full name" type="text" value="Alexander"/>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="font-label-caps text-label-caps text-text-muted uppercase">Username</label>
-                            <input class="w-full h-14 bg-background-dark border border-surface-slate-800 rounded-lg px-4 text-text-primary font-body-md input-focus-ring transition-all" placeholder="Enter username" type="text" value="PlayerOne_Arena"/>
-                        </div>
-                    </div> -->
-                    <div class="space-y-2">
-                        <label class="font-label-caps text-label-caps text-text-muted uppercase">Username</label>
-                        <div class="relative">
-                            <input class="w-full h-14 bg-background-dark border border-surface-slate-800 rounded-lg px-4 pl-12 text-text-primary font-body-md input-focus-ring transition-all" placeholder="Juanito_eljuean" type="email" value="Juanito_eljuean"/>
-                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted">mail</span>
-                        </div>
+    <!-- CONTENIDO PRINCIPAL (MAIN) -->
+    <main class="lg:ml-0 pt-20 pb-20 px-gutter max-w-container-max mx-auto flex-1">
+
+        <!-- Profile Header -->
+        <!-- <section class="mb-12 px-gutter">
+            <div class="glass-panel p-8 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-accent-blue-glow rounded-full blur-[100px]"></div>
+
+                <div class="relative group">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-brand-blue p-1">
+                        <img alt="Player Avatar" class="w-full h-full object-cover rounded-full" 
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_qVpZprWd2D-1JXO8YbQy2rUw7zJg2L4mNl1GAvYaHN70tDF3zExVatVtqXfMRc7Fb42DvPzJjY-aG_57MCj4fxzD2sp_VpEmvsL-U8yBjk8J2SbVF1S2HYoziLtaBKhGEXaJ11zWN4xea07SWNcPekUsTOKnabgkwcZXMLe_f506J0H1bStJFHKwFWhdWihftVD5DGWWedZbsKt-9dk8o4q2bPzUmRVvpEFO4_HRUsBMHQs5AT8YU3x5jX-2xRgb3JK7fuJWmtg"/>
                     </div>
-                    <div class="space-y-2">
-                        <label class="font-label-caps text-label-caps text-text-muted uppercase">Email Address</label>
-                        <div class="relative">
-                            <input class="w-full h-14 bg-background-dark border border-surface-slate-800 rounded-lg px-4 pl-12 text-text-primary font-body-md input-focus-ring transition-all" placeholder="email@example.com" type="email" value="alexander.pro@glitcharena.com"/>
-                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted">mail</span>
-                        </div>
-                    </div>
-                    <div class="flex justify-end pt-8">
-                        <button class="bg-brand-blue text-white px-10 py-4 rounded-xl font-button text-button uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all" type="submit">
-                            Save Changes
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="lg:col-span-4 space-y-8">
-            <div class="glass-panel p-card-padding rounded-xl border-l-4 border-accent-blue-glow">
-                <h3 class="font-label-caps text-label-caps text-text-primary uppercase mb-4">Security</h3>
-                <div class="space-y-4">
-                    <button class="w-full flex items-center justify-between p-4 bg-background-dark/50 rounded-lg hover:bg-surface-slate-800 transition-colors group">
-                        <span class="font-body-md text-text-muted group-hover:text-text-primary">Change Password</span>
-                        <span class="material-symbols-outlined text-text-muted">chevron_right</span>
+                    <button class="absolute bottom-2 right-2 bg-background-dark border border-surface-slate-800 p-2 rounded-full text-text-muted hover:text-text-primary transition-all">
+                        <span class="material-symbols-outlined text-[18px]">edit</span>
                     </button>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Liked Tournaments -->
-    <section class="px-gutter" id="likes-section">
-        <div class="flex justify-between items-end mb-8">
-            <div>
-                <h2 class="font-hero-display-mobile text-section-header italic uppercase border-l-4 border-brand-blue pl-4 mb-2">Liked Tournaments</h2>
-                <p class="font-body-md text-text-muted">Events you've bookmarked for later.</p>
+                <div class="text-center md:text-left flex-1">
+                    <div class="flex flex-col md:flex-row items-center gap-4 mb-2">
+                        <h1 class="font-hero-display-mobile text-section-header italic uppercase tracking-tight">Player One</h1>
+                        <span class="bg-brand-blue text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 uppercase tracking-widest">
+                            <span class="w-2 h-2 bg-white rounded-full live-pulse"></span>
+                            Pro Rank #42
+                        </span>
+                    </div>
+                    <p class="font-body-md text-body-md text-text-muted max-w-lg">Veteran striker specialized in high-speed maneuvers.</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="text-center px-6 border-r border-surface-slate-800">
+                        <div class="font-hero-display-mobile text-h2-italic text-text-primary">124</div>
+                        <div class="font-label-caps text-label-caps text-text-muted">MATCHES</div>
+                    </div>
+                    <div class="text-center px-6 border-r border-surface-slate-800">
+                        <div class="font-hero-display-mobile text-h2-italic text-text-primary">12</div>
+                        <div class="font-label-caps text-label-caps text-text-muted">TROPHIES</div>
+                    </div>
+                    <div class="text-center px-6">
+                        <div class="font-hero-display-mobile text-h2-italic text-text-primary">8.4k</div>
+                        <div class="font-label-caps text-label-caps text-text-muted">FOLLOWERS</div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div id="liked_tournaments" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Se pintará dinámicamente -->
-        </div>
-    </section>
-</main>
+        </section> -->
+
+        <!-- SETTINGS SECTION -->
+        <!-- <section id="settings-section" class="grid grid-cols-1 lg:grid-cols-12 gap-8 px-gutter mb-section-gap">
+            <div class="lg:col-span-8">
+                <div class="glass-panel p-card-padding rounded-xl">
+                    <h2 class="font-hero-display-mobile text-section-header italic mb-8 border-l-4 border-brand-blue pl-4 uppercase">Account Settings</h2>
+
+                    <form class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="font-label-caps text-label-caps text-text-muted uppercase">Username</label>
+                            <div class="relative">
+                                <input class="w-full h-14 bg-background-dark border border-surface-slate-800 rounded-lg px-4 pl-12 text-text-primary font-body-md input-focus-ring transition-all" 
+                                    placeholder="Juanito_eljuean" type="text" value="Juanito_eljuean"/>
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted">person</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="font-label-caps text-label-caps text-text-muted uppercase">Email Address</label>
+                            <div class="relative">
+                                <input class="w-full h-14 bg-background-dark border border-surface-slate-800 rounded-lg px-4 pl-12 text-text-primary font-body-md input-focus-ring transition-all" 
+                                    placeholder="email@example.com" type="email" value="alexander.pro@glitcharena.com"/>
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted">mail</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-8">
+                            <button id="btn_save_user" class="bg-brand-blue text-white px-10 py-4 rounded-xl font-button text-button uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all" type="submit">
+                                Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 space-y-8">
+                <div class="glass-panel p-card-padding rounded-xl border-l-4 border-accent-blue-glow">
+                    <h3 class="font-label-caps text-label-caps text-text-primary uppercase mb-4">Security</h3>
+                    <div class="space-y-4">
+                        <button class="w-full flex items-center justify-between p-4 bg-background-dark/50 rounded-lg hover:bg-surface-slate-800 transition-colors group">
+                            <span class="font-body-md text-text-muted group-hover:text-text-primary">Change Password</span>
+                            <span class="material-symbols-outlined text-text-muted">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+        <!-- <section id="settings-section" class="grid grid-cols-1 lg:grid-cols-12 gap-8 px-gutter mb-section-gap"></section> -->
+        <div id="settings-section"></div>
+        <br>
+        <!-- LIKED TOURNAMENTS -->
+        <section class="px-gutter" id="likes-section">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="font-hero-display-mobile text-section-header italic uppercase border-l-4 border-brand-blue pl-4 mb-2">Liked Tournaments</h2>
+                    <p class="font-body-md text-text-muted">Events you've bookmarked for later.</p>
+                </div>
+            </div>
+
+            <div id="liked_tournaments" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Se pintará dinámicamente -->
+            </div>
+        </section>
+
+    </main>
+</div>
