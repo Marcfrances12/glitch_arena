@@ -33,23 +33,53 @@ class DAOprofile
         return $res;
     }
 
-   function get_user_by_username($username) {
-        $conexion = connect::con();
-        $sql = "SELECT id_user, username, avatar, password FROM users WHERE username = :username";
-        $stmt = $conexion->prepare($sql);
-        $stmt->execute([':username' => $username]);
-        $res = $stmt->fetch(PDO::FETCH_ASSOC);
-        connect::close($conexion);
-        return $res;
-    }
+ 
 
     function select_data_user($username) {
         $conexion = connect::con();
-        $sql = "SELECT * FROM users WHERE username = :username";
+        $sql = "SELECT u.*, COUNT(l.id_like) AS total_likes
+                FROM users u
+                LEFT JOIN likes l ON u.id_user = l.id_user
+                WHERE u.username = :username
+                GROUP BY u.id_user";
         $stmt = $conexion->prepare($sql);
         $stmt->execute([':username' => $username]);
         $res = $stmt->fetch(PDO::FETCH_OBJ);
         connect::close($conexion);
         return $res;
+    }
+
+    function get_liked_tournaments($username) {
+        $conexion = connect::con();
+        $sql = "SELECT 
+                    t.id_torn, t.title, t.price, t.start_date,
+                    c.city_name, v.venue_name,
+                    GROUP_CONCAT(DISTINCT ti.image_url SEPARATOR ', ') AS tournament_images
+                FROM likes lk
+                INNER JOIN users u ON lk.id_user = u.id_user
+                INNER JOIN tournaments t ON lk.id_torn = t.id_torn
+                LEFT JOIN cities c ON t.id_city = c.id_city
+                LEFT JOIN venues v ON t.id_venue = v.id_venue
+                LEFT JOIN torn_images ti ON t.id_torn = ti.id_torn
+                WHERE u.username = :username
+                GROUP BY t.id_torn";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([':username' => $username]);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        connect::close($conexion);
+
+        $result = [];
+        foreach ($res as $row) {
+            $result[] = [
+                "id_torn"           => $row["id_torn"],
+                "title"             => $row["title"],
+                "price"             => $row["price"],
+                "start_date"        => $row["start_date"],
+                "city_name"         => $row["city_name"],
+                "venue_name"        => $row["venue_name"],
+                "tournament_images" => !empty($row["tournament_images"]) ? explode(", ", $row["tournament_images"]) : []
+            ];
+        }
+        return $result;
     }
 }

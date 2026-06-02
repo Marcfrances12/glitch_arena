@@ -553,16 +553,16 @@ function clicks(){
     });
 
     $(document).on("click", '#containerPopular > div', function() {
-    var id = $(this).attr('id');
-    if (id) {
-        
-        ajaxPromise('module/shop/controller/controller_shop.php?op=update_visits', 'POST', 'JSON', { 'id_torn': id });
-        
-        setTimeout(function() {
-            window.location.href = 'index.php?page=controller_shop&op=list&detalle=' + id;
-        }, 300);
-    }
-});
+        var id = $(this).attr('id');
+        if (id) {
+            
+            ajaxPromise('module/shop/controller/controller_shop.php?op=update_visits', 'POST', 'JSON', { 'id_torn': id });
+            
+            setTimeout(function() {
+                window.location.href = 'index.php?page=controller_shop&op=list&detalle=' + id;
+            }, 300);
+        }
+    });
 }
 
 $(document).ready(function () {

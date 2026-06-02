@@ -21,7 +21,7 @@ switch ($_GET['op']) {
 
             
             if (!empty($_POST['password'])) {
-                $user = $dao->get_user_by_username($token_data['username']);
+                $user = $dao->select_data_user($token_data['username']);
                 if (!password_verify($_POST['password_old'], $user['password'])) {
                     echo json_encode("wrong_password");
                     exit;
@@ -54,6 +54,18 @@ switch ($_GET['op']) {
         $dao = new DAOprofile();
         $rdo = $dao->select_data_user($username["username"]);
         echo json_encode($rdo);
+        exit;
+    break;
+
+    case 'get_liked_tournaments':
+        try {
+            $token_data = decode_token($_POST['token']);
+            $dao = new DAOProfile();
+            $rdo = $dao->get_liked_tournaments($token_data['username']);
+            echo json_encode($rdo);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
         exit;
     break;
 

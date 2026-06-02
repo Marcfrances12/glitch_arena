@@ -57,9 +57,7 @@ function load_profile_form() {
                                 <img alt="Player Avatar" class="w-full h-full object-cover rounded-full"
                                     src="${user.avatar}" />
                             </div>
-                            <button class="absolute bottom-2 right-2 bg-background-dark border border-surface-slate-800 p-2 rounded-full text-text-muted hover:text-text-primary transition-all">
-                                <span class="material-symbols-outlined text-[18px]">edit</span>
-                            </button>
+                            
                         </div>
 
                         <div class="text-center md:text-left flex-1">
@@ -70,12 +68,12 @@ function load_profile_form() {
                                     Pro Rank #42
                                 </span>
                             </div>
-                            <p class="font-body-md text-body-md text-text-muted max-w-lg">Veteran striker specialized in high-speed maneuvers.</p>
+                            <p class="font-body-md text-body-md text-text-muted max-w-lg">Veterano en compraventa :V.</p>
                         </div>
 
                         <div class="flex gap-4">
                             <div class="text-center px-6">
-                                <div class="font-hero-display-mobile text-h2-italic text-text-primary">0</div>
+                                <div class="font-hero-display-mobile text-h2-italic text-text-primary">${user.total_likes}</div>
                                 <div class="font-label-caps text-label-caps text-text-muted">LIKES</div>
                             </div>
                         </div>
@@ -151,9 +149,114 @@ function clicks_profile() {
         e.preventDefault();
         update_password();
     });
+
+    $(document).on("click", '#liked_tournaments > div', function() {
+        var id = $(this).attr('id');
+        if (id) {
+            
+            ajaxPromise('module/shop/controller/controller_shop.php?op=update_visits', 'POST', 'JSON', { 'id_torn': id });
+            
+            setTimeout(function() {
+                window.location.href = 'index.php?page=controller_shop&op=list&detalle=' + id;
+            }, 300);
+        }
+    });
 }
+
+function load_liked_tournaments() {
+    var token = localStorage.getItem('token_JWT');
+    if (!token) return;
+
+    ajaxPromise('module/profile/controller/controller_profile.php?op=get_liked_tournaments', 'POST', 'JSON', { 'token': token })
+        .then(function(data) {
+            $('#liked_tournaments').empty();
+
+            if (data === "error" || data.length === 0) {
+                $('#liked_tournaments').html(`
+                    <div class="col-span-full flex flex-col items-center justify-center py-20 px-6 border-2 border-dashed border-slate-800 rounded-3xl">
+                        <span class="material-symbols-outlined text-slate-500" style="font-size: 3rem">favorite_border</span>
+                        <h3 class="text-xl font-bold text-white uppercase mt-4">No tienes torneos guardados</h3>
+                        <p class="text-slate-500 mt-2 text-center">Explora el shop y dale like a los que te interesen.</p>
+                    </div>
+                `);
+                return;
+            }
+
+            for (var row in data) {
+                $('<div class="flex-item more_info_list" id="' + data[row].id_torn + '"></div>')
+                    .appendTo('#liked_tournaments')
+                    .html(`
+                        <article class="card-evento">
+                            <div class="evento-img-wrapper" style="position:relative">
+                                <div id="profile-carousel-${data[row].id_torn}" class="swiper">
+                                    <div class="swiper-wrapper container_listCarousel"></div>
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div>
+                                </div>
+                                <span class="material-symbols-outlined torn__heart like_red" 
+                                    data-id="${data[row].id_torn}" 
+                                    id="like_${data[row].id_torn}" 
+                                    style="position:absolute; top:10px; right:10px; cursor:pointer; font-size:1.8rem; color:#ff4d4d; z-index:10; text-shadow: 0 0 4px rgba(0,0,0,0.8); font-variation-settings: 'FILL' 1">
+                                    favorite
+                                </span>
+                            </div>
+                            <div class="evento-body">
+                                <h3 class="evento-title">${data[row].title}</h3>
+                                <div class="evento-info-group">
+                                    <div class="evento-info-item">
+                                        <span class="material-symbols-outlined" style="font-size:1rem">calendar_month</span>
+                                        <span>${data[row].start_date}</span>
+                                    </div>
+                                    <div class="evento-info-item">
+                                        <span class="material-symbols-outlined" style="font-size:1rem">location_on</span>
+                                        <span>${data[row].venue_name}, ${data[row].city_name}</span>
+                                    </div>
+                                </div>
+                                <div class="evento-footer">
+                                    <div class="evento-price-box">
+                                        <p style="font-size: 0.75rem; color: #94a3b8; margin:0">Desde</p>
+                                        <p class="evento-price-value">${data[row].price}€</p>
+                                    </div>
+                                    <button id="${data[row].id_torn}" class="evento-btn buy-ticket-btn">
+                                        Comprar Entrada
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    `);
+
+                data[row].tournament_images.forEach(function(img) {
+                    $('<div></div>')
+                        .attr('class', 'carousel-item-c swiper-slide')
+                        .appendTo(`#profile-carousel-${data[row].id_torn} .container_listCarousel`)
+                        .html(`<img src="${img}" alt="${data[row].title}" class="evento-img">`);
+                });
+            }
+
+        
+            document.querySelectorAll('#liked_tournaments .swiper').forEach((el) => {
+                new Swiper(el, {
+                    speed: 600,
+                    loop: el.querySelectorAll('.swiper-slide').length > 1,
+                    autoplay: { delay: 2500, disableOnInteraction: false },
+                    slidesPerView: 1,
+                    observer: true,
+                    observeParents: true,
+                    navigation: {
+                        nextEl: el.querySelector('.swiper-button-next'),
+                        prevEl: el.querySelector('.swiper-button-prev'),
+                    },
+                });
+            });
+
+        }).catch(function() {
+            console.log("Error en load_liked_tournaments");
+        });
+}
+
 
 $(document).ready(function() {
     clicks_profile();
+    load_liked_tournaments();
     load_profile_form();
 });
