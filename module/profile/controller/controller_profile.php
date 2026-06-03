@@ -22,7 +22,7 @@ switch ($_GET['op']) {
             
             if (!empty($_POST['password'])) {
                 $user = $dao->select_data_user($token_data['username']);
-                if (!password_verify($_POST['password_old'], $user['password'])) {
+                if (!password_verify($_POST['password_old'], $user->password)) {
                     echo json_encode("wrong_password");
                     exit;
                 }

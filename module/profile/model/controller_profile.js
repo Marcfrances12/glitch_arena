@@ -4,10 +4,37 @@ function update_user() {
 
     var new_password    = $('#input_password').val();
     var old_password    = $('#input_password_old').val();
+    $('.input-error').remove();
 
+    var username = $('#input_username').val();
+
+    if (username.length < 5) {
+        $('#input_username').closest('.space-y-2').append('<p class="input-error text-red-500 text-sm mt-1">* El username debe tener mínimo 5 caracteres</p>');
+        return;
+    }
+
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+        $('#input_username').closest('.space-y-2').append('<p class="input-error text-red-500 text-sm mt-1">* Solo letras, números y _</p>');
+        return;
+    }
+
+    if (new_password && new_password.length < 6) {
+        $('#input_password').closest('.space-y-2').append('<p class="input-error text-red-500 text-sm mt-1">* La contraseña debe tener mínimo 6 caracteres</p>');
+        return;
+    }
     
     if (new_password && !old_password) {
         Swal.fire({ icon: 'warning', title: 'Introduce tu contraseña actual', showConfirmButton: true });
+        return;
+    }
+
+    if (old_password && !new_password) {
+        Swal.fire({ icon: 'warning', title: 'Introduce la nueva contraseña', showConfirmButton: true });
+        return;
+    }
+
+    if (new_password && old_password && new_password === old_password) {
+        Swal.fire({ icon: 'warning', title: 'La nueva contraseña debe ser diferente a la actual', showConfirmButton: true });
         return;
     }
 
@@ -21,6 +48,7 @@ function update_user() {
 
     ajaxPromise('module/profile/controller/controller_profile.php?op=update_user', 'POST', 'JSON', data)
         .then(function(result) {
+            console.log(result);
             if (result == "error") {
                 Swal.fire({ icon: 'error', title: 'Error al actualizar', showConfirmButton: true });
             } else if (result == "wrong_password") {
