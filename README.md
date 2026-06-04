@@ -16,16 +16,13 @@
 <img width="1919" height="920" alt="image" src="https://github.com/user-attachments/assets/96ba40b8-e000-4630-9b4c-7792b01fa370" />
 
 ### 🔐 Auth — Login & Register
-<!-- Sube tu captura a GitHub y reemplaza esta línea -->
-> 📌 _Captura pendiente de subir_
+<img width="1919" height="923" alt="Auth" src="https://github.com/user-attachments/assets/20c27049-29c9-438d-a2c7-7ad3263c3cd6" />
 
 ### 👤 Profile — Datos de Usuario
-<!-- Sube tu captura a GitHub y reemplaza esta línea -->
-> 📌 _Captura pendiente de subir_
+<img width="1917" height="910" alt="Perfil" src="https://github.com/user-attachments/assets/3e1e5aec-92e9-4f45-b74e-55e4175c00ab" />
 
 ### ❤️ Profile — Torneos con Like
-<!-- Sube tu captura a GitHub y reemplaza esta línea -->
-> 📌 _Captura pendiente de subir_
+<img width="1898" height="859" alt="Likes" src="https://github.com/user-attachments/assets/c86e0dea-f428-4c52-a0e1-68616dce10cf" />
 
 ---
 
